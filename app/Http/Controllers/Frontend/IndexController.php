@@ -1,0 +1,443 @@
+<?php
+
+namespace App\Http\Controllers\Frontend;
+
+use Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+/*use Illuminate\Pagination\Paginator;*/
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+
+
+use App\Models\User;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Brand;
+class IndexController extends Controller
+{
+    public function index(){
+        return view ('frontend.index');
+    }
+
+    public function UserLogout(){
+        Auth::logout();
+        return redirect() -> route('login');
+
+    }
+
+    public function UserProfile(){
+
+        $id = Auth::user()->id;
+        $userData = User::find($id);
+        return view ('frontend.profile.user_profile', compact('userData'));
+    }
+
+    public function UserProfileStore (Request $request){
+        $id = Auth::user()->id;
+        $userData = User::find($id);
+        $userData->name = $request->name;
+        $userData->email = $request->email;
+        $userData->phone = $request->phone;
+        if ($request->file('profile_photo_path')){
+
+            $file = $request->file('profile_photo_path');
+            @unlink(public_path('upload/user_images/'.$userData->profile_photo_path));
+            $filename = date('YmdHi').$file->getClientOriginalName();//rename the file
+            $file->move(public_path('upload/user_images'), $filename);//move the image to admin_images folder
+            $userData['profile_photo_path'] = $filename; //store the data in database
+
+            
+
+
+
+        }
+
+        $userData->save();
+        $notification = array(
+            'message' => 'Profile Updated Successfully !',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('dashboard')->with($notification);
+
+        
+    }
+
+    public function UserChangePassword(){
+        $id = Auth::user()->id;
+        $userData = User::find($id);
+        return view ('frontend.profile.user_change_password', compact('userData'));
+    }
+
+    public function UserUpdatePassword (Request $request){
+
+            $validateData = $request->validate([
+                'oldpassword' => 'required',
+                'password' => 'required|confirmed',
+                
+            ]);
+           
+            $hashedPassword =Auth::user()->password;
+            if (Hash::check($request->oldpassword,$hashedPassword)){
+                $userData = User::find(Auth::id());
+                $userData->password = Hash::make($request->password);
+                $userData->save();
+               
+                Auth::logout();
+
+                return redirect()->route('user.logout');
+            }
+            else {
+                return redirect()->back();
+
+            }
+
+
+    }
+
+    public function GetProductDetails($id,$slug){
+        $productData = Product::findOrFail($id); // this returns one record as object, not a collection of objects , sowe don't need to use foreach to loop through it
+        $related = Product::where('category_id' , $productData->category_id)->where('status', 1)->orderBy('id', 'DESC')->get();
+
+        
+            $listcolor = array();
+            $listsize = array();
+            if (session()->get('language') == 'english'){
+
+           
+                     $colors = $productData->product_color_en;
+                     $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
+                
+                     $colorsenglish = preg_split($pattern, $colors); 
+                     $size= count($colorsenglish);
+                     for ($i = 0 ; $i < $size ; $i++){
+
+                     
+                      array_push($listcolor,$colorsenglish[$i]);
+                     }
+
+                     $sizes = $productData->product_size_en;
+                     $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
+                
+                     $sizesenglish = preg_split($pattern, $sizes); 
+                     $size= count($sizesenglish);
+                     for ($i = 0 ; $i < $size ; $i++){
+
+                     
+                      array_push($listsize,$sizesenglish[$i]);
+                     }
+
+                        
+                     
+
+            }
+            else{
+
+           
+                $colors = $productData->product_color_fr;
+                $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
+           
+                $colorsfrensh = preg_split($pattern, $colors); 
+                $size= count($colorsfrensh);
+                for ($i = 0 ; $i < $size ; $i++){
+
+                
+                 array_push($listcolor,$colorsfrensh[$i]);
+                }
+
+                $sizes = $productData->product_size_fr;
+                $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
+           
+                $sizesfrensh = preg_split($pattern, $sizes); 
+                $size= count($sizesfrensh);
+                for ($i = 0 ; $i < $size ; $i++){
+
+                
+                 array_push($listsize,$sizesfrensh[$i]);
+                }
+
+
+       
+        }
+        return view ('frontend.products.product_details', compact('productData', 'listsize' , 'listcolor', 'related'));
+
+    }
+
+    /*public function paginate($items, $perPage = 2, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }*/
+
+    public function GetProductsTag(Request $request , $tag){
+        $products = Product::where('status', 1)->get();
+        $listpros = array();
+        $categories = Category::latest()->get();
+        
+
+        foreach($products as $pro){
+            if (session()->get('language') == 'english'){
+
+           
+                     $tags = $pro->product_tags_en;
+                     $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
+                
+                     $wordsenglish = preg_split($pattern, $tags); 
+
+                     if (in_array($tag, $wordsenglish)){
+                      array_push($listpros,$pro);
+
+                        
+                     }
+
+            }
+            else{
+
+           
+                $tags = $pro->product_tags_fr;
+                $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
+           
+                $wordsfrensh = preg_split($pattern, $tags); 
+
+                if (in_array($tag, $wordsfrensh)){
+                 array_push($listpros,$pro);
+
+                   
+                }
+
+       }
+        }
+        
+        
+        
+       // $collection = Product::paginate(2);
+
+        //dd($collection);
+        //dd($products);
+       
+      // $data = $this->paginate($listpros);
+        
+      //$collection = Product::hydrate($listpros);
+      
+      
+      //$collection =Product::paginate(2);
+
+      
+
+      //$collection = (object) $listpros;
+      //$collectionp =Product::get();
+
+      //dd(gettype($data));
+      //dd($data);
+      // dd($collection);
+
+        // Get current page form url e.x. &page=1
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+ 
+        // Create a new Laravel collection from the array data
+        $productCollection = collect($listpros);
+ 
+        // Define how many products we want to be visible in each page
+        $perPage = 3;
+ 
+        // Slice the collection to get the products to display in current page
+        $currentPageproducts = $productCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+ 
+        // Create our paginator and pass it to the view
+        $paginatedproducts= new LengthAwarePaginator($currentPageproducts , count($productCollection), $perPage);
+ 
+        // set url path for generted links
+        $paginatedproducts->setPath($request->url());
+       // dd($paginatedproducts);
+        
+        //return view ('frontend.tags.tag_view', compact('paginatedproducts','collection','products','listpros','tag' , 'categories'));
+
+        return view('frontend.tags.tag_view', [
+            'listpros' => $paginatedproducts,
+            'tag' => $tag,
+            'categories' => $categories,
+
+
+        ]);
+
+    }
+    //always having a problem when trying to paginate $products (method links() is undefined) , so i store it in an array , that i convert to a collection, then paginate
+    public function GetSubCategoryProducts($id, $slug, Request $request){
+        $products = Product::where('sub_category_id', $id)->where('status', 1)->orderBy('id', 'DESC')->get();
+        //dd($products);
+        $categories = Category::latest()->get();
+       
+        $listpros = array(); 
+        
+
+        foreach($products as $pro){
+            array_push($listpros,$pro);
+
+        }
+
+
+        // Get current page form url e.x. &page=1
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+ 
+        // Create a new Laravel collection from the array data
+        $productCollection = collect($listpros);
+ 
+        // Define how many products we want to be visible in each page
+        $perPage = 2;
+ 
+        // Slice the collection to get the products to display in current page
+        $currentPageproducts = $productCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+ 
+        // Create our paginator and pass it to the view
+        $paginatedproducts= new LengthAwarePaginator($currentPageproducts , count($productCollection), $perPage);
+ 
+        // set url path for generted links
+        $paginatedproducts->setPath($request->url());
+
+        //dd($paginatedproducts);
+
+       
+
+        return view ('frontend.subcategories.sub_products', [
+        'listpros' => $paginatedproducts,
+
+        
+
+       
+        
+        'categories' => $categories,
+    ]);
+
+    }
+
+    public function GetSubSubCategoryProducts($id, $slug, Request $request){
+
+        $products = Product::where('sub_sub_category_id', $id)->where('status', 1)->orderBy('id', 'DESC')->get();
+        //dd($products);
+        $categories = Category::latest()->get();
+       
+        $listpros = array(); 
+        
+
+        foreach($products as $pro){
+            array_push($listpros,$pro);
+
+        }
+
+
+        // Get current page form url e.x. &page=1
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+ 
+        // Create a new Laravel collection from the array data
+        $productCollection = collect($listpros);
+ 
+        // Define how many products we want to be visible in each page
+        $perPage = 2;
+ 
+        // Slice the collection to get the products to display in current page
+        $currentPageproducts = $productCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+ 
+        // Create our paginator and pass it to the view
+        $paginatedproducts= new LengthAwarePaginator($currentPageproducts , count($productCollection), $perPage);
+ 
+        // set url path for generted links
+        $paginatedproducts->setPath($request->url());
+
+        //dd($paginatedproducts);
+
+       
+
+        return view ('frontend.subsubcategories.subsub_products', [
+        'listpros' => $paginatedproducts,
+
+        
+
+       
+        
+        'categories' => $categories,
+    ]);
+
+    }
+
+
+    public function GetProductViewAjax($id){
+        $productData = Product::with('category','brand')->findOrFail($id);
+
+       //$brand = Barnd::findOrFail($productData->brand_id);
+        
+        //$category = Category::findOrFail($productData->category_id);
+        
+        $listcolor = array();
+        $listsize = array();
+        if (session()->get('language') == 'english'){
+
+       
+                 $colors = $productData->product_color_en;
+                 $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
+            
+                 $colorsenglish = preg_split($pattern, $colors); 
+                 $size= count($colorsenglish);
+                 for ($i = 0 ; $i < $size ; $i++){
+
+                 
+                  array_push($listcolor,$colorsenglish[$i]);
+                 }
+
+                 $sizes = $productData->product_size_en;
+                 $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
+            
+                 $sizesenglish = preg_split($pattern, $sizes); 
+                 $size= count($sizesenglish);
+                 for ($i = 0 ; $i < $size ; $i++){
+
+                 
+                  array_push($listsize,$sizesenglish[$i]);
+                 }
+
+                    
+                 
+
+        }
+        else{
+
+       
+            $colors = $productData->product_color_fr;
+            $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
+       
+            $colorsfrensh = preg_split($pattern, $colors); 
+            $size= count($colorsfrensh);
+            for ($i = 0 ; $i < $size ; $i++){
+
+            
+             array_push($listcolor,$colorsfrensh[$i]);
+            }
+
+            $sizes = $productData->product_size_fr;
+            $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
+       
+            $sizesfrensh = preg_split($pattern, $sizes); 
+            $size= count($sizesfrensh);
+            for ($i = 0 ; $i < $size ; $i++){
+
+            
+             array_push($listsize,$sizesfrensh[$i]);
+            }
+
+
+   
+    }
+    return response()->json(array(
+        'product' => $productData,
+       
+        'color' => $listcolor,
+        'size' => $listsize,
+
+    ));
+
+    }
+    
+}
