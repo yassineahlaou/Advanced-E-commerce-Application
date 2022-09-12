@@ -540,18 +540,51 @@ function wishlistRemove(id){
     var rows = ""
     $.each(response.carts, function(key,value){
         rows += `<tr>
-        <td class="col-md-2"><img src="/${value.options.image} " alt="imga"></td>
+        <td class="col-md-2"><img src="/${value.options.image} " alt="imga"   style="width:60px; height:60px;">
+        </td>
         
-        <td class="col-md-7">
-            <div class="product-name"><a href="#">${value.name}</a></div>
+        <td class="col-md-2">
+
+        @if (session()->get('language') == 'english')
+                        <div class="product-name"><a href="/product/details/${value.id}/${value.options.slugname}">${value.options.nameenglish}</a></div>
+                        @else
+                        <div class="product-name"><a href="/product/details/${value.id}/${value.options.slugname}">${value.options.namefrensh}</a></div>
+                        @endif
+          
              
             <div class="price"> 
                             ${value.price}
                         </div>
                     </td>
-         
+
+                    <td class="col-md-2">
+                    <strong>${value.options.color}</strong>
+            
+                    </td>
+
+                    <td class="col-md-2">
+                    ${value.options.size == null ? `<span>.....</span>` : `<strong>${value.options.size}</strong>`}
+            
+                    </td>
+
+                <td class="col-md-2">
+
+                ${value.qty == 1 ? `<button type="submit" class="btn btn-danger btn-sm" id="${value.rowId}" onclick="qtyDecrement(this.id)" disabled>-</button>` : `<button type="submit" class="btn btn-danger btn-sm" id="${value.rowId}" onclick="qtyDecrement(this.id)" >-</button>`}
+                   
+                    <input type="text" value="${value.qty}" min="1" max="100" disabled="" style="width:25px;" >  
+                    <button type="submit" class="btn btn-success btn-sm" id="${value.rowId}" onclick="qtyIncrement(this.id)" >+</button>   
+
+
+            </td>
+
+            <td class="col-md-2">
+            <strong>$${value.subtotal} </strong> 
+            </td>
+            
+            
+
         <td class="col-md-1 close-btn">
-            <button type="submit" class="" id="${value.id}" onclick="wishlistRemove(this.id)"><i class="fa fa-times"></i></button>
+            <button type="submit" class="" id="${value.rowId}" onclick="cartRemove(this.id)"><i class="fa fa-times"></i></button>
         </td>
                 </tr>`
         });
@@ -561,6 +594,67 @@ function wishlistRemove(id){
         })
      }
  cart();
+
+
+
+ function cartRemove(id){
+        $.ajax({
+            type: 'GET',
+            url: '/user/cart-remove/'+id,
+            dataType:'json',
+            success:function(data){
+              cart();
+            
+             // Start Message 
+                const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                     
+                      showConfirmButton: false,
+                      timer: 3000
+                    })
+                if ($.isEmptyObject(data.error)) {
+                    Toast.fire({
+                      icon : 'success',
+                        type: 'success',
+                        title: data.success
+                    })
+                }else{
+                    Toast.fire({
+                      icon : 'error',
+                        type: 'error',
+                        title: data.error
+                    })
+                }
+                // End Message 
+            }
+        });
+    }
+
+    function qtyDecrement(rowId){
+        $.ajax({
+            type:'GET',
+            url: "/user/quantity-decrement/"+rowId,
+            dataType:'json',
+            success:function(data){
+                cart();
+                miniCart();
+            }
+        });
+    }
+    function qtyIncrement(rowId){
+        $.ajax({
+            type:'GET',
+            url: "/user/quantity-increment/"+rowId,
+            dataType:'json',
+            success:function(data){
+                cart();
+                miniCart();
+            }
+        });
+    }
+
+
 
 </script>
 </body>

@@ -192,7 +192,12 @@ Route::group(['prefix'=>'user','middleware' => ['user','auth'],'namespace'=>'Use
         Route::get('/wishlist-remove/{id}', [WishlistController::class, 'RemoveFromWishList']); //remove with ajax
         Route::get('/cart', [CartPageController::class, 'ViewCart'])->name('cart');
        
-        Route::get('/get-cart-product', [CartPageController::class, 'GetCartProduct']); //wishlist load info
+        Route::get('/get-cart-product', [CartPageController::class, 'GetCartProduct']); //card load info
+
+        Route::get('/cart-remove/{id}', [CartPageController::class, 'RemoveFromCart']); //remove with ajax
+
+        Route::get('/quantity-decrement/{rowId}', [CartPageController::class, 'quantityDecrement']); //decrease with ajax
+        Route::get('/quantity-increment/{rowId}', [CartPageController::class, 'quantityIncrement']); //increase with ajax
 
 });
 
