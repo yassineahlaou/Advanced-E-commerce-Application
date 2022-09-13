@@ -571,7 +571,7 @@ function wishlistRemove(id){
 
                 ${value.qty == 1 ? `<button type="submit" class="btn btn-danger btn-sm" id="${value.rowId}" onclick="qtyDecrement(this.id)" disabled>-</button>` : `<button type="submit" class="btn btn-danger btn-sm" id="${value.rowId}" onclick="qtyDecrement(this.id)" >-</button>`}
                    
-                    <input type="text" value="${value.qty}" min="1" max="100" disabled="" style="width:25px;" >  
+                    <input type="text" value="${value.qty}" min="1" max="100" disabled="" style="width:25px;text-align:center" >  
                     <button type="submit" class="btn btn-success btn-sm" id="${value.rowId}" onclick="qtyIncrement(this.id)" >+</button>   
 
 

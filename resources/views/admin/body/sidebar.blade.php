@@ -104,6 +104,24 @@
             
           </ul>
         </li>
+
+        <li class="treeview {{($prefix == '/shipping')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>Shipping Area</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'manage.division')? 'active' : ''}}"><a href="{{route('manage.division')}}"><i class="ti-more"></i>Shipping Division</a></li>
+            <li class="{{($route == 'manage.district')? 'active' : ''}}"><a href="{{route('manage.district')}}"><i class="ti-more"></i>Shipping District</a></li>
+            <li class="{{($route == 'manage.state')? 'active' : ''}}"><a href="{{route('manage.state')}}"><i class="ti-more"></i>Shipping State</a></li>
+            
+       
+            
+            
+          </ul>
+        </li>
         <li class="header nav-small-cap">User Interface</li>
 		  
         <li class="treeview">

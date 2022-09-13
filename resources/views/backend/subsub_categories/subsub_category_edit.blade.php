@@ -66,7 +66,7 @@
                                 </div>
 							</div>
                             <div class="form-group">
-								<h5>SubCategory Name English <span class="text-danger">*</span></h5>
+								<h5>Sub Sub Category Name English <span class="text-danger">*</span></h5>
 								<div class="controls">
 									<input type="text" name="sub_sub_category_name_en" id ="sub_sub_category_name_en" class="form-control" value=" {{$subsubcategoryData->sub_sub_category_name_en}}" required=""  >
 									@error('sub_sub_category_name_en')
@@ -75,7 +75,7 @@
                                 </div>
 							</div>
                             <div class="form-group">
-								<h5>Sub Category Name Frensh <span class="text-danger">*</span></h5>
+								<h5>Sub Sub Category Name Frensh <span class="text-danger">*</span></h5>
 								<div class="controls">
 									<input type="text" name="sub_sub_category_name_fr" id ="sub_sub_category_name_fr" class="form-control" required="" value="{{$subsubcategoryData->sub_sub_category_name_fr}}" >
 									@error('sub_sub_category_name_fr')
