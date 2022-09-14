@@ -573,7 +573,8 @@
 			</tbody><!-- /tbody -->
 		</table><!-- /table -->
 	</div>
-</div><!-- /.shopping-cart-table -->				<div class="col-md-4 col-sm-12 estimate-ship-tax">
+</div><!-- /.shopping-cart-table -->				
+<div class="col-md-4 col-sm-12 estimate-ship-tax">
 	<table class="table">
 		<thead>
 			<tr>

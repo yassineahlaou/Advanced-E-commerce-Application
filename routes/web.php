@@ -170,6 +170,7 @@ Route::prefix('coupons')->group(function(){
     Route::get('/coupondown/{id}', [CouponController::class, 'CouponDown'])->name('coupon.down');
     Route::get('/couponup/{id}', [CouponController::class, 'CouponUp'])->name('coupon.up');
     
+    
 
 
 });
@@ -244,6 +245,8 @@ Route::group(['prefix'=>'user','middleware' => ['user','auth'],'namespace'=>'Use
 
         Route::get('/quantity-decrement/{rowId}', [CartPageController::class, 'quantityDecrement']); //decrease with ajax
         Route::get('/quantity-increment/{rowId}', [CartPageController::class, 'quantityIncrement']); //increase with ajax
-
+        Route::post('/coupon-apply/{coupon_name}', [CartPageController::class, 'CouponApply']);
+        Route::get('/coupon-calculation', [CartPageController::class, 'CouponCalculation']);
+        Route::get('/remove-coupon', [CartPageController::class, 'RemoveCoupon']);
 });
 
