@@ -459,228 +459,202 @@
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
 				<li><a href="#">Home</a></li>
-				<li class='active'>Shopping Cart</li>
+				<li class='active'>Checkout</li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
 	</div><!-- /.container -->
 </div><!-- /.breadcrumb -->
 
-<div class="body-content outer-top-xs">
+<div class="body-content">
 	<div class="container">
-		<div class="row ">
-			<div class="shopping-cart">
-				<div class="shopping-cart-table ">
-	<div class="table-responsive">
-		<table class="table">
-			<thead>
-				<tr>
-					<th class="cart-romove item">Remove</th>
-					<th class="cart-description item">Image</th>
-					<th class="cart-product-name item">Product Name</th>
-					<th class="cart-edit item">Edit</th>
-					<th class="cart-qty item">Quantity</th>
-					<th class="cart-sub-total item">Subtotal</th>
-					<th class="cart-total last-item">Grandtotal</th>
-				</tr>
-			</thead><!-- /thead -->
-			<tfoot>
-				<tr>
-					<td colspan="7">
-						<div class="shopping-cart-btn">
-							<span class="">
-								<a href="#" class="btn btn-upper btn-primary outer-left-xs">Continue Shopping</a>
-								<a href="#" class="btn btn-upper btn-primary pull-right outer-right-xs">Update shopping cart</a>
-							</span>
-						</div><!-- /.shopping-cart-btn -->
-					</td>
-				</tr>
-			</tfoot>
-			<tbody>
-				<tr>
-					<td class="romove-item"><a href="#" title="cancel" class="icon"><i class="fa fa-trash-o"></i></a></td>
-					<td class="cart-image">
-						<a class="entry-thumbnail" href="detail.html">
-						    <img src="assets/images/products/p1.jpg" alt="">
-						</a>
-					</td>
-					<td class="cart-product-name-info">
-						<h4 class='cart-product-description'><a href="detail.html">Floral Print Buttoned</a></h4>
-						<div class="row">
-							<div class="col-sm-4">
-								<div class="rating rateit-small"></div>
+		<div class="checkout-box ">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="panel-group checkout-steps" id="accordion">
+						<!-- checkout-step-01  -->
+						<div class="panel panel-default checkout-step-01">
+
+								<!-- panel-heading -->
+								<div class="panel-heading">
+									<h4 class="unicase-checkout-title">
+										<a data-toggle="collapse" class="" data-parent="#accordion" href="#collapseOne">
+										<span>1</span>Checkout Method
+										</a>
+									</h4>
+								</div>
+								<!-- panel-heading -->
+
+										<div id="collapseOne" class="panel-collapse collapse in">
+
+											<!-- panel-body  -->
+											<div class="panel-body">
+												<div class="row">		
+
+													<!-- guest-login -->			
+													<div class="col-md-6 col-sm-6 guest-login">
+														<h4 class="checkout-subtitle">Guest or Register Login</h4>
+														<p class="text title-tag-line">Register with us for future convenience:</p>
+
+														<!-- radio-form  -->
+														<form class="register-form" role="form">
+															<div class="radio radio-checkout-unicase">  
+																<input id="guest" type="radio" name="text" value="guest" checked>  
+																<label class="radio-button guest-check" for="guest">Checkout as Guest</label>  
+																<br>
+																<input id="register" type="radio" name="text" value="register">  
+																<label class="radio-button" for="register">Register</label>  
+															</div>  
+														</form>
+														<!-- radio-form  -->
+
+														<h4 class="checkout-subtitle outer-top-vs">Register and save time</h4>
+														<p class="text title-tag-line ">Register with us for future convenience:</p>
+														
+														<ul class="text instruction inner-bottom-30">
+															<li class="save-time-reg">- Fast and easy check out</li>
+															<li>- Easy access to your order history and status</li>
+														</ul>
+
+														<button type="submit" class="btn-upper btn btn-primary checkout-page-button checkout-continue ">Continue</button>
+													</div>
+													<!-- guest-login -->
+
+													<!-- already-registered-login -->
+													<div class="col-md-6 col-sm-6 already-registered-login">
+														<h4 class="checkout-subtitle">Already registered?</h4>
+														<p class="text title-tag-line">Please log in below:</p>
+														<form class="register-form" role="form">
+															<div class="form-group">
+															<label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
+															<input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="">
+														</div>
+														<div class="form-group">
+															<label class="info-title" for="exampleInputPassword1">Password <span>*</span></label>
+															<input type="password" class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="">
+															<a href="#" class="forgot-password">Forgot your Password?</a>
+														</div>
+														<button type="submit" class="btn-upper btn btn-primary checkout-page-button">Login</button>
+														</form>
+													</div>	
+													<!-- already-registered-login -->		
+
+												</div>			
+											</div>
+											<!-- panel-body  -->
+
+										</div><!-- row -->
 							</div>
-							<div class="col-sm-8">
-								<div class="reviews">
-									(06 Reviews)
+									<!-- checkout-step-01  -->
+					    <!-- checkout-step-02  -->
+					  	<div class="panel panel-default checkout-step-02">
+						    <div class="panel-heading">
+						      <h4 class="unicase-checkout-title">
+						        <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapseTwo">
+						          <span>2</span>Billing Information
+						        </a>
+						      </h4>
+						    </div>
+						    <div id="collapseTwo" class="panel-collapse collapse">
+						      <div class="panel-body">
+						      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+						      </div>
+						    </div>
+					  	</div>
+					  	<!-- checkout-step-02  -->
+
+						<!-- checkout-step-03  -->
+					  	<div class="panel panel-default checkout-step-03">
+						    <div class="panel-heading">
+						      <h4 class="unicase-checkout-title">
+						        <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapseThree">
+						       		<span>3</span>Shipping Information
+						        </a>
+						      </h4>
+						    </div>
+						    <div id="collapseThree" class="panel-collapse collapse">
+						      <div class="panel-body">
+						      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+						      </div>
+						    </div>
+					  	</div>
+					  	<!-- checkout-step-03  -->
+
+						<!-- checkout-step-04  -->
+					    <div class="panel panel-default checkout-step-04">
+						    <div class="panel-heading">
+						      <h4 class="unicase-checkout-title">
+						        <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapseFour">
+						        	<span>4</span>Shipping Method
+						        </a>
+						      </h4>
+						    </div>
+						    <div id="collapseFour" class="panel-collapse collapse">
+							    <div class="panel-body">
+							     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+							    </div>
+					    	</div>
+						</div>
+						<!-- checkout-step-04  -->
+
+						<!-- checkout-step-05  -->
+					  	<div class="panel panel-default checkout-step-05">
+						    <div class="panel-heading">
+						      <h4 class="unicase-checkout-title">
+						        <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapseFive">
+						        	<span>5</span>Payment Information
+						        </a>
+						      </h4>
+						    </div>
+						    <div id="collapseFive" class="panel-collapse collapse">
+						      <div class="panel-body">
+						       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+						      </div>
+						    </div>
+					    </div>
+					    <!-- checkout-step-05  -->
+
+						<!-- checkout-step-06  -->
+					  	<div class="panel panel-default checkout-step-06">
+						    <div class="panel-heading">
+						      <h4 class="unicase-checkout-title">
+						        <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapseSix">
+						        	<span>6</span>Order Review
+						        </a>
+						      </h4>
+						    </div>
+					    	<div id="collapseSix" class="panel-collapse collapse">
+					      		<div class="panel-body">
+					        		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+					      		</div>
+					    	</div>
+					  	</div>
+					  	<!-- checkout-step-06  -->
+					  	
+					</div><!-- /.checkout-steps -->
+				</div>
+				<div class="col-md-4">
+					<!-- checkout-progress-sidebar -->
+						<div class="checkout-progress-sidebar ">
+							<div class="panel-group">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="unicase-checkout-title">Your Checkout Progress</h4>
+									</div>
+									<div class="">
+										<ul class="nav nav-checkout-progress list-unstyled">
+											<li><a href="#">Billing Address</a></li>
+											<li><a href="#">Shipping Address</a></li>
+											<li><a href="#">Shipping Method</a></li>
+											<li><a href="#">Payment Method</a></li>
+										</ul>		
+									</div>
 								</div>
 							</div>
-						</div><!-- /.row -->
-						<div class="cart-product-info">
-											<span class="product-color">COLOR:<span>Blue</span></span>
-						</div>
-					</td>
-					<td class="cart-product-edit"><a href="#" class="product-edit">Edit</a></td>
-					<td class="cart-product-quantity">
-						<div class="quant-input">
-				                <div class="arrows">
-				                  <div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
-				                  <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
-				                </div>
-				                <input type="text" value="1">
-			              </div>
-		            </td>
-					<td class="cart-product-sub-total"><span class="cart-sub-total-price">$300.00</span></td>
-					<td class="cart-product-grand-total"><span class="cart-grand-total-price">$300.00</span></td>
-				</tr>
-				<tr>
-					<td class="romove-item"><a href="#" title="cancel" class="icon"><i class="fa fa-trash-o"></i></a></td>
-					<td class="cart-image">
-						<a class="entry-thumbnail" href="detail.html">
-						    <img src="assets/images/products/p2.jpg" alt="">
-						</a>
-					</td>
-					<td class="cart-product-name-info">
-						<h4 class='cart-product-description'><a href="detail.html">Floral Print Buttoned</a></h4>
-						<div class="row">
-							<div class="col-sm-4">
-								<div class="rating rateit-small"></div>
-							</div>
-							<div class="col-sm-8">
-								<div class="reviews">
-									(06 Reviews)
-								</div>
-							</div>
-						</div><!-- /.row -->
-						<div class="cart-product-info">
-						<span class="product-color">COLOR:<span>Pink</span></span>
-						</div>
-					</td>
-					<td class="cart-product-edit"><a href="#" class="product-edit">Edit</a></td>
-					<td class="cart-product-quantity">
-						<div class="cart-quantity">
-							<div class="quant-input">
-				                <div class="arrows">
-				                  <div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
-				                  <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
-				                </div>
-				                <input type="text" value="1">
-			              </div>
-			            </div>
-		            </td>
-					<td class="cart-product-sub-total"><span class="cart-sub-total-price">$300.00</span></td>
-					<td class="cart-product-grand-total"><span class="cart-grand-total-price">$300.00</span></td>
-				</tr>
-			</tbody><!-- /tbody -->
-		</table><!-- /table -->
-	</div>
-</div><!-- /.shopping-cart-table -->				
-<div class="col-md-4 col-sm-12 estimate-ship-tax">
-	<table class="table">
-		<thead>
-			<tr>
-				<th>
-					<span class="estimate-title">Estimate shipping and tax</span>
-					<p>Enter your destination to get shipping and tax.</p>
-				</th>
-			</tr>
-		</thead><!-- /thead -->
-		<tbody>
-				<tr>
-					<td>
-						<div class="form-group">
-							<label class="info-title control-label">Country <span>*</span></label>
-							<select class="form-control unicase-form-control selectpicker">
-								<option>--Select options--</option>
-								<option>India</option>
-								<option>SriLanka</option>
-								<option>united kingdom</option>
-								<option>saudi arabia</option>
-								<option>united arab emirates</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label class="info-title control-label">State/Province <span>*</span></label>
-							<select class="form-control unicase-form-control selectpicker">
-								<option>--Select options--</option>
-								<option>TamilNadu</option>
-								<option>Kerala</option>
-								<option>Andhra Pradesh</option>
-								<option>Karnataka</option>
-								<option>Madhya Pradesh</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label class="info-title control-label">Zip/Postal Code</label>
-							<input type="text" class="form-control unicase-form-control text-input" placeholder="">
-						</div>
-						<div class="pull-right">
-							<button type="submit" class="btn-upper btn btn-primary">GET A QOUTE</button>
-						</div>
-					</td>
-				</tr>
-		</tbody>
-	</table>
-</div><!-- /.estimate-ship-tax -->
-
-<div class="col-md-4 col-sm-12 estimate-ship-tax">
-	<table class="table">
-		<thead>
-			<tr>
-				<th>
-					<span class="estimate-title">Discount Code</span>
-					<p>Enter your coupon code if you have one..</p>
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-				<tr>
-					<td>
-						<div class="form-group">
-							<input type="text" class="form-control unicase-form-control text-input" placeholder="You Coupon..">
-						</div>
-						<div class="clearfix pull-right">
-							<button type="submit" class="btn-upper btn btn-primary">APPLY COUPON</button>
-						</div>
-					</td>
-				</tr>
-		</tbody><!-- /tbody -->
-	</table><!-- /table -->
-</div><!-- /.estimate-ship-tax -->
-
-<div class="col-md-4 col-sm-12 cart-shopping-total">
-	<table class="table">
-		<thead>
-			<tr>
-				<th>
-					<div class="cart-sub-total">
-						Subtotal<span class="inner-left-md">$600.00</span>
-					</div>
-					<div class="cart-grand-total">
-						Grand Total<span class="inner-left-md">$600.00</span>
-					</div>
-				</th>
-			</tr>
-		</thead><!-- /thead -->
-		<tbody>
-				<tr>
-					<td>
-						<div class="cart-checkout-btn pull-right">
-							<button type="submit" class="btn btn-primary checkout-btn">PROCCED TO CHEKOUT</button>
-							<span class="">Checkout with multiples address!</span>
-						</div>
-					</td>
-				</tr>
-		</tbody><!-- /tbody -->
-	</table><!-- /table -->
-</div><!-- /.cart-shopping-total -->			
-
-
-
-
-
-
-</div><!-- /.shopping-cart -->
-		</div> <!-- /.row -->
+						</div> 
+						<!-- checkout-progress-sidebar -->				
+				</div>
+			</div><!-- /.row -->
+		</div><!-- /.checkout-box -->
 		<!-- ============================================== BRANDS CAROUSEL ============================================== -->
 <div id="brands-carousel" class="logo-slider wow fadeInUp">
 
@@ -752,6 +726,12 @@
 <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->	</div><!-- /.container -->
 </div><!-- /.body-content -->
 
+
+
+
+
+
+<!-- ============================================================= FOOTER ============================================================= -->
 <!-- ============================================================= FOOTER ============================================================= -->
 <footer id="footer" class="footer color-bg">
 
@@ -907,7 +887,6 @@
 	<script src="assets/js/scripts.js"></script>
 
 	
-
 	
 
 </body>

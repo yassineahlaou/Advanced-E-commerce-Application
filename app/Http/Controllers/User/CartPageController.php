@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
 use App\Models\Coupon;
+use App\Models\ShippingDivision;
 use Carbon\Carbon;
 class CartPageController extends Controller
 
@@ -142,5 +143,29 @@ class CartPageController extends Controller
 		
 		Session::forget('coupon');
 		return response()->json(['success' => 'Coupon Canceled']);
+	}
+
+	public function ViewCheckout(){
+
+		if (Cart::total() > 0)
+		{
+		$carts = Cart::content(); //This method will return a Collection of CartItems which you can iterate over and show the content to your customers.
+    	$cartQty = Cart::count();// This method will return the total number of items in the cart
+    	$cartTotal = Cart::total();//can be used to get the calculated total of all items in the cart, given there price and quantity.
+		
+		$divisions = ShippingDivision::orderBy('division_name','ASC')->get();
+
+
+		return view ('frontend.checkout.checkout_view', compact('carts', 'cartQty' , 'cartTotal', 'divisions'));
+	}
+	else{
+		$notification = array(
+            'message' => 'Add Items to Cart before Checkout',
+            'alert-type' => 'info'
+        );
+
+        return redirect()->to('/')->with($notification);
+	}
+
 	}
 }

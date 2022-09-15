@@ -16,6 +16,7 @@ use App\Http\Controllers\Frontend\LanguageController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\User\WishlistController;
 use App\Http\Controllers\User\CartPageController;
+use App\Http\Controllers\User\CheckoutController;
 use App\Models\User;
 
 /*
@@ -248,5 +249,10 @@ Route::group(['prefix'=>'user','middleware' => ['user','auth'],'namespace'=>'Use
         Route::post('/coupon-apply/{coupon_name}', [CartPageController::class, 'CouponApply']);
         Route::get('/coupon-calculation', [CartPageController::class, 'CouponCalculation']);
         Route::get('/remove-coupon', [CartPageController::class, 'RemoveCoupon']);
+        Route::get('/checkout', [CartPageController::class, 'ViewCheckout'])->name('checkout');
+
+        Route::get('/district/ajax/{division_id}', [CheckoutController::class, 'GetDistrictUser']);
+        Route::get('/state/ajax/{district_id}', [CheckoutController::class, 'GetStatetUser']);
+        Route::post('/checkout/process', [CheckoutController::class, 'CheckoutProcess'])->name('checkout.store');
 });
 

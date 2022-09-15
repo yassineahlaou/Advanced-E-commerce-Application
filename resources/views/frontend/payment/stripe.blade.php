@@ -1,0 +1,1 @@
+<h1>{{$res->shipping_name}}</h1>

@@ -1,3 +1,18 @@
 .noover{
     overflow-x: hidden;
 }
+
+.list{
+    display: flex;
+  
+   
+    flex-direction: column;
+   
+}
+.listflex{
+    display: flex;
+    gap: 10px;
+}
+.total{
+    margin-left: 10px;
+}
