@@ -9,6 +9,7 @@ use App\Models\ShippingDistrict;
 use App\Models\ShippingState;
 use App\Models\Shipping;
 use Carbon\Carbon;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 
 class CheckoutController extends Controller
@@ -25,51 +26,28 @@ class CheckoutController extends Controller
 
     public function CheckoutProcess(Request $request){
 
-        $request->validate([
-            'division_id' => 'required',
-            'district_id' => 'required',
-            'state_id' => 'required',
-            'shipping_name' => 'required',
-            'shipping_email' => 'required',
-            'shipping_phone' => 'required',
-            'post_code' => 'required',
-            'adrress' => 'required',
-            'notes' => 'required',
-           
-           
-            
-        ]);
-       // $idCategory = Category::findOrFail($request->category_id)->id();
+        $data = array();
+    	$data['shipping_name'] = $request->shipping_name;
+    	$data['shipping_email'] = $request->shipping_email;
+    	$data['shipping_phone'] = $request->shipping_phone;
+    	$data['post_code'] = $request->post_code;
+    	$data['division_id'] = $request->division_id;
+    	$data['district_id'] = $request->district_id;
+    	$data['state_id'] = $request->state_id;
+    	$data['notes'] = $request->notes;
+        $data['adrress'] = $request->adrress;
 
-        
-       
-       Shipping::insert([
-        'order_id' => 45,
+        $carts = Cart::content(); //This method will return a Collection of CartItems which you can iterate over and show the content to your customers.
+    	$cartQty = Cart::count();// This method will return the total number of items in the cart
+    	$cartTotal = Cart::total();
 
-            'division_id' => $request->division_id,
-            'district_id' => $request->district_id,
-            'state_id' => $request->state_id,
-            'shipping_name' => $request->shipping_name,
-            'shipping_email' => $request->shipping_email,
-            'shipping_phone' => $request->shipping_phone,
-            'post_code' => $request->post_code,
-            'adrress' => $request->adrress,
-            'notes' => $request->notes,
-            'created_at' => Carbon::now(),
-            
-           
-
-        ]
-
-        );
-
-        $res = Shipping::where('order_id', 45)->first();
+      
 
         
 
         
     	if ($request->payment_method == 'stripe') {
-    		return view('frontend.payment.stripe',compact('res'));
+    		return view('frontend.payment.stripe',compact('data', 'cartTotal', 'carts', 'cartQty'));
     	}elseif ($request->payment_method == 'card') {
     		return 'card';
     	}else{
