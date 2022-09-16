@@ -59,7 +59,7 @@ width: 100% !important;
 <td>Invoice No: {{$orderSummary->invoice_no}}</td>
 <td>Email: {{$orderSummary->email}}</td>
 <td>Name: {{$orderSummary->name}}</td>
-<td>Amount: {{$orderSummary->amount}}</td>
+<td>Amount: ${{$orderSummary->amount_after}}</td>
 <td></td>
 </tr>
 </table>

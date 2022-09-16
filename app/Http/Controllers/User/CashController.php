@@ -20,11 +20,16 @@ class CashController extends Controller
 
 
         if (Session::has('coupon')){
-            $total_amount = Session::get('coupon')['total_amount'];
+            $total_amount_after = Session::get('coupon')['total_amount'];
+
+            $total_amount_before = str_replace( ',', '', Cart::total() );
+
+            $coupon_name = Session::get('coupon')['coupon_name'];
+            $coupon_discount = Session::get('coupon')['coupon_discount'];
 
         }
         else{
-            $total_amount =str_replace( ',', '', Cart::total() );
+            $total_amount_after =str_replace( ',', '', Cart::total() );
             
             
         }
@@ -48,7 +53,10 @@ class CashController extends Controller
      	'payment_method' => 'CashOnDelivery',
      	
      	'currency' => 'USD',
-     	'amount' => $total_amount,
+     	'amount_before' =>  $total_amount_before,
+         'coupon_name' => $coupon_name,
+        'coupon_discount' => $coupon_discount,
+         'amount_after' =>  $total_amount_after,
      	'order_number' => uniqid(),
 
      	'invoice_no' => 'AHLAOUSHOP'.mt_rand(10000000,99999999), //mt_rand generates random id 
@@ -65,7 +73,7 @@ class CashController extends Controller
     $invoiceData = Order::findOrFail($order_id);
     $data=[
         'invoice_no' => $invoiceData->invoice_no,
-        'amount' => $invoiceData->amount,
+        'amount' => $invoiceData->amount_after,
         'name' => $invoiceData->name,
         'email' => $invoiceData->email,
 

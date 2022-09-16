@@ -266,5 +266,6 @@ Route::group(['prefix'=>'user','middleware' => ['user','auth'],'namespace'=>'Use
         Route::post('/cashondelivery', [CashController::class, 'CashOnDelivery'])->name('cash');
         Route::get('/myorders', [UserOrders::class, 'GetAllUserOrders'])->name('user.orders');
         Route::get('/order/view/{orderId}', [UserOrders::class, 'GetOrderDetails'])->name('order.view');
+        Route::get('/order/invoice/{orderId}', [UserOrders::class, 'GetOrderInvoice'])->name('order.invoice');
 });
 

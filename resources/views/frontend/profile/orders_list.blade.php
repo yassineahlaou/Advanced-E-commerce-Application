@@ -65,7 +65,7 @@
         </td>
 
         <td class="col-md-3">
-          <label for=""> ${{ $order->amount }}</label>
+          <label for=""> ${{ $order->amount_after }}</label>
         </td>
 
 
@@ -87,7 +87,7 @@
  <td class="col-md-1" >
   <a href="{{route('order.view', $order->id)}}" class="btn btn-sm btn-primary" style="margin-bottom:10px"><i class="fa fa-eye"></i> View</a>
 
-   <a href="" class="btn btn-sm btn-danger"><i class="fa fa-download" style="color: white;"></i> Invoice </a>
+   <a target="_blank" href="{{route('order.invoice', $order->id)}}" class="btn btn-sm btn-danger"><i class="fa fa-download" style="color: white;"></i> Invoice </a>
 
 </td>
 
