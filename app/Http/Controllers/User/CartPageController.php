@@ -46,8 +46,8 @@ class CartPageController extends Controller
 		Session::put('coupon',[
 			'coupon_name' => $coupon->coupon_name,
 			'coupon_discount' => $coupon->coupon_discount,
-			'discount_amount' => round(Cart::total() * $coupon->coupon_discount/100), 
-			'total_amount' => round(Cart::total() - Cart::total() * $coupon->coupon_discount/100)  
+			'discount_amount' => round(str_replace( ',', '', Cart::total() ) * $coupon->coupon_discount/100 , 2), 
+			'total_amount' => round(str_replace( ',', '', Cart::total() ) - str_replace( ',', '', Cart::total() ) * $coupon->coupon_discount/100 , 2)  
 		]);
 		}
         return response()->json(['success' => 'Product Successfully removed from Cart']);
@@ -67,8 +67,8 @@ class CartPageController extends Controller
 		Session::put('coupon',[
 			'coupon_name' => $coupon->coupon_name,
 			'coupon_discount' => $coupon->coupon_discount,
-			'discount_amount' => round(Cart::total() * $coupon->coupon_discount/100), 
-			'total_amount' => round(Cart::total() - Cart::total() * $coupon->coupon_discount/100)  
+			'discount_amount' => round(str_replace( ',', '', Cart::total() ) * $coupon->coupon_discount/100 , 2), 
+			'total_amount' => round(str_replace( ',', '', Cart::total() ) - str_replace( ',', '', Cart::total() ) * $coupon->coupon_discount/100 , 2)  
 		]);
 		}
 		return response()->json('decrement');
@@ -89,8 +89,8 @@ class CartPageController extends Controller
 		Session::put('coupon',[
 			'coupon_name' => $coupon->coupon_name,
 			'coupon_discount' => $coupon->coupon_discount,
-			'discount_amount' => round(Cart::total() * $coupon->coupon_discount/100), 
-			'total_amount' => round(Cart::total() - Cart::total() * $coupon->coupon_discount/100)  
+			'discount_amount' => round(str_replace( ',', '', Cart::total() ) * $coupon->coupon_discount/100 , 2), 
+			'total_amount' => round(str_replace( ',', '', Cart::total() ) - str_replace( ',', '', Cart::total() ) * $coupon->coupon_discount/100, 2)  
 		]);
 	}
 
@@ -107,8 +107,8 @@ class CartPageController extends Controller
             Session::put('coupon',[
                 'coupon_name' => $coupon->coupon_name,
                 'coupon_discount' => $coupon->coupon_discount,
-                'discount_amount' => round(Cart::total() * $coupon->coupon_discount/100), 
-                'total_amount' => round(Cart::total() - Cart::total() * $coupon->coupon_discount/100)  
+                'discount_amount' => round(str_replace( ',', '', Cart::total() )* $coupon->coupon_discount/100,2), 
+                'total_amount' => round(str_replace( ',', '', Cart::total() ) - str_replace( ',', '', Cart::total() ) * $coupon->coupon_discount/100, 2)  
 			]);
             return response()->json(['success' => 'Valid Coupon']);
         }

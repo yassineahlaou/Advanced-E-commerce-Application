@@ -50,9 +50,15 @@ class CheckoutController extends Controller
     		return view('frontend.payment.stripe',compact('data', 'cartTotal', 'carts', 'cartQty'));
     	}elseif ($request->payment_method == 'card') {
     		return 'card';
-    	}else{
-            return 'cash';
+    	}elseif ($request->payment_method == 'cash'){
+			return view('frontend.payment.cash',compact('data', 'cartTotal', 'carts', 'cartQty'));
     	}
+		elseif ($request->payment_method == 'paypal'){
+            return 'paypal';
+    	}
+		else{
+			//return response()->json(['info' => 'Please Select A payment Method']);
+		}
 
 
 

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->string('payment_type');
             $table->string('payment_method')->nullable();
-            $table->string('transaction_id');
+            $table->string('transaction_id')->nullable();
             $table->string('currency');
             $table->float('amount',8,2);  
             $table->string('order_number');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
@@ -13,9 +14,9 @@ use Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderMail;
 
-class StripeController extends Controller
+class CashController extends Controller
 {
-    public function StripePayment(Request $request){
+    public function CashOnDelivery(Request $request){
 
 
         if (Session::has('coupon')){
@@ -27,18 +28,8 @@ class StripeController extends Controller
             
             
         }
-    \Stripe\Stripe::setApiKey('sk_test_51LiIJNCe1Kb2UBPsAmxIPkk58sraYTacVbU6jM96yZ154rLIqLQjP6HJ9N3Z0K7A3uhuHMr43ccsazLdIExo0pmA00OX9C4B67');
+   
 
-        // Token is created using Checkout or Elements!
-        // Get the payment token ID submitted by the form:
-	$token = $_POST['stripeToken'];
-	$charge = \Stripe\Charge::create([
-	  'amount' => $total_amount*100,
-	  'currency' => 'usd',
-	  'description' => 'Ahlaou Shop',
-	  'source' => $token,
-	  'metadata' => ['order_id' => uniqid()],//we can put our cart options like color or size
-	]);
 
 	$order_id = Order::insertGetId([
         'user_id' => Auth::id(),
@@ -53,13 +44,12 @@ class StripeController extends Controller
          'adrress' => $request->adrress,
      	'notes' => $request->notes,
 
-     	'payment_type' => 'Stripe',
-     	'payment_method' => 'Stripe',
-     	'payment_type' => $charge->payment_method,
-     	'transaction_id' => $charge->balance_transaction,
-     	'currency' => $charge->currency,
+     	'payment_type' => 'CashOnDelivery',
+     	'payment_method' => 'CashOnDelivery',
+     	
+     	'currency' => 'USD',
      	'amount' => $total_amount,
-     	'order_number' => $charge->metadata->order_id,
+     	'order_number' => uniqid(),
 
      	'invoice_no' => 'AHLAOUSHOP'.mt_rand(10000000,99999999), //mt_rand generates random id 
      	'order_date' => Carbon::now()->format('d F Y'),
@@ -114,5 +104,4 @@ class StripeController extends Controller
 
 
 }
-
 }

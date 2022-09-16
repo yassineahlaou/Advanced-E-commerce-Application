@@ -794,6 +794,8 @@ function wishlistRemove(id){
         }
     })
 }
+
+
 </script>
 </body>
 </html>

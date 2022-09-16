@@ -11,6 +11,7 @@
                     <ul  class="list-group  list-group-flush " style="padding-top: 3mm">
 
                         <a href="/" class="btn btn-sm btn-primary mb-5 btn-block">Home</a>
+                        <a href="{{route('user.orders')}}" class="btn btn-sm btn-primary mb-5 btn-block">My Orders</a>
                         <a href="{{route('user.profile')}}" class="btn btn-sm btn-primary mb-5 btn-block">Edit Profile</a>
                         <a href="{{ route('user.change.password')}}" class="btn btn-sm btn-primary mb-5 btn-block">Change Password</a>
                         <a href="{{ route('user.logout') }}" class="btn btn-sm btn-danger mb-5 btn-block">Logout</a>

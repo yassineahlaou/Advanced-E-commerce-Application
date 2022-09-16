@@ -138,7 +138,7 @@
                     
                     <div class="form-group" style="padding-top : 5px">	
 		                    <label for="">Stripe</label> 		
-                            <input type="radio" name="payment_method" value="stripe">
+                            <input type="radio" name="payment_method" value="stripe" required="">
                             <img src="{{ asset('frontend/assets/images/payments/4.png') }}">		    		
 		    	    </div> <!-- end col md 4 -->
 
@@ -151,9 +151,9 @@
                 <div class="col-md-6 col-sm-6 already-registered-login">
                 <h4 class="checkout-subtitle"><strong>&nbsp;</strong></h4>
                     <div class="form-group" style="padding-top : 5px">
-		    		    <label for="">Cash</label> 		
+		    		    <label for="">Cash On Delivery</label> 		
                         <input type="radio" name="payment_method" value="cash">	
-                            <img src="{{ asset('frontend/assets/images/payments/2.png') }}">  		
+                            <img src="{{ asset('frontend/assets/images/payments/6.png') }}">  		
 		    	    </div> <!-- end col md 4 -->
 
                     <div class="form-group">
@@ -161,7 +161,7 @@
                         <input type="radio" name="payment_method" value="paypal">	
                             <img src="{{ asset('frontend/assets/images/payments/1.png') }}">  		
 		    	    </div> <!-- end col md 4 -->
-
+                   
 
 			    </div>
 					
@@ -182,7 +182,7 @@
 					  
 					  	
 					</div><!-- /.checkout-steps -->
-                    <button type="submit" class="btn-upper btn btn-primary checkout-page-button" style="float:right">Complete Payment</button>
+                    <button type="submit" class="btn-upper btn btn-primary checkout-page-button"  style="float:right">Complete Payment</button>
 
 </form>
 				</div>

@@ -18,6 +18,11 @@ use App\Http\Controllers\User\WishlistController;
 use App\Http\Controllers\User\CartPageController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\StripeController;
+use App\Http\Controllers\User\UserOrders;
+use App\Http\Controllers\User\CashController;
+
+
+
 
 
 use App\Models\User;
@@ -258,5 +263,8 @@ Route::group(['prefix'=>'user','middleware' => ['user','auth'],'namespace'=>'Use
         Route::get('/state/ajax/{district_id}', [CheckoutController::class, 'GetStatetUser']);
         Route::post('/checkout/process', [CheckoutController::class, 'CheckoutProcess'])->name('checkout.store');
         Route::post('/stripe/payment', [StripeController::class, 'StripePayment'])->name('stripe.payment');
+        Route::post('/cashondelivery', [CashController::class, 'CashOnDelivery'])->name('cash');
+        Route::get('/myorders', [UserOrders::class, 'GetAllUserOrders'])->name('user.orders');
+        Route::get('/order/view/{orderId}', [UserOrders::class, 'GetOrderDetails'])->name('order.view');
 });
 
