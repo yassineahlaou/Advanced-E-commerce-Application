@@ -124,40 +124,48 @@
         </li>
         <li class="header nav-small-cap">User Interface</li>
 		  
-        <li class="treeview">
+        <li class="treeview {{($prefix == '/orders')? 'active' : ''}}">
           <a href="#">
-            <i data-feather="grid"></i>
-            <span>Components</span>
+            <i data-feather="mail"></i> <span>Orders</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-right pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="components_alerts.html"><i class="ti-more"></i>Alerts</a></li>
-            <li><a href="components_badges.html"><i class="ti-more"></i>Badge</a></li>
-            <li><a href="components_buttons.html"><i class="ti-more"></i>Buttons</a></li>
-            <li><a href="components_sliders.html"><i class="ti-more"></i>Sliders</a></li>
-            <li><a href="components_dropdown.html"><i class="ti-more"></i>Dropdown</a></li>
-            <li><a href="components_modals.html"><i class="ti-more"></i>Modal</a></li>
-            <li><a href="components_nestable.html"><i class="ti-more"></i>Nestable</a></li>
-            <li><a href="components_progress_bars.html"><i class="ti-more"></i>Progress Bars</a></li>
+            <li class="{{($route == 'view.pending')? 'active' : ''}}"><a href="{{route('view.pending')}}"><i class="ti-more"></i>Pending Orders</a></li>
+            <li class="{{($route == 'view.confirmed')? 'active' : ''}}"><a href="{{route('view.confirmed')}}"><i class="ti-more"></i>Confirmed Orders</a></li>
+            <li class="{{($route == 'view.processing')? 'active' : ''}}"><a href="{{route('view.processing')}}"><i class="ti-more"></i>Processing Orders</a></li>
+            <li class="{{($route == 'view.shipped')? 'active' : ''}}"><a href="{{route('view.shipped')}}"><i class="ti-more"></i>Shipped Orders</a></li>
+            <li class="{{($route == 'view.picked')? 'active' : ''}}"><a href="{{route('view.picked')}}"><i class="ti-more"></i>Picked Orders</a></li>
+            
+            <li class="{{($route == 'view.delivered')? 'active' : ''}}"><a href="{{route('view.delivered')}}"><i class="ti-more"></i>Delivered Orders</a></li>
+            <li class="{{($route == 'view.canceled')? 'active' : ''}}"><a href="{{route('view.canceled')}}"><i class="ti-more"></i>Canceled Orders</a></li>
+            
+            
+       
+            
+            
           </ul>
         </li>
 		
-		<li class="treeview">
+		
+        <li class="treeview {{($prefix == '/reports')? 'active' : ''}}">
           <a href="#">
-            <i data-feather="credit-card"></i>
-            <span>Cards</span>
+            <i data-feather="mail"></i> <span>All Reports</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-right pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-			<li><a href="card_advanced.html"><i class="ti-more"></i>Advanced Cards</a></li>
-			<li><a href="card_basic.html"><i class="ti-more"></i>Basic Cards</a></li>
-			<li><a href="card_color.html"><i class="ti-more"></i>Cards Color</a></li>
-		  </ul>
-        </li>  
+            <li class="{{($route == 'all.reports')? 'active' : ''}}"><a href="{{route('all.reports')}}"><i class="ti-more"></i>All Reports</a></li>
+            
+            
+            
+       
+            
+            
+          </ul>
+        </li>
 		  
          	  		  
 		  

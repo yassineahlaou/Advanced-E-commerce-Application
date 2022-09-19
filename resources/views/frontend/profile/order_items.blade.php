@@ -1,6 +1,8 @@
 @extends('frontend.main_master')
 @section('content')
 
+<link rel="stylesheet" href="{{asset('css/over.css')}}">
+
     <div class="body-content">
         <div class="container">
             <div class="row">
@@ -12,6 +14,8 @@
 
                 <a href="/" class="btn btn-sm btn-primary mb-5 btn-block">Home</a>
                 <a href="{{route('user.orders')}}" class="btn btn-sm btn-primary mb-5 btn-block">My Orders</a>
+                <a href="{{route('user.canceled')}}" class="btn btn-sm btn-primary mb-5 btn-block">Canceld Orders</a>
+                <a href="{{route('user.returns')}}" class="btn btn-sm btn-primary mb-5 btn-block">Returnes</a>
                 <a href="{{route('user.profile')}}" class="btn btn-sm btn-primary mb-5 btn-block">Edit Profile</a>
                 <a href="{{ route('user.change.password')}}" class="btn btn-sm btn-primary mb-5 btn-block">Change Password</a>
                 <a href="{{ route('user.logout') }}" class="btn btn-sm btn-danger mb-5 btn-block">Logout</a>
@@ -221,7 +225,36 @@
 
 </div> 
             </div>
+            @if($order->status == "Delivered" && $order->return_reason == NULL)
+
+
+
+            <form action="{{ route('return.order',$order->id) }}" method="post">
+        @csrf
+
+<div class="form-group">
+<h3 class="text-center">Return Request</h3>
+<label for="label"> Tell Us Why you want to Return this order!</label>
+<textarea name="return_reason" id="" required="" class="form-control" cols="30" rows="05" style="resize:none" placeholder="Return Reason"></textarea>
+<button type="submit" class="btn btn-danger" style="float:right;margin-top:7px;margin-bottom:7px">Submit</button>
+</form>
+</div>
+@endif
+
+@if ($order->return_reason != NULL)
+
+<h3 class="text-center">Return Request</h3>
+<div class="text-center">
+
+<h4 class="badge badge-pill badge-warning " style="background: green;font-size:14px;padding:10px">You Have already sent a return request for this order!</h4>
+</div>
+<div class="formflex">
+<label for="label"> Return Reason:</label>
+<textarea name="return_reason" id=""  class="form-control"  style="width:50%;resize:none" disabled >"{{$order->return_reason}}"</textarea>
+</div>
+@endif
         </div>
+      
     </div>
 
 

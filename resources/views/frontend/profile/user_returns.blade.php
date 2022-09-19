@@ -83,10 +83,7 @@
           <label for=""> 
             <span class="badge badge-pill badge-warning" style="background: #418DB9;">{{ $order->status }} </span>
 
-            @if ($order->return_reason != NULL)
-
             <span class="badge badge-pill badge-danger" style="background:red;" >Return Requested </span>
-            @endif
 
             </label>
         </td>

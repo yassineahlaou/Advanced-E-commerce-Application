@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItems;
 use Auth;
+use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 
@@ -51,10 +52,41 @@ class UserOrders extends Controller
            
     ]);
             
-        return $pdf->download('invoice.pdf');
+        return $pdf->download('user_invoice.pdf');
  
  
  
  
-     } // end mehto
+     } 
+
+     public function ReturnOrder(Request $request , $orderId){
+
+        Order::where('id',$orderId)->where('user_id',Auth::id())->update([
+            'return_date'=>Carbon::now(),
+            'return_reason'=>$request->return_reason,
+        ]);
+
+        $notification = array(
+            'message' => 'Return Request Submitted Successfully !',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('user.returns')->with($notification);
+
+
+     }
+
+     public function GetReturns(){
+        $id = Auth::user()->id;
+        $userData = User::find($id);
+        $orders = Order::where('user_id', Auth::id())->where('return_reason', '!=' , NULL)->orderBy('id', 'DESC')->get();
+        return view ('frontend.profile.user_returns', compact('orders', 'userData'));
+     }
+
+     public function GetCanceled(){
+        $id = Auth::user()->id;
+        $userData = User::find($id);
+        $orders = Order::where('user_id', Auth::id())->where('status', 'Canceled')->orderBy('id', 'DESC')->get();
+        return view ('frontend.profile.user_canceled', compact('orders', 'userData'));
+     }
 }

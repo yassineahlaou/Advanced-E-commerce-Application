@@ -73,7 +73,7 @@ class StripeController extends Controller
      	'order_number' => $charge->metadata->order_id,
 
      	'invoice_no' => 'AHLAOUSHOP'.mt_rand(10000000,99999999), //mt_rand generates random id 
-     	'order_date' => Carbon::now()->format('d F Y'),
+     	'order_date' => Carbon::now()->format('d F Y'),// will convert the date to this format "11 july 2022"
      	'order_month' => Carbon::now()->format('F'),
      	'order_year' => Carbon::now()->format('Y'),
      	'status' => 'Pending',

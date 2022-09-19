@@ -16,3 +16,21 @@
 .total{
     margin-left: 10px;
 }
+
+.formflex{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 14px;
+    justify-content: center;
+    margin-bottom: 7px;
+}
+
+.flextitle{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 14px;
+    justify-content: center;
+
+}

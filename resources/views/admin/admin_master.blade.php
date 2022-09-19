@@ -123,8 +123,186 @@
 
     })
   })
+
   </script>
 	
+
+  <script>
+  $(function(){
+    $(document).on('click', '#confirm', function(e){
+      e.preventDefault();
+      var link = $(this).attr("href");
+
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "Once you Confirm , You can't go back!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, confirm it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = link//this is changing the window after the delete
+    Swal.fire(
+      'Deleted!',
+      'The Order has been Confirmed.',
+      'success'
+    )
+  }
+})
+
+    })
+  })
+  
+  </script>
+	
+  <script>
+  $(function(){
+    $(document).on('click', '#process', function(e){
+      e.preventDefault();
+      var link = $(this).attr("href");
+
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "Once you Process , You can't go back!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, Process it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = link//this is changing the window after the delete
+    Swal.fire(
+      'Deleted!',
+      'The Order is Being Processed.',
+      'success'
+    )
+  }
+})
+
+    })
+  })
+  
+  </script>
+  <script>
+  $(function(){
+    $(document).on('click', '#ship', function(e){
+      e.preventDefault();
+      var link = $(this).attr("href");
+
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "Once you Shipped , You can't go back!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, confirm it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = link//this is changing the window after the delete
+    Swal.fire(
+      'Deleted!',
+      'The Order has been Shipped.',
+      'success'
+    )
+  }
+})
+
+    })
+  })
+  
+  </script>
+  <script>
+  $(function(){
+    $(document).on('click', '#picked', function(e){
+      e.preventDefault();
+      var link = $(this).attr("href");
+
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "Once you Picked , You can't go back!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, confirm it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = link//this is changing the window after the delete
+    Swal.fire(
+      'Deleted!',
+      'The Order has been Picked.',
+      'success'
+    )
+  }
+})
+
+    })
+  })
+  
+  </script>
+  <script>
+  $(function(){
+    $(document).on('click', '#deliver', function(e){
+      e.preventDefault();
+      var link = $(this).attr("href");
+
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "Once you Deliver , You can't go back!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, confirm it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = link//this is changing the window after the delete
+    Swal.fire(
+      'Deleted!',
+      'The Order has been Delivered.',
+      'success'
+    )
+  }
+})
+
+    })
+  })
+  
+  </script>
+
+<script>
+  $(function(){
+    $(document).on('click', '#cancel', function(e){
+      e.preventDefault();
+      var link = $(this).attr("href");
+
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "Once you Cancel , You can't go back!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, Cancel it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = link//this is changing the window after the delete
+    Swal.fire(
+      'Deleted!',
+      'The Order has been Canceld.',
+      'success'
+    )
+  }
+})
+
+    })
+  })
+  
+  </script>
 	
 </body>
 </html>

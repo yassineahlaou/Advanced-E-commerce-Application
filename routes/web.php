@@ -12,6 +12,8 @@ use App\Http\Controllers\Backend\ProductsController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\ShippingController;
+use App\Http\Controllers\Backend\ReportsController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Frontend\LanguageController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\User\WishlistController;
@@ -213,6 +215,39 @@ Route::prefix('shipping')->group(function(){
 
 
 });
+Route::prefix('orders')->group(function(){
+    Route::get('/pending/view', [OrderController::class, 'ViewPending'])->name('view.pending');
+    Route::get('/order/details/{id}', [OrderController::class, 'OrderDetails'])->name('order.details');
+
+
+    Route::get('/confirm/{orderId}', [OrderController::class, 'ConfirmOrder'])->name('pending.confirm');
+    Route::get('/process/{orderId}', [OrderController::class, 'ProcessOrder'])->name('confirmed.process');
+    Route::get('/ship/{orderId}', [OrderController::class, 'ShipOrder'])->name('processing.ship');
+    Route::get('/pick/{orderId}', [OrderController::class, 'PickOrder'])->name('picked.shipped');
+    Route::get('/deliver/{orderId}', [OrderController::class, 'DeliverOrder'])->name('delivered.picked');
+    Route::get('/cancel/{orderId}', [OrderController::class, 'CancelOrder'])->name('cancel.order');
+    
+
+
+    Route::get('/confirmed/view', [OrderController::class, 'ViewConfirmed'])->name('view.confirmed');
+    Route::get('/processing/view', [OrderController::class, 'ViewProcessing'])->name('view.processing');
+    Route::get('/picked/view', [OrderController::class, 'ViewPicked'])->name('view.picked');
+    Route::get('/shipped/view', [OrderController::class, 'ViewShipped'])->name('view.shipped');
+    Route::get('/delivred/view', [OrderController::class, 'ViewDelivered'])->name('view.delivered');
+    Route::get('/canceled/view', [OrderController::class, 'ViewCanceled'])->name('view.canceled');
+
+    Route::get('/order/getInvoice/{orderId}', [OrderController::class, 'AdminInvoiceDownload'])->name('admin.invoice');
+
+
+});
+Route::prefix('reports')->group(function(){
+    Route::get('/allreports', [ReportsController::class, 'AllReports'])->name('all.reports');
+    Route::post('/dateSearch', [ReportsController::class, 'SearchByDate'])->name('date.search');
+    Route::post('/monthSearch', [ReportsController::class, 'SearchByMonth'])->name('month.search');
+    Route::post('/yearSearch', [ReportsController::class, 'SearchByYear'])->name('year.search');
+});
+
+
 
 });
 
@@ -267,5 +302,8 @@ Route::group(['prefix'=>'user','middleware' => ['user','auth'],'namespace'=>'Use
         Route::get('/myorders', [UserOrders::class, 'GetAllUserOrders'])->name('user.orders');
         Route::get('/order/view/{orderId}', [UserOrders::class, 'GetOrderDetails'])->name('order.view');
         Route::get('/order/invoice/{orderId}', [UserOrders::class, 'GetOrderInvoice'])->name('order.invoice');
+        Route::post('/order/return/{orderId}', [UserOrders::class, 'ReturnOrder'])->name('return.order');
+        Route::get('/returns', [UserOrders::class, 'GetReturns'])->name('user.returns');
+        Route::get('/canceld', [UserOrders::class, 'GetCanceled'])->name('user.canceled');
 });
 
