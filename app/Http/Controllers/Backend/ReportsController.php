@@ -38,6 +38,7 @@ class ReportsController extends Controller
        
 
         $orders = Order::where('order_month',$request->month)->where('order_year',$request->year)->orderBy('id','DESC')->get();
+        
         return view ('backend.reports.data', compact('orders'));
 
     }
@@ -45,7 +46,8 @@ class ReportsController extends Controller
 
         
 
-        $orders = Order::where('order_year',$request->year_name)->orderBy('id','DESC')->get();
+        $orders = Order::where('order_year',$request->year_name)->latest()->get();
+       
         return view ('backend.reports.data', compact('orders'));
 
     }

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('size')->nullable();
             $table->string('qty');
             $table->float('price',8,2);
+            $table->string('returned')->nullable();
             $table->timestamps();
         });
     }

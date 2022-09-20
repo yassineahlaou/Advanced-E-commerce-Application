@@ -1,6 +1,6 @@
 @extends('frontend.main_master')
 @section('content')
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="{{asset('css/over.css')}}">
 
     <div class="body-content">
@@ -229,16 +229,137 @@
 
 
 
-            <form action="{{ route('return.order',$order->id) }}" method="post">
+            <form action="{{ route('return.order',$order->id) }}" method="post" enctype="multipart/form-data"> 
         @csrf
+        <h3 class="text-center">Return Request</h3>
 
-<div class="form-group">
-<h3 class="text-center">Return Request</h3>
+
+
+<div class="form-group" style="padding-top : 5px">	
+<label for="label"> Select Items You Want to Return</label>
+<div class="table-responsive">
+  <table class="table">
+    <tbody>
+
+      <tr style="background: #e2e2e2;">
+      <td class="col-md-1">
+         
+        </td>
+        <td class="col-md-1">
+          <label for=""> Product Image</label>
+        </td>
+        <td class="col-md-1">
+          <label for=""> Product Name</label>
+        </td>
+        <td class="col-md-1">
+          <label for=""> Product Code</label>
+        </td>
+
+        <td class="col-md-3">
+          <label for=""> Color</label>
+        </td>
+
+        <td class="col-md-1" >
+          <label for=""> Size</label>
+        </td>
+
+
+        <td class="col-md-2">
+          <label for=""> Quantity</label>
+        </td>
+
+         <td class="col-md-2">
+          <label for=""> Price</label>
+        </td>
+
+        
+
+      </tr>
+@php
+
+$temp = 0;
+@endphp
+
+      @foreach($orderItems as $item)
+
+      @php
+
+$temp = $temp + 1;
+@endphp
+<tr>
+<td class="col-md-1">
+ 
+<input type="checkbox" name="{{$item->product_id}}" value="returned" >
+
+
+</td>
+        <td class="col-md-1">
+          <label for=""> <img src="{{asset($item['product']['product_thumbnail'])}}" alt="" style="width:80px; height:80px;"></img></label>
+        </td>
+        <td class="col-md-3">
+          <label for=""> <a href="/product/details/{{$item->product_id}}/{{$item['product']['product_slug_en']}}">{{$item['product']['product_name_en']}}</a></label>
+        </td>
+        <td class="col-md-3">
+          <label for=""> {{$item['product']['product_code']}}</label>
+        </td>
+
+        <td class="col-md-3">
+          <label for=""> {{$item->color}}</label>
+        </td>
+
+
+         <td class="col-md-3">
+          <label for=""> {{ $item->size}}</label>
+        </td>
+
+        <td class="col-md-2">
+          <label for=""> {{ $item->qty }}</label>
+        </td>
+
+         <td class="col-md-2">
+           
+          <label for=""> ${{ $item->price }}</label>
+
+           
+        </td>
+
+ 
+
+      </tr>
+      @endforeach
+
+
+
+
+
+    </tbody>
+
+  </table>
+</div>
+		                   		
+                           
+                             		
+		    	    </div> <!-- end col md 4 -->
+              <div class="form-group">
+
 <label for="label"> Tell Us Why you want to Return this order!</label>
 <textarea name="return_reason" id="" required="" class="form-control" cols="30" rows="05" style="resize:none" placeholder="Return Reason"></textarea>
+</div>
+
+<div class="form-group">
+<label for="label">Add Images</label>
+								
+									<input type="file" name="return_image[]"  id="return_images"  class="form-control" multiple="" required=""> 
+                                   
+                                    <div  id="preview_img"></div>
+
+	 		                 
+                                </div>
+
+
 <button type="submit" class="btn btn-danger" style="float:right;margin-top:7px;margin-bottom:7px">Submit</button>
 </form>
-</div>
+
 @endif
 
 @if ($order->return_reason != NULL)
@@ -257,5 +378,48 @@
       
     </div>
 
+    <script>
+ 
+  $(document).ready(function(){
+   $('#return_images').on('change', function(){ //on file input change
+      if (window.File && window.FileReader && window.FileList && window.Blob) //check File API supported browser
+      {
+          var data = $(this)[0].files; //this file data
+           
+          $.each(data, function(index, file){ //loop though each file
+              if(/(\.|\/)(gif|jpe?g|png)$/i.test(file.type)){ //check supported file type
+                  var fRead = new FileReader(); //new filereader
+                  fRead.onload = (function(file){ //trigger function on successful read
+                  return function(e) {
+                      var img = $('<img/>').addClass('thumb').attr('src', e.target.result).width(80).css("padding-right", "7px").css("padding-top", "5px")
+                  .height(80); //create image element 
+                      $('#preview_img').append(img); //append image to output element
+                     
+                  };
+                  })(file);
+                  fRead.readAsDataURL(file); //URL representing the file's data.
+              }
+          });
+           
+      }else{
+          alert("Your browser doesn't support File API!"); //if File API is absent
+      }
+   });
+  });
+   
+  </script>
+
+
+<script> 
+  //check if at leaset one checkbox is checked
+  $(document).ready(function(){
+    $("form").submit(function(){
+		if ($('input:checkbox').filter(':checked').length < 1){
+        alert("Check at least one item in your Return Request!");
+		return false;
+		}
+    });
+});
+  </script>
 
 @endsection

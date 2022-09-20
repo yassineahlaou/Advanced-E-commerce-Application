@@ -29,6 +29,9 @@ class CashController extends Controller
 
         }
         else{
+            $coupon_name = NULL;
+            $coupon_discount = NULL;
+            $total_amount_before = str_replace( ',', '', Cart::total() );
             $total_amount_after =str_replace( ',', '', Cart::total() );
             
             

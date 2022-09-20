@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 /*use Illuminate\Pagination\Paginator;*/
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 
 
 use App\Models\User;
@@ -23,7 +24,10 @@ class IndexController extends Controller
     }
 
     public function UserLogout(){
+        Cache::get('user_is_online' . Auth::user()->id);
+        Cache::forget('user_is_online' . Auth::user()->id);
         Auth::logout();
+       
         return redirect() -> route('login');
 
     }
@@ -54,6 +58,7 @@ class IndexController extends Controller
 
 
         }
+       
 
         $userData->save();
         $notification = array(

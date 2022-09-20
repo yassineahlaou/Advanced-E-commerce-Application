@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItems;
+use App\Models\ReturnImages;
 use Auth;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use Image;
 
 use App\Models\User;
 
@@ -61,10 +62,52 @@ class UserOrders extends Controller
 
      public function ReturnOrder(Request $request , $orderId){
 
+        $images = $request->file('return_image');
+        foreach($images as $img){
+           
+            $imgname = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();//rename the file
+     
+            
+            Image::make($img)->resize(917, 1000)->save("upload/return_images/".$imgname);
+            $img_url = "upload/return_images/".$imgname;
+           
+
+            ReturnImages::insert([
+            'order_id' => $orderId,
+            'photo_name' => $img_url,
+            'created_at' => Carbon::now(),
+
+        ]);
+        }
+
+       
+
         Order::where('id',$orderId)->where('user_id',Auth::id())->update([
             'return_date'=>Carbon::now(),
             'return_reason'=>$request->return_reason,
+            'return_status'=>'Pending',
         ]);
+
+       
+
+        
+        
+          
+          $orderItems = OrderItems::where('order_id', $orderId)->latest()->get();
+
+          foreach($orderItems as $item){
+            $product = $item->product_id;
+
+          if ($request->$product == 'returned') {
+           OrderItems::where('order_id', $orderId)->where('product_id', $product)->update([
+            
+          
+            'returned'=>'YES',
+        ]);
+    }
+}
+
+
 
         $notification = array(
             'message' => 'Return Request Submitted Successfully !',
@@ -79,7 +122,7 @@ class UserOrders extends Controller
      public function GetReturns(){
         $id = Auth::user()->id;
         $userData = User::find($id);
-        $orders = Order::where('user_id', Auth::id())->where('return_reason', '!=' , NULL)->orderBy('id', 'DESC')->get();
+        $orders = Order::where('user_id', Auth::id())->where('return_status', '!=' , NULL)->orderBy('id', 'DESC')->get();
         return view ('frontend.profile.user_returns', compact('orders', 'userData'));
      }
 

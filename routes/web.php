@@ -13,6 +13,10 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\ShippingController;
 use App\Http\Controllers\Backend\ReportsController;
+use App\Http\Controllers\Backend\AllUsersController;
+
+use App\Http\Controllers\Backend\ReturnsController;
+
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Frontend\LanguageController;
 use App\Http\Controllers\Frontend\CartController;
@@ -245,6 +249,16 @@ Route::prefix('reports')->group(function(){
     Route::post('/dateSearch', [ReportsController::class, 'SearchByDate'])->name('date.search');
     Route::post('/monthSearch', [ReportsController::class, 'SearchByMonth'])->name('month.search');
     Route::post('/yearSearch', [ReportsController::class, 'SearchByYear'])->name('year.search');
+});
+Route::prefix('users')->group(function(){
+    Route::get('/allusers', [AllUsersController::class, 'AllUsers'])->name('all.users');
+    
+});
+Route::prefix('returns')->group(function(){
+    Route::get('/pending', [ReturnsController::class, 'GetPendingReturns'])->name('pending.returns');
+    Route::get('/approved', [ReturnsController::class, 'GetApprovedReturns'])->name('approved.returns');
+    Route::get('/return/details/{id}', [ReturnsController::class, 'ReturnDetails'])->name('return.details');
+    
 });
 
 

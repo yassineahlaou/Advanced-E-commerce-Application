@@ -25,41 +25,36 @@
 					  <table id="example1" class="table table-bordered table-striped">
 						<thead>
 							<tr>
-                                <th>Date </th>
+                                <th>Return Date </th>
 								<th>Invoice </th>
 								<th>Amount </th>
 								<th>Payment </th>
-								<th>Status </th>
+								<th>Return Status </th>
 								<th>Action</th>
 								
 							</tr>
 						</thead>
 						<tbody>
-							
-                            @foreach($orders as $order)
-							
+                            @foreach($returns as $return)
 							<tr>
 								
                                 
-								<td>{{$order->order_date}}</td>
-                                <td>{{$order->invoice_no}}</td>
-                                <td>{{$order->amount_after}}</td>
-                                <td>{{$order->payment_method}}</td>
+								<td>{{$return->return_date}}</td>
+                                <td>{{$return->invoice_no}}</td>
+                                <td>{{$return->amount_after}}</td>
+                                <td>{{$return->payment_method}}</td>
                                 <td>
                                    
-		 	                            <span class="badge badge-pill badge-primary">{{$order->status}}</span>
+		 	                            <span class="badge badge-pill badge-primary">Approved</span>
 
 		 	                     
                                  </td>
                               
 
 								
-								<td width="25%">
-								<a href="{{route('order.details',$order->id)}}" class="btn btn-info"><i style="margin-right:7px" class="fa fa-eye"></i>View</a>
-
-                                @if ($order->status != 'Canceled' && $order->status != 'Pending')
-                                <a target="_blank" href="{{route('admin.invoice', $order->id)}}"  class="btn btn-danger" ><i class="fa fa-download" style="color: white;margin-right:7px"></i>Invoice</a>
-                                @endif
+								<td width="20%">
+								<a href="{{route('return.details',$return->id)}}" class="btn btn-info"><i style="margin-right:7px" class="fa fa-eye"></i>View</a>
+                              
                                
                                  </td>
 								

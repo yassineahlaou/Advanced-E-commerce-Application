@@ -109,7 +109,7 @@ class ProductsController extends Controller
       }
 
       public function ManageProduct(){
-          $productsData = Product::latest()->get(); //get all data
+          $productsData = Product::orderBy('id', 'DESC')->get(); //get all data
           return view ('backend.products.product_manage', compact('productsData'));
   
       }

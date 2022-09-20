@@ -50,11 +50,11 @@
         </td>
 
          <td class="col-md-2">
-          <label for=""> Order</label>
+          <label for=""> Order Status</label>
         </td>
 
          <td class="col-md-2" >
-          <label for=""> Action </label>
+          <label for=""> Return Status </label>
         </td>
 
       </tr>
@@ -83,15 +83,13 @@
           <label for=""> 
             <span class="badge badge-pill badge-warning" style="background: #418DB9;">{{ $order->status }} </span>
 
-            <span class="badge badge-pill badge-danger" style="background:red;" >Return Requested </span>
+            
 
             </label>
         </td>
 
  <td class="col-md-1" >
-  <a href="{{route('order.view', $order->id)}}" class="btn btn-sm btn-primary" style="margin-bottom:10px"><i class="fa fa-eye"></i> View</a>
-
-   <a target="_blank" href="{{route('order.invoice', $order->id)}}" class="btn btn-sm btn-danger"><i class="fa fa-download" style="color: white;"></i> Invoice </a>
+ <span class="badge badge-pill badge-warning" style="background: #418DB9;">{{ $order->return_status }} </span>
 
 </td>
 
