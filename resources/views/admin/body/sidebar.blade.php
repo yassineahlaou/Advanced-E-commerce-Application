@@ -195,6 +195,7 @@
           <ul class="treeview-menu">
             <li class="{{($route == 'pending.returns')? 'active' : ''}}"><a href="{{route('pending.returns')}}"><i class="ti-more"></i>Pending Returns</a></li>
             <li class="{{($route == 'approved.returns')? 'active' : ''}}"><a href="{{route('approved.returns')}}"><i class="ti-more"></i>Approved Returns</a></li>
+            <li class="{{($route == 'canceled.returns')? 'active' : ''}}"><a href="{{route('canceled.returns')}}"><i class="ti-more"></i>Canceled Returns</a></li>
             
             
             

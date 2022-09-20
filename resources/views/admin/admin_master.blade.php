@@ -303,6 +303,66 @@
   })
   
   </script>
+
+
+<script>
+  $(function(){
+    $(document).on('click', '#approvereturn', function(e){
+      e.preventDefault();
+      var link = $(this).attr("href");
+
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "Once you Approve , You can't go back!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, Approve it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = link//this is changing the window after the delete
+    Swal.fire(
+      'Approved!',
+      'The Return has been Approved.',
+      'success'
+    )
+  }
+})
+
+    })
+  })
+  
+  </script>
 	
+  <script>
+  $(function(){
+    $(document).on('click', '#cancelreturn', function(e){
+      e.preventDefault();
+      var link = $(this).attr("href");
+
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "Once you Cancel , You can't go back!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, cancel it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = link//this is changing the window after the delete
+    Swal.fire(
+      'Canceled!',
+      'The Return has been Canceld.',
+      'success'
+    )
+  }
+})
+
+    })
+  })
+  
+  </script>
 </body>
 </html>

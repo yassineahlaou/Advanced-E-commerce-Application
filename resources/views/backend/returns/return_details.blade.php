@@ -255,6 +255,8 @@
           </table>
                     </div>
 			    </div>
+</div>
+<div class="row">
           <div class="col-md-12 col-12">
                     <div class="box box-bordered border-primary">
                     <div class="box-header with-border">
@@ -280,7 +282,23 @@
 
                </th>
             </tr>
-            </table
+            <tr>
+              <th> Order Status : </th>
+               <th >   
+               @if($order->return_status == 'Pending')
+               	<a  href="{{ route('return.confirm',$order->id) }}" class="btn btn-block btn-success" id="approvereturn">Confirm Return</a>
+                 <a href="{{ route('return.cancel',$order->id) }}" class="btn btn-block btn-danger" id="cancelreturn">Cancel Return</a>
+                @elseif ($order->return_status == 'Approved')
+                <span class="badge badge-pill badge-success">Approved</span>
+
+                @else
+                  <span class="badge badge-pill badge-danger">Canceled</span>
+                
+
+               	@endif
+              </th>
+            </tr>
+</table>
                     
 </div>
 </div>

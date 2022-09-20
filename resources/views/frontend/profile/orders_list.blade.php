@@ -82,10 +82,15 @@
          <td class="col-md-2">
           <label for=""> 
             <span class="badge badge-pill badge-warning" style="background: #418DB9;">{{ $order->status }} </span>
+    @if($order->return_status != NULL)
+            @if ($order->return_status == "Pending")
 
-            @if ($order->return_reason != NULL)
-
-            <span class="badge badge-pill badge-danger" style="background:red;" >Return Requested </span>
+            <span class="badge badge-pill badge-danger" style="background:#418DB9;" >Return Requested </span>
+            @elseif($order->return_status == "Approved")
+            <span class="badge badge-pill badge-danger" style="background:green;" >Return Approved </span>
+            @elseif($order->return_status == "Canceled")
+            <span class="badge badge-pill badge-danger" style="background:red;" >Return Canceled </span>
+            @endif
             @endif
 
             </label>

@@ -35,4 +35,33 @@ class ReturnsController extends Controller
         return view ('backend.returns.approved_returns', compact('returns'));
 
     }
+    public function GetCanceledReturns(){
+        $returns = Order::where('return_status' , 'Canceled')->latest()->get();
+        return view ('backend.returns.canceled_returns', compact('returns'));
+
+    }
+    public function ConfirmReturn($orderId){
+        Order::findOrFail($orderId)->update([
+            'return_status'=>'Approved',
+        ]);
+
+        $notification = array(
+            'message' => 'Returned Approved Successfully !',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('pending.returns')->with($notification);
+    }
+    public function CancelReturn($orderId){
+        Order::findOrFail($orderId)->update([
+            'return_status'=>'Canceled',
+        ]);
+
+        $notification = array(
+            'message' => 'Returned Canceled Successfully !',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('pending.returns')->with($notification);
+    }
 }

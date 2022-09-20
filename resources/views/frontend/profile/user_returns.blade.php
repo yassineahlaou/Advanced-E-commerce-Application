@@ -89,7 +89,13 @@
         </td>
 
  <td class="col-md-1" >
+  @if ($order->return_status == "Pending")
  <span class="badge badge-pill badge-warning" style="background: #418DB9;">{{ $order->return_status }} </span>
+ @elseif($order->return_status == "Approved")
+ <span class="badge badge-pill badge-warning" style="background: green;">{{ $order->return_status }} </span>
+ @else
+ <span class="badge badge-pill badge-warning" style="background: red;">{{ $order->return_status }} </span>
+ @endif
 
 </td>
 

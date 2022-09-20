@@ -257,7 +257,10 @@ Route::prefix('users')->group(function(){
 Route::prefix('returns')->group(function(){
     Route::get('/pending', [ReturnsController::class, 'GetPendingReturns'])->name('pending.returns');
     Route::get('/approved', [ReturnsController::class, 'GetApprovedReturns'])->name('approved.returns');
+    Route::get('/canceled', [ReturnsController::class, 'GetCanceledReturns'])->name('canceled.returns');
     Route::get('/return/details/{id}', [ReturnsController::class, 'ReturnDetails'])->name('return.details');
+    Route::get('/confirm/{orderId}', [ReturnsController::class, 'ConfirmReturn'])->name('return.confirm');
+    Route::get('/cancel/{orderId}', [ReturnsController::class, 'CancelReturn'])->name('return.cancel');
     
 });
 
