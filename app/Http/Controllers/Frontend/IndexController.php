@@ -17,6 +17,10 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\Review;
+use Carbon\Carbon;
+
+
 class IndexController extends Controller
 {
     public function index(){
@@ -167,6 +171,8 @@ class IndexController extends Controller
 
        
         }
+
+        
         return view ('frontend.products.product_details', compact('productData', 'listsize' , 'listcolor', 'related'));
 
     }
@@ -444,5 +450,72 @@ class IndexController extends Controller
     ));
 
     }
+    public function GetAverageReviews($idProduct){
+        $product = Product::findOrFail($idProduct);
+        if ($product->average_rating == NULL){
+            $avRating = 0.0;
+
+        }
+        else{
+            $avRating = $product->average_rating;
+        }
+
+        if ($product->total_review == NULL){
+            $totRating = 0;
+        }
+        else{
+            $totRating = $product->total_review;
+
+        }
+        return response()->json(array(
+            'average_rating' =>$avRating,
+           
+            'total_review' => $totRating,
+           
+    
+        ));
+
+    }
+    public function ReviewStore(Request $request , $idPro){
+      
+
+    	Review::insert([
+    		'product_id' => $idPro,
+    		'user_id' => Auth::id(),
+            'rating'=>$request->rating,
+    		'comment' => $request->comment,
+    		'summary' => $request->summary,
+    		'created_at' => Carbon::now(),
+
+    	]);
+
+        $reviews = Review::where('product_id' , $idPro)->get();
+        $total_rating = 0;
+
+        foreach($reviews as $item){
+            $total_rating =  $total_rating + $item->rating;
+
+        }
+
+        Product::findOrFail($idPro)->update([
+            'average_rating' => $total_rating / count($reviews),
+            'total_review' => count($reviews),
+        ]);
+        return response()->json(['success' => 'Successfully Added Review']);
+
+
+    }
+
+    public function ReviewsList($idProduct){
+         $reviews = Review::with('user')->where('product_id',$idProduct)->where('status',0)->latest()->get();
+
+        
+    	return response()->json(array(
+    		'reviews' => $reviews,
+    		
+            
+
+    	));
+    } // end method 
     
 }

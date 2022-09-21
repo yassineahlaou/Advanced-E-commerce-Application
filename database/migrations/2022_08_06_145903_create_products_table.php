@@ -21,6 +21,10 @@ return new class extends Migration
             $table->integer('sub_sub_category_id');
             $table->string('product_name_en');
             $table->string('product_name_fr');
+            $table->string('product_name_fr');
+            $table->float('average_rating',5,1)->nullable();
+            $table->unsignedBigInteger('total_review')->default(0);
+            
             $table->string('product_slug_en');
             $table->string('product_slug_fr');
             $table->string('product_code');

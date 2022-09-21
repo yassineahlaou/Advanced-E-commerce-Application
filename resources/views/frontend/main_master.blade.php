@@ -38,6 +38,7 @@
 
 <link rel="stylesheet" type ="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 <script src="https://js.stripe.com/v3/"></script>
+
 </head>
 <body class="cnt-home">
 <!-- ============================================== HEADER ============================================== -->
@@ -75,6 +76,7 @@
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" ></script>
+
 <script>
  @if(Session::has('message'))
  var type = "{{ Session::get('alert-type','info') }}"
@@ -794,6 +796,8 @@ function wishlistRemove(id){
         }
     })
 }
+
+
 
 
 </script>

@@ -1,6 +1,33 @@
 
 @extends('frontend.main_master')
 @section('content')
+<link rel="stylesheet" href="{{asset('frontend/assets/js/dateFormat.js')}}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+
+<style>
+.progress-label-left
+{
+    float: left;
+    margin-right: 0.5em;
+    line-height: 1em;
+}
+.progress-label-right
+{
+    float: right;
+    margin-left: 0.3em;
+    line-height: 1em;
+}
+.star-light
+{
+	color:#e9ecef;
+}
+.star-warning
+{
+	color:#ffff00;
+}
+</style>
 
 
 <div class="body-content outer-top-xs">
@@ -116,11 +143,19 @@
 							<div class="rating-reviews m-t-20">
 								<div class="row">
 									<div class="col-sm-3">
-										<div class="rating rateit-small"></div>
+									<div class="mb-3">
+										<i class="fa fa-star star-light mr-1 main_star" ></i>
+										<i class="fa fa-star star-light mr-1 main_star" ></i>
+										<i class="fa fa-star star-light mr-1 main_star" ></i>
+										<i class="fa fa-star star-light mr-1 main_star" ></i>
+										<i class="fa fa-star star-light mr-1 main_star"></i>
 									</div>
+									</div>
+									<p hidden id="productid">{{$productData->id}}</p>
 									<div class="col-sm-8">
 										<div class="reviews">
-											<a href="#" class="lnk">(13 Reviews)</a>
+										
+											<a href="#" class="lnk" > <span id="total_review"></span> Reviews</a>
 										</div>
 									</div>
 								</div><!-- /.row -->		
@@ -333,10 +368,7 @@
 											<h4 class="title">Customer Reviews</h4>
 
 											<div class="reviews">
-												<div class="review">
-													<div class="review-title"><span class="summary">We love this product</span><span class="date"><i class="fa fa-calendar"></i><span>1 days ago</span></span></div>
-													<div class="text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit.Aliquam suscipit."</div>
-																										</div>
+												<div id="reviewsList"></div>
 											
 											</div><!-- /.reviews -->
 										</div><!-- /.product-reviews -->
@@ -344,80 +376,48 @@
 
 										
 										<div class="product-add-review">
-											<h4 class="title">Write your own review</h4>
-											<div class="review-table">
-												<div class="table-responsive">
-													<table class="table">	
-														<thead>
-															<tr>
-																<th class="cell-label">&nbsp;</th>
-																<th>1 star</th>
-																<th>2 stars</th>
-																<th>3 stars</th>
-																<th>4 stars</th>
-																<th>5 stars</th>
-															</tr>
-														</thead>	
-														<tbody>
-															<tr>
-																<td class="cell-label">Quality</td>
-																<td><input type="radio" name="quality" class="radio" value="1"></td>
-																<td><input type="radio" name="quality" class="radio" value="2"></td>
-																<td><input type="radio" name="quality" class="radio" value="3"></td>
-																<td><input type="radio" name="quality" class="radio" value="4"></td>
-																<td><input type="radio" name="quality" class="radio" value="5"></td>
-															</tr>
-															<tr>
-																<td class="cell-label">Price</td>
-																<td><input type="radio" name="quality" class="radio" value="1"></td>
-																<td><input type="radio" name="quality" class="radio" value="2"></td>
-																<td><input type="radio" name="quality" class="radio" value="3"></td>
-																<td><input type="radio" name="quality" class="radio" value="4"></td>
-																<td><input type="radio" name="quality" class="radio" value="5"></td>
-															</tr>
-															<tr>
-																<td class="cell-label">Value</td>
-																<td><input type="radio" name="quality" class="radio" value="1"></td>
-																<td><input type="radio" name="quality" class="radio" value="2"></td>
-																<td><input type="radio" name="quality" class="radio" value="3"></td>
-																<td><input type="radio" name="quality" class="radio" value="4"></td>
-																<td><input type="radio" name="quality" class="radio" value="5"></td>
-															</tr>
-														</tbody>
-													</table><!-- /.table .table-bordered -->
-												</div><!-- /.table-responsive -->
-											</div><!-- /.review-table -->
+											
 											
 											<div class="review-form">
+											@guest
+													<p> <b> Please , Login In First <a href="{{ route('login') }}">Login Here</a> </b> </p>
+													@else
 												<div class="form-container">
-													<form role="form" class="cnt-form">
+													
+													<input type="hidden"  name="product_id" id="product_id" value="{{$productData->id}}">
+													<h4 class="title">Write your own review</h4>
+											<h4 class="text-center mt-2 mb-4">
+												<i class="fa fa-star star-light submit_star mr-1" id="submit_star_1" data-rating="1"></i>
+												<i class="fa fa-star star-light submit_star mr-1" id="submit_star_2" data-rating="2"></i>
+												<i class="fa fa-star star-light submit_star mr-1" id="submit_star_3" data-rating="3"></i>
+												<i class="fa fa-star star-light submit_star mr-1" id="submit_star_4" data-rating="4"></i>
+												<i class="fa fa-star star-light submit_star mr-1" id="submit_star_5" data-rating="5"></i>
+											</h4>
 														
 														<div class="row">
 															<div class="col-sm-6">
-																<div class="form-group">
-																	<label for="exampleInputName">Your Name <span class="astk">*</span></label>
-																	<input type="text" class="form-control txt" id="exampleInputName" placeholder="">
-																</div><!-- /.form-group -->
+																
 																<div class="form-group">
 																	<label for="exampleInputSummary">Summary <span class="astk">*</span></label>
-																	<input type="text" class="form-control txt" id="exampleInputSummary" placeholder="">
+																	<input type="text" class="form-control txt" id="summary"  name="summary" placeholder="">
 																</div><!-- /.form-group -->
 															</div>
 
 															<div class="col-md-6">
 																<div class="form-group">
 																	<label for="exampleInputReview">Review <span class="astk">*</span></label>
-																	<textarea class="form-control txt txt-review" id="exampleInputReview" rows="4" placeholder=""></textarea>
+																	<textarea class="form-control txt txt-review" id="comment" name="comment" rows="4" style="resize:none" placeholder=""></textarea>
 																</div><!-- /.form-group -->
 															</div>
 														</div><!-- /.row -->
 														
 														<div class="action text-right">
-															<button class="btn btn-primary btn-upper">SUBMIT REVIEW</button>
+															<button class="btn btn-primary btn-upper" id="save_review">SUBMIT REVIEW</button>
 														</div><!-- /.action -->
 
-													</form><!-- /.cnt-form -->
+													<!-- /.cnt-form -->
 												</div><!-- /.form-container -->
+												@endguest
 											</div><!-- /.review-form -->
 
 										</div><!-- /.product-add-review -->										
@@ -646,6 +646,293 @@
 	
 </div><!-- /.logo-slider -->
 <!-- == = BRANDS CAROUSEL : END = -->	</div><!-- /.container -->
-</div><!-- /.body-content -->
+</div><!-- /.body-content -->  
 
+<script> 
+
+
+$(document).ready(function(){
+
+	var rating_data = 0;
+
+    
+
+    $(document).on('mouseenter', '.submit_star', function(){
+
+        var rating = $(this).data('rating');
+
+        reset_background();
+
+        for(var count = 1; count <= rating; count++)
+        {
+
+            $('#submit_star_'+count).addClass('star-warning');
+
+        }
+
+    });
+
+    function reset_background()
+    {
+        for(var count = 1; count <= 5; count++)
+        {
+
+            $('#submit_star_'+count).addClass('star-light');
+
+            $('#submit_star_'+count).removeClass('star-warning');
+
+        }
+    }
+
+    $(document).on('mouseleave', '.submit_star', function(){
+
+        reset_background();
+
+        for(var count = 1; count <= rating_data; count++)
+        {
+
+            $('#submit_star_'+count).removeClass('star-light');
+
+            $('#submit_star_'+count).addClass('star-warning');
+        }
+
+    });
+
+    $(document).on('click', '.submit_star', function(){
+
+        rating_data = $(this).data('rating');
+
+    });
+
+    $('#save_review').click(function(){
+		var comment = $('#comment').val();
+		var idPro = $('#product_id').val();
+        var summary = $('#summary').val();
+		console.log(comment);
+       
+            $.ajax({
+				
+            
+            
+            
+                
+                type: "POST",
+                data:{rating:rating_data, comment:comment, summary:summary},
+				dataType: 'json',
+				url:'/review/store/'+idPro,
+                success:function(data)
+                {
+                    
+
+                    load_rating_data();
+					reviewsList();
+					load_rating_user();
+					const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      icon: 'success',
+                      //title: 'Product Added To Cart',
+                      showConfirmButton: false,
+                      timer: 3000
+                    })
+                if ($.isEmptyObject(data.error)) {
+                  //if there is no error
+				  $('#comment').val('');
+				  $('#summary').val('');
+                    Toast.fire({
+                        icon: 'success',
+                        title: data.success
+                    })
+                }else{
+                  //if there is an error
+                    Toast.fire({
+                        icon: 'error',
+                        title: data.error
+                    })
+                }
+                // End Message 
+
+                   
+                }
+            })
+        });
+
+    });
+
+	function reviewsList(){
+		var idProduct = $('#productid').text();
+        $.ajax({
+            type: 'GET',
+            url: '/reviews/list/'+idProduct,
+            dataType:'json',
+            success:function(response){
+                //console.log(response)
+               // $('span[id="carttotal"]').text(response.cartTotal);//Having 2 elements with the same ID is not valid html according to the W3C specification. thats's why we use this syntax cause we have 2 elements with the same id in our headr, span(carttotal)
+               // $('#cartcount').text(response.cartQty);
+                var list = ""
+                $.each(response.reviews, function(key,value){
+					function addZero(i) {
+						if (i < 10) {i = "0" + i}
+						return i;
+					}
+
+					var getDate = new Date(value.created_at);
+
+					var day = getDate.getDate();
+					var month =  getDate.getMonth();
+					month += 1;  // JavaScript months are 0-11
+					var year = getDate.getFullYear();
+
+					var hour = addZero(getDate.getHours());
+					var min = addZero(getDate.getMinutes());
+					var sec = addZero(getDate.getSeconds());
+					var formatedDate = day + "." + month + "." + year + "\t" + "at" + "\t" +hour + ":" + min + ":" + sec;
+					
+					
+					
+
+                    list += `
+                    
+                   
+								<div class="review">
+
+						<div class="row">
+							<div class="col-md-3">
+							<img style="border-radius: 50%" src="/upload/user_images/${value.user.profile_photo_path}" width="40px;" height="40px;"><b> ${value.user.name}</b>
+							</div>
+						<p hidden id="userrating">${value.rating}</p>
+							<div class="mb-3">
+										<i class="fa fa-star star-light mr-1 user_star"></i>
+										<i class="fa fa-star star-light mr-1 user_star"></i>
+										<i class="fa fa-star star-light mr-1 user_star"></i>
+										<i class="fa fa-star star-light mr-1 user_star"></i>
+										<i class="fa fa-star star-light mr-1 user_star"></i>
+									</div>
+
+							<div class="col-md-9">
+
+							</div>			
+						</div> <!-- // end row -->
+
+
+
+							<div class="review-title">
+								<span class="summary">${value.summary}</span>
+								<span class="date">
+									<i class="fa fa-calendar"></i>
+									<span>
+										${formatedDate}
+									</span>
+								</span>
+							</div>
+							<div class="text">"${value.comment}"</div>
+						</div>`
+						
+						
+                });
+                
+                $('#reviewsList').html(list);//jquery function
+
+				
+				$('.review').each(function(){
+								var rate = $(this).find('#userrating').text();
+								//console.log(rate);
+								var count_star = 0;
+								$(this).find('.user_star').each(function(){
+								count_star++;
+
+								
+								
+								if(rate >= count_star)
+								{
+									$(this).removeClass('star-light');
+									$(this).addClass('star-warning');
+								}
+							});
+							});
+							
+				
+
+            }
+       
+            
+          
+          })
+        }
+		
+        reviewsList();//we should run the function
+
+		
+
+	
+	
+
+function load_rating_data(idProduct)
+{
+	var idProduct = $('#productid').text();
+	
+	$.ajax({
+		type: 'GET',
+		
+		url:'/totalreviews/'+idProduct,
+		
+		//data:{action:'load_data'},
+		dataType:"JSON",
+		success:function(data)
+		{
+			//$('#average_rating').text(data.average_rating);
+			$('#total_review').text(data.total_review);
+
+			var count_star = 0;
+
+			$('.main_star').each(function(){
+				count_star++;
+
+				
+				console.log($(this).text());
+				if(Math.ceil(data.average_rating) >= count_star)
+				{
+					$(this).removeClass('star-light');
+					$(this).addClass('star-warning');
+				}
+			});
+
+		}
+	}
+	)
+}
+load_rating_data()
+
+function load_rating_user()
+{
+	
+
+							$('.review').each(function(){
+								var rate = $('#userrating').text();
+								console.log(rate);
+								var count_star = 0;
+								$(this).find('.user_star').each(function(){
+								count_star++;
+
+								
+								
+								if(rate >= count_star)
+								{
+									$(this).removeClass('star-light');
+									$(this).addClass('star-warning');
+								}
+							});
+							});
+
+}
+//load_rating_user();
+
+
+</script>
+<script type="text/javascript">
+  /* jQuery(document).ready(function() {
+	$('.date').find()
+     $("abbr.timeago").timeago();
+   });*/
+</script>
 @endsection

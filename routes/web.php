@@ -277,6 +277,10 @@ Route::get('/language/frensh', [LanguageController::class, 'LanFrensh'])->name('
 //frontend product details
 
 Route::get('/product/details/{id}/{slug}', [IndexController::class, 'GetProductDetails']);
+Route::get('/totalreviews/{idProduct}', [IndexController::class, 'GetAverageReviews']);
+Route::post('/review/store/{idPro}', [IndexController::class, 'ReviewStore']);
+Route::get('/reviews/list/{idProduct}', [IndexController::class, 'ReviewsList']);
+
 Route::get('/products/tag/{tag}', [IndexController::class, 'GetProductsTag']);
 Route::get('/products/subcategory/{id}/{slug}', [IndexController::class, 'GetSubCategoryProducts']);
 Route::get('/products/subsubcategory/{id}/{slug}', [IndexController::class, 'GetSubSubCategoryProducts']);
