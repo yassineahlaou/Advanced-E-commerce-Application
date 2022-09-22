@@ -9,6 +9,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\OrderItems;
 use Auth;
 use Illuminate\Support\Facades\Mail;
@@ -98,6 +99,10 @@ class CashController extends Controller
             'price'=>$item->price,
             'created_at' => Carbon::now(),	 
 
+        ]);
+        $product = Product::where('id',$item->id)->first();
+        Product::where('id',$item->id)->update([
+            'product_qty'=> $product->product_qty-$item->qty,
         ]);
     }
 

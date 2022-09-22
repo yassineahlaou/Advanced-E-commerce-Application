@@ -18,8 +18,11 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Models\Review;
+use App\Models\ReviewImages;
+use App\Models\Order;
+use App\Models\OrderItems;
 use Carbon\Carbon;
-
+use Image;
 
 class IndexController extends Controller
 {
@@ -116,8 +119,8 @@ class IndexController extends Controller
             $listsize = array();
             if (session()->get('language') == 'english'){
 
-           
-                     $colors = $productData->product_color_en;
+                if ($productData->product_color_en != NULL)
+                   {  $colors = $productData->product_color_en;
                      $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
                 
                      $colorsenglish = preg_split($pattern, $colors); 
@@ -127,7 +130,9 @@ class IndexController extends Controller
                      
                       array_push($listcolor,$colorsenglish[$i]);
                      }
-
+                    }
+                    else{$listcolor=[];}
+                    if ($productData->product_size_en != NULL){
                      $sizes = $productData->product_size_en;
                      $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
                 
@@ -137,13 +142,16 @@ class IndexController extends Controller
 
                      
                       array_push($listsize,$sizesenglish[$i]);
-                     }
+                     }}
+                     else{$listsize = [];}
 
                         
                      
 
             }
             else{
+
+                if ($productData->product_color_fr != NULL){
 
            
                 $colors = $productData->product_color_fr;
@@ -156,7 +164,9 @@ class IndexController extends Controller
                 
                  array_push($listcolor,$colorsfrensh[$i]);
                 }
-
+            }
+            else{$listcolor=[];}
+            if ($productData->product_size_fr != NULL){
                 $sizes = $productData->product_size_fr;
                 $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
            
@@ -168,12 +178,16 @@ class IndexController extends Controller
                  array_push($listsize,$sizesfrensh[$i]);
                 }
 
-
+            }
+            else{$listsize = [];}
        
         }
 
+        $orders = Order::where('user_id', Auth::id())->get();
+        $orderitems = OrderItems::get();
+
         
-        return view ('frontend.products.product_details', compact('productData', 'listsize' , 'listcolor', 'related'));
+        return view ('frontend.products.product_details', compact('productData', 'listsize' , 'orders','orderitems','listcolor', 'related'));
 
     }
 
@@ -451,6 +465,21 @@ class IndexController extends Controller
 
     }
     public function GetAverageReviews($idProduct){
+        $reviews = Review::where('product_id' , $idProduct)->where('status','Approved')->get();
+        $total_rating = 0;
+
+        
+
+        if (count($reviews) != 0)
+       { 
+        foreach($reviews as $item){
+            $total_rating =  $total_rating + $item->rating;
+
+        }
+        Product::findOrFail($idProduct)->update([
+            'average_rating' => $total_rating / count($reviews),
+            'total_review' => count($reviews),
+        ]);}
         $product = Product::findOrFail($idProduct);
         if ($product->average_rating == NULL){
             $avRating = 0.0;
@@ -478,40 +507,68 @@ class IndexController extends Controller
     }
     public function ReviewStore(Request $request , $idPro){
       
-
-    	Review::insert([
+        
+       
+        
+    	$review_id = Review::insertGetId([
     		'product_id' => $idPro,
     		'user_id' => Auth::id(),
             'rating'=>$request->rating,
     		'comment' => $request->comment,
     		'summary' => $request->summary,
+            'status'=>'Pending',
     		'created_at' => Carbon::now(),
 
     	]);
+        $images = $request->postimages;
+        if ($images != NULL)
+       { foreach($images as $img){
+           
+            $imgname = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();//rename the file
+     
+            
+            Image::make($img)->resize(917, 1000)->save("upload/review_images/".$imgname);
+            $img_url = "upload/review_images/".$imgname;
+           
 
-        $reviews = Review::where('product_id' , $idPro)->get();
+            ReviewImages::insert([
+            'review_id'=> $review_id,
+            'product_id' => $idPro,
+            'user_id'=>Auth::id(),
+            'photo_name' => $img_url,
+            'created_at' => Carbon::now(),
+
+        ]);
+        }
+}
+        $reviews = Review::where('product_id' , $idPro)->where('status','Approved')->get();
         $total_rating = 0;
 
+        
+
+        if (count($reviews) != 0)
+       { 
         foreach($reviews as $item){
             $total_rating =  $total_rating + $item->rating;
 
         }
-
         Product::findOrFail($idPro)->update([
             'average_rating' => $total_rating / count($reviews),
             'total_review' => count($reviews),
-        ]);
-        return response()->json(['success' => 'Successfully Added Review']);
+        ]);}
+        return response()->json(['success' => 'Your Review is being reviewed!']);
 
 
     }
 
     public function ReviewsList($idProduct){
-         $reviews = Review::with('user')->where('product_id',$idProduct)->where('status',0)->latest()->get();
+         $reviews = Review::with('user')->where('product_id',$idProduct)->where('status','Approved')->latest()->get();
+         $review_images = ReviewImages::with('review')->get();
 
         
     	return response()->json(array(
     		'reviews' => $reviews,
+            'review_images'=>$review_images,
     		
             
 

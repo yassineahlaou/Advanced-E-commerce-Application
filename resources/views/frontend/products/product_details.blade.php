@@ -249,7 +249,7 @@
 						</div>
 						</div>
 						
-						@elseif($productData->	product_size_en == null && $productData->product_size_fr == null && $productData->	product_color_en != null && $productData->	product_color_fr != null )
+						@elseif($productData->product_size_en == null && $productData->product_size_fr == null && $productData->	product_color_en != null && $productData->	product_color_fr != null )
 									
 
 									<div class="col-sm-6">
@@ -382,7 +382,26 @@
 											@guest
 													<p> <b> Please , Login In First <a href="{{ route('login') }}">Login Here</a> </b> </p>
 													@else
+													@php
+													$check = 0;
+													
+													@endphp
+													@foreach($orders as $order)
+														@foreach ($orderitems as $item)	
+															@if($item->product_id == $productData->id)
+																@php
+																	 $check = $check + 1
+																@endphp
+															@endif
+														@endforeach
+													@endforeach
+
+													@if ($check != 0)
+
+													
+													
 												<div class="form-container">
+												
 													
 													<input type="hidden"  name="product_id" id="product_id" value="{{$productData->id}}">
 													<h4 class="title">Write your own review</h4>
@@ -410,13 +429,27 @@
 																</div><!-- /.form-group -->
 															</div>
 														</div><!-- /.row -->
+														<div class="row">
+														<div class="col-md-12">	
+														<div class="form-group">
+																<label for="label">Add Images</label>
+																	
+																		<input type="file" name="review_image[]"  id="review_images"  class="form-control" multiple="" > 
+																	
+																		<div  id="preview_img"></div>
+
+																
+																	</div>
+																</div>
+														</div>
 														
 														<div class="action text-right">
 															<button class="btn btn-primary btn-upper" id="save_review">SUBMIT REVIEW</button>
 														</div><!-- /.action -->
 
-													<!-- /.cnt-form -->
+												<!-- /.cnt-form -->
 												</div><!-- /.form-container -->
+												@endif
 												@endguest
 											</div><!-- /.review-form -->
 
@@ -650,7 +683,7 @@
 
 <script> 
 
-
+var myarray = [];
 $(document).ready(function(){
 
 	var rating_data = 0;
@@ -705,28 +738,40 @@ $(document).ready(function(){
     });
 
     $('#save_review').click(function(){
+
 		var comment = $('#comment').val();
 		var idPro = $('#product_id').val();
+		var postimages = myarray; 
         var summary = $('#summary').val();
-		console.log(comment);
+		
+
+		var dt = new FormData();
+		for (var i=0; i<postimages.length;i++){
+			console.log(postimages[i]);
+			dt.append('postimages[]',postimages[i]);
+		}
+		
+		dt.append( 'comment', comment); 
+		dt.append( 'summary', summary);  
+		dt.append( 'rating', rating_data); 
+		//we used FormData because postimages is a ajavascript object so it should be serialize to string
        
             $.ajax({
-				
-            
-            
-            
+		
                 
                 type: "POST",
-                data:{rating:rating_data, comment:comment, summary:summary},
+                data:dt,
 				dataType: 'json',
 				url:'/review/store/'+idPro,
+				processData: false,
+				contentType: false,
                 success:function(data)
                 {
                     
 
                     load_rating_data();
 					reviewsList();
-					load_rating_user();
+					
 					const Toast = Swal.mixin({
                       toast: true,
                       position: 'top-end',
@@ -739,6 +784,8 @@ $(document).ready(function(){
                   //if there is no error
 				  $('#comment').val('');
 				  $('#summary').val('');
+				  reset_background();
+				  $('#preview_img').empty();
                     Toast.fire({
                         icon: 'success',
                         title: data.success
@@ -771,6 +818,7 @@ $(document).ready(function(){
                // $('#cartcount').text(response.cartQty);
                 var list = ""
                 $.each(response.reviews, function(key,value){
+					var check = 0;
 					function addZero(i) {
 						if (i < 10) {i = "0" + i}
 						return i;
@@ -795,6 +843,7 @@ $(document).ready(function(){
                     
                    
 								<div class="review">
+								<p hidden id="reviewid">${value.id}</p>
 
 						<div class="row">
 							<div class="col-md-3">
@@ -826,7 +875,27 @@ $(document).ready(function(){
 								</span>
 							</div>
 							<div class="text">"${value.comment}"</div>
-						</div>`
+							
+						`
+						$.each(response.review_images, function(key,vall){
+							if (vall.review_id == value.id){check = check + 1;}
+
+						});
+						if (check != 0){list += `<div> <strong>Additional Pictures:</strong></div>`}
+						$.each(response.review_images, function(key,val){
+							
+							
+							
+							if (val.review_id == value.id)
+							{list += `
+							
+							<img src="/${val.photo_name}" alt="" width="80px;" height="80px;"></img>
+							
+
+							`}
+						});
+
+						list += `</div>`
 						
 						
                 });
@@ -903,36 +972,44 @@ function load_rating_data(idProduct)
 }
 load_rating_data()
 
-function load_rating_user()
-{
-	
-
-							$('.review').each(function(){
-								var rate = $('#userrating').text();
-								console.log(rate);
-								var count_star = 0;
-								$(this).find('.user_star').each(function(){
-								count_star++;
-
-								
-								
-								if(rate >= count_star)
-								{
-									$(this).removeClass('star-light');
-									$(this).addClass('star-warning');
-								}
-							});
-							});
-
-}
-//load_rating_user();
 
 
-</script>
-<script type="text/javascript">
+
+
   /* jQuery(document).ready(function() {
 	$('.date').find()
      $("abbr.timeago").timeago();
    });*/
-</script>
+   
+ 
+  $(document).ready(function(){
+   $('#review_images').on('change', function(){ //on file input change
+      if (window.File && window.FileReader && window.FileList && window.Blob) //check File API supported browser
+      {
+          var data = $(this)[0].files; //this file data
+		 myarray = data;
+           
+          $.each(data, function(index, file){ //loop though each file
+              if(/(\.|\/)(gif|jpe?g|png)$/i.test(file.type)){ //check supported file type
+                  var fRead = new FileReader(); //new filereader
+                  fRead.onload = (function(file){ //trigger function on successful read
+                  return function(e) {
+                      var img = $('<img/>').addClass('thumb').attr('src', e.target.result).width(80).css("padding-right", "7px").css("padding-top", "5px")
+                  .height(80); //create image element 
+                      $('#preview_img').append(img); //append image to output element
+                     
+                  };
+                  })(file);
+                  fRead.readAsDataURL(file); //URL representing the file's data.
+              }
+          });
+           
+      }else{
+          alert("Your browser doesn't support File API!"); //if File API is absent
+      }
+   });
+  });
+   
+  </script>
+
 @endsection

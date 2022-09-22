@@ -1,5 +1,14 @@
 @extends('admin.admin_master')
 @section('admin')
+@php
+	$date = Carbon\Carbon::now()->format('d F Y');
+	$todaySales = App\Models\Order::where('order_date',$date)->sum('amount_after');
+	$month = Carbon\Carbon::now()->format('F');
+	$monthSales = App\Models\Order::where('order_month',$month)->sum('amount_after');
+    $year = Carbon\Carbon::now()->format('Y');
+	$yearSales = App\Models\Order::where('order_year',$year)->sum('amount_after');
+    $allOrders = App\Models\Order::get();
+@endphp
 <div class="container-full">
 
 		<!-- Main content -->
@@ -12,8 +21,8 @@
 								<i class="text-primary mr-0 font-size-24 mdi mdi-account-multiple"></i>
 							</div>
 							<div>
-								<p class="text-mute mt-20 mb-0 font-size-16">New Customers</p>
-								<h3 class="text-white mb-0 font-weight-500">3400 <small class="text-success"><i class="fa fa-caret-up"></i> +2.5%</small></h3>
+								<p class="text-mute mt-20 mb-0 font-size-16">Today's sales</p>
+								<h3 class="text-white mb-0 font-weight-500">{{$todaySales}} <small class="text-success">USD</small></h3>
 							</div>
 						</div>
 					</div>
@@ -25,8 +34,8 @@
 								<i class="text-warning mr-0 font-size-24 mdi mdi-car"></i>
 							</div>
 							<div>
-								<p class="text-mute mt-20 mb-0 font-size-16">Sold Cars</p>
-								<h3 class="text-white mb-0 font-weight-500">3400 <small class="text-success"><i class="fa fa-caret-up"></i> +2.5%</small></h3>
+								<p class="text-mute mt-20 mb-0 font-size-16">Month's sales</p>
+								<h3 class="text-white mb-0 font-weight-500">{{$monthSales}} <small class="text-success">USD</small></h3>
 							</div>
 						</div>
 					</div>
@@ -38,8 +47,8 @@
 								<i class="text-info mr-0 font-size-24 mdi mdi-sale"></i>
 							</div>
 							<div>
-								<p class="text-mute mt-20 mb-0 font-size-16">Sales Lost</p>
-								<h3 class="text-white mb-0 font-weight-500">$1,250 <small class="text-danger"><i class="fa fa-caret-down"></i> -0.5%</small></h3>
+								<p class="text-mute mt-20 mb-0 font-size-16">Years's sales</p>
+								<h3 class="text-white mb-0 font-weight-500">{{$yearSales}} <small class="text-success">USD</small></h3>
 							</div>
 						</div>
 					</div>
@@ -51,8 +60,8 @@
 								<i class="text-danger mr-0 font-size-24 mdi mdi-phone-incoming"></i>
 							</div>
 							<div>
-								<p class="text-mute mt-20 mb-0 font-size-16">Inbound Call</p>
-								<h3 class="text-white mb-0 font-weight-500">1,460 <small class="text-danger"><i class="fa fa-caret-up"></i> -1.5%</small></h3>
+								<p class="text-mute mt-20 mb-0 font-size-16">Total Orders</p>
+								<h3 class="text-white mb-0 font-weight-500">{{count($allOrders)}} <small class="text-success">Orders</small></h3>
 							</div>
 						</div>
 					</div>
@@ -67,249 +76,61 @@
 					<div class="box">
 						<div class="box-header">
 							<h4 class="box-title align-items-start flex-column">
-								New Arrivals
-								<small class="subtitle">More than 400+ new members</small>
+								Last Pending Orders
+								<small class="subtitle"></small>
 							</h4>
 						</div>
+						@php
+							$orders = App\Models\Order::where('status','Pending')->limit(7)->orderBy('id','DESC')->get();
+						@endphp
 						<div class="box-body">
 							<div class="table-responsive">
 								<table class="table no-border">
 									<thead>
 										<tr class="text-uppercase bg-lightest">
-											<th style="min-width: 250px"><span class="text-white">products</span></th>
-											<th style="min-width: 100px"><span class="text-fade">pruce</span></th>
-											<th style="min-width: 100px"><span class="text-fade">deposit</span></th>
-											<th style="min-width: 150px"><span class="text-fade">agent</span></th>
-											<th style="min-width: 130px"><span class="text-fade">status</span></th>
-											<th style="min-width: 120px"></th>
+											<th style="min-width: 200px"><span class="text-white">Order Date</span></th>
+											<th style="min-width: 100px"><span class="text-fade">Invouce No</span></th>
+											<th style="min-width: 100px"><span class="text-fade">Amount</span></th>
+											<th style="min-width: 150px"><span class="text-fade">Payment Method</span></th>
+											<th style="min-width: 130px"><span class="text-fade">Status</span></th>
+											<th style="min-width: 130px"><span class="text-fade">Action</span></th>
+											
 										</tr>
 									</thead>
 									<tbody>
+										@foreach ($orders as $order)
 										<tr>										
-											<td class="pl-0 py-8">
-												<div class="d-flex align-items-center">
-													<div class="flex-shrink-0 mr-20">
-														<div class="bg-img h-50 w-50" style="background-image: url({{asset('backend/images/gallery/creative/img-1.jpg')}})"></div>
-													</div>
-
-													<div>
-														<a href="#" class="text-white font-weight-600 hover-primary mb-1 font-size-16">Vivamus consectetur</a>
-														<span class="text-fade d-block">Pharetra, Nulla , Nec, Aliquet</span>
-													</div>
-												</div>
+											<td >
+											<span class="text-white font-weight-600 d-block font-size-16">
+													{{$order->order_date}}
+											</span>
+											<span class="text-fade d-block">{{ Carbon\Carbon::parse($order->created_at)->format('H:i:s')  }}</span>
+											
 											</td>
 											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Paid
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													$45,800k
-												</span>
+											<span class="text-white font-weight-600 d-block font-size-16">
+											{{$order->invoice_no}}
+											</span>
 											</td>
 											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Paid
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													$45k
+											<span class="text-white font-weight-600 d-block font-size-16">
+											{{$order->amount_after}} $
+											</span>
+											</td>
+											<td>
+											<span class="text-white font-weight-600 d-block font-size-16">
+											{{$order->payment_method}}
 												</span>
 											</td>
 											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Sophia
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													Pharetra
-												</span>
-											</td>
-											<td>
-												<span class="badge badge-primary-light badge-lg">Approved</span>
+												<span class="badge badge-primary-light badge-lg">Pending</span>
 											</td>
 											<td class="text-right">
-												<a href="#" class="waves-effect waves-light btn btn-info btn-circle mx-5"><span class="mdi mdi-bookmark-plus"></span></a>
-												<a href="#" class="waves-effect waves-light btn btn-info btn-circle mx-5"><span class="mdi mdi-arrow-right"></span></a>
+											<a href="{{route('order.details',$order->id)}}" class="btn btn-info"><i style="margin-right:7px" class="fa fa-eye"></i>View</a>
 											</td>
 										</tr>
-										<tr>										
-											<td class="pl-0 py-8">
-												<div class="d-flex align-items-center">
-													<div class="flex-shrink-0 mr-20">
-														<div class="bg-img h-50 w-50" style="background-image: url({{asset('backend/images/gallery/creative/img-2.jpg')}})"></div>
-													</div>
-
-													<div>
-														<a href="#" class="text-white font-weight-600 hover-primary mb-1 font-size-16">Vivamus consectetur</a>
-														<span class="text-fade d-block">Pharetra, Nulla , Nec, Aliquet</span>
-													</div>
-												</div>
-											</td>
-											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Paid
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													$45,800k
-												</span>
-											</td>
-											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Paid
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													$45k
-												</span>
-											</td>
-											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Sophia
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													Pharetra
-												</span>
-											</td>
-											<td>
-												<span class="badge badge-warning-light badge-lg">In Progress</span>
-											</td>
-											<td class="text-right">
-												<a href="#" class="waves-effect waves-light btn btn-info btn-circle mx-5"><span class="mdi mdi-bookmark-plus"></span></a>
-												<a href="#" class="waves-effect waves-light btn btn-info btn-circle mx-5"><span class="mdi mdi-arrow-right"></span></a>
-											</td>
-										</tr>
-										<tr>										
-											<td class="pl-0 py-8">
-												<div class="d-flex align-items-center">
-													<div class="flex-shrink-0 mr-20">
-														<div class="bg-img h-50 w-50" style="background-image: url({{asset('backend/images/gallery/creative/img-3.jpg')}})"></div>
-													</div>
-
-													<div>
-														<a href="#" class="text-white font-weight-600 hover-primary mb-1 font-size-16">Vivamus consectetur</a>
-														<span class="text-fade d-block">Pharetra, Nulla , Nec, Aliquet</span>
-													</div>
-												</div>
-											</td>
-											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Paid
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													$45,800k
-												</span>
-											</td>
-											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Paid
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													$45k
-												</span>
-											</td>
-											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Sophia
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													Pharetra
-												</span>
-											</td>
-											<td>
-												<span class="badge badge-success-light badge-lg">Success</span>
-											</td>
-											<td class="text-right">
-												<a href="#" class="waves-effect waves-light btn btn-info btn-circle mx-5"><span class="mdi mdi-bookmark-plus"></span></a>
-												<a href="#" class="waves-effect waves-light btn btn-info btn-circle mx-5"><span class="mdi mdi-arrow-right"></span></a>
-											</td>
-										</tr>
-										<tr>										
-											<td class="pl-0 py-8">
-												<div class="d-flex align-items-center">
-													<div class="flex-shrink-0 mr-20">
-														<div class="bg-img h-50 w-50" style="background-image: url({{asset('backend/images/gallery/creative/img-4.jpg')}})"></div>
-													</div>
-
-													<div>
-														<a href="#" class="text-white font-weight-600 hover-primary mb-1 font-size-16">Vivamus consectetur</a>
-														<span class="text-fade d-block">Pharetra, Nulla , Nec, Aliquet</span>
-													</div>
-												</div>
-											</td>
-											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Paid
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													$45,800k
-												</span>
-											</td>
-											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Paid
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													$45k
-												</span>
-											</td>
-											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Sophia
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													Pharetra
-												</span>
-											</td>
-											<td>
-												<span class="badge badge-danger-light badge-lg">Rejected</span>
-											</td>
-											<td class="text-right">
-												<a href="#" class="waves-effect waves-light btn btn-info btn-circle mx-5"><span class="mdi mdi-bookmark-plus"></span></a>
-												<a href="#" class="waves-effect waves-light btn btn-info btn-circle mx-5"><span class="mdi mdi-arrow-right"></span></a>
-											</td>
-										</tr>
-										<tr>										
-											<td class="pl-0 py-8">
-												<div class="d-flex align-items-center">
-													<div class="flex-shrink-0 mr-20">
-														<div class="bg-img h-50 w-50" style="background-image: url({{asset('backend/images/gallery/creative/img-5.jpg')}})"></div>
-													</div>
-
-													<div>
-														<a href="#" class="text-white font-weight-600 hover-primary mb-1 font-size-16">Vivamus consectetur</a>
-														<span class="text-fade d-block">Pharetra, Nulla , Nec, Aliquet</span>
-													</div>
-												</div>
-											</td>
-											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Paid
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													$45,800k
-												</span>
-											</td>
-											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Paid
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													$45k
-												</span>
-											</td>
-											<td>
-												<span class="text-fade font-weight-600 d-block font-size-16">
-													Sophia
-												</span>
-												<span class="text-white font-weight-600 d-block font-size-16">
-													Pharetra
-												</span>
-											</td>
-											<td>
-												<span class="badge badge-warning-light badge-lg">In Progress</span>
-											</td>
-											<td class="text-right">
-												<a href="#" class="waves-effect waves-light btn btn-info btn-circle mx-5"><span class="mdi mdi-bookmark-plus"></span></a>
-												<a href="#" class="waves-effect waves-light btn btn-info btn-circle mx-5"><span class="mdi mdi-arrow-right"></span></a>
-											</td>
-										</tr>
+										@endforeach
+									
 									</tbody>
 								</table>
 							</div>

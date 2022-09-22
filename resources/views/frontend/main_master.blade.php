@@ -78,7 +78,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" ></script>
 
 <script>
- @if(Session::has('message'))
+ if(Session::has('message')){
  var type = "{{ Session::get('alert-type','info') }}"
  switch(type){
     case 'info':
@@ -94,7 +94,7 @@
     toastr.error(" {{ Session::get('message') }} ");
     break; 
  }
- @endif 
+ }
 </script>
 
 <!-- Modal Add to cart -->
@@ -275,6 +275,11 @@ function productView(id){
             $('#selectsize').hide();
         }else{
             $('#selectsize').show();
+        }
+        if (data.color == "") {
+            $('#selectcolor').hide();
+        }else{
+            $('#selectcolor').show();
         }
     
     // end size

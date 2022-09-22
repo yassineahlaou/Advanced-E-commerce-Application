@@ -15,6 +15,7 @@ use App\Http\Controllers\Backend\ShippingController;
 use App\Http\Controllers\Backend\ReportsController;
 use App\Http\Controllers\Backend\AllUsersController;
 
+use App\Http\Controllers\Backend\ReviewsController;
 use App\Http\Controllers\Backend\ReturnsController;
 
 use App\Http\Controllers\Backend\OrderController;
@@ -264,7 +265,15 @@ Route::prefix('returns')->group(function(){
     
 });
 
-
+Route::prefix('reviews')->group(function(){
+    Route::get('/pending', [ReviewsController::class, 'GetPendingReviews'])->name('pending.reviews');
+    Route::get('/approved', [ReviewsController::class, 'GetApprovedReviews'])->name('approved.reviews');
+    Route::get('/canceled', [ReviewsController::class, 'GetCanceledReviews'])->name('canceled.reviews');
+    Route::get('/return/details/{reviewId}', [ReviewsController::class, 'ReviewDetails'])->name('review.details');
+    Route::get('/confirm/{reviewId}', [ReviewsController::class, 'ConfirmReview'])->name('review.confirm');
+    Route::get('/cancel/{reviewId}', [ReviewsController::class, 'CancelReview'])->name('review.cancel');
+    
+});
 
 });
 

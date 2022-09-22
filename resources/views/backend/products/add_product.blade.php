@@ -153,7 +153,7 @@
                             <div class="form-group">
 								<h5>Product Tags Frensh<span class="text-danger">*</span></h5>
 								<div class="controls">
-                                <input type="text" value="Lorem,Ipsum,Amet" name="product_tags_fr" id="product_tags_fr"  required="" data-role="tagsinput" placeholder="add tags" /> 
+                                <input type="text" value="Lorem,Ipsum,Amet" name="product_tags_fr" id="product_tags_fr"   data-role="tagsinput" placeholder="add tags" /> 
                                     @error('product_tags_fr')
             							<span class="invalid-feedback" role="alert"><strong>{{$message}}</strong></span>
             						@enderror 
@@ -164,7 +164,7 @@
                             <div class="form-group">
 								<h5>Product Size English<span class="text-danger">*</span></h5>
 								<div class="controls">
-                                <input type="text" value="S,M,L" name="product_size_en" id="product_size_en" required="" data-role="tagsinput" placeholder="add tags" /> 
+                                <input type="text" value="S,M,L" name="product_size_en" id="product_size_en"  data-role="tagsinput" placeholder="add size english" /> 
                                     @error('product_size_en')
             							<span class="invalid-feedback" role="alert"><strong>{{$message}}</strong></span>
             						@enderror 
@@ -175,7 +175,7 @@
                             <div class="form-group">
 								<h5>Product Size Frensh<span class="text-danger">*</span></h5>
 								<div class="controls">
-                                <input type="text" value="Lorem,Ipsum,Amet" name="product_size_fr" required="" id="product_size_fr" data-role="tagsinput" placeholder="add tags" /> 
+                                <input type="text" value="Lorem,Ipsum,Amet" name="product_size_fr" id="product_size_fr" data-role="tagsinput" placeholder="add size frensh" /> 
                                     @error('product_size_fr')
             							<span class="invalid-feedback" role="alert"><strong>{{$message}}</strong></span>
             						@enderror 
@@ -186,7 +186,7 @@
                             <div class="form-group">
 								<h5>Product Color English<span class="text-danger">*</span></h5>
 								<div class="controls">
-                                <input type="text" value="Red,Yellow,Green" name="product_color_en" id="product_color_en" data-role="tagsinput" required="" placeholder="add tags" /> 
+                                <input type="text" value="Red,Yellow,Green" name="product_color_en" id="product_color_en" data-role="tagsinput"  placeholder="add color english" /> 
                                     @error('product_color_en')
             							<span class="invalid-feedback" role="alert"><strong>{{$message}}</strong></span>
             						@enderror 
@@ -197,7 +197,7 @@
                             <div class="form-group">
 								<h5>Product Color Frensh<span class="text-danger">*</span></h5>
 								<div class="controls">
-                                <input type="text" value="Lorem,Ipsum,Amet" name="product_color_fr" id="product_color_fr" required="" data-role="tagsinput" placeholder="add tags" /> 
+                                <input type="text" value="Lorem,Ipsum,Amet" name="product_color_fr" id="product_color_fr"  data-role="tagsinput" placeholder="add color frensh" /> 
                                     @error('product_color_fr')
             							<span class="invalid-feedback" role="alert"><strong>{{$message}}</strong></span>
             						@enderror 

@@ -204,6 +204,26 @@
             
           </ul>
         </li>
+
+        <li class="treeview {{($prefix == '/reviews')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>All Reviews</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'pending.reviews')? 'active' : ''}}"><a href="{{route('pending.reviews')}}"><i class="ti-more"></i>Pending Reviews</a></li>
+            <li class="{{($route == 'approved.reviews')? 'active' : ''}}"><a href="{{route('approved.reviews')}}"><i class="ti-more"></i>Approved Reviews</a></li>
+            <li class="{{($route == 'canceled.reviews')? 'active' : ''}}"><a href="{{route('canceled.reviews')}}"><i class="ti-more"></i>Canceled Reviews</a></li>
+            
+            
+            
+       
+            
+            
+          </ul>
+        </li>
 		  
          	  		  
 		  
