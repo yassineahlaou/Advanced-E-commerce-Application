@@ -44,7 +44,7 @@
      display: -webkit-box;
      display: -ms-flexbox;
      display: flex;
-     margin-bottom: 60px;
+     margin-bottom: 100px;
      margin-top: 50px
  }
  .track .step {
@@ -264,14 +264,14 @@
 
 
 
-<div class="step"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text"> Order Confirmed <br>{{$order->confirmed_date}}</span> </div>
+<div class="step"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text"> Ready to Confirm <br>{{$order->confirmed_date}}</span> </div>
 
-    <div class="step"> <span class="icon"> <i class="fa fa-spinner"></i> </span> <span class="text"> Order Processing <br>{{$order->processing_date}} </span> </div>
-    <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text">Order Shipped <br>{{$order->shipped_date		}} </span> </div>
+    <div class="step"> <span class="icon"> <i class="fa fa-spinner"></i> </span> <span class="text"> Ready to Process<br>{{$order->processing_date}} </span> </div>
+    <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text">Ready to Ship <br>{{$order->shipped_date		}} </span> </div>
     <div class="step"> <span class="icon"> <i class="fa fa-archive"></i> </span> <span class="text">Ready to Pick <br>{{$order->picked_date	}}</span> </div>
    
 
-     <div class="step"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text">Delivered <br>{{$order->delivered_date}}</span> </div>
+     <div class="step"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text">Ready to Deliver <br>{{$order->delivered_date}}</span> </div>
 
             
 
@@ -285,16 +285,16 @@
 
 <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text"> Order Confirmed <br>{{$order->confirmed_date}}</span> </div>
 
-    <div class="step"> <span class="icon"> <i class="fa fa-spinner"></i> </span> <span class="text"> Order Processing <br>{{$order->processing_date}} </span> </div>
-    <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text">Order Shipped <br>{{$order->shipped_date		}} </span> </div>
+    <div class="step"> <span class="icon"> <i class="fa fa-spinner"></i> </span> <span class="text"> Ready to Process <br>{{$order->processing_date}} </span> </div>
+    <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text">Ready to Ship<br>{{$order->shipped_date		}} </span> </div>
     <div class="step"> <span class="icon"> <i class="fa fa-archive"></i> </span> <span class="text">Ready to Pick <br>{{$order->picked_date	}}</span> </div>
    
 
-     <div class="step"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text">Delivered <br>{{$order->delivered_date}}</span> </div>
+     <div class="step"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text">Ready to Deliver <br>{{$order->delivered_date}}</span> </div>
 
 
 
-     <div class="step"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Delivered </span> </div>
+    
 
  @elseif($order->status == 'Processing')
 
@@ -305,12 +305,12 @@
 
  <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text"> Order Confirmed <br>{{$order->confirmed_date}}</span> </div>
  
-     <div class="step active"> <span class="icon"> <i class="fa fa-spinner"></i> </span> <span class="text"> Order Processing <br>{{$order->processing_date}} </span> </div>
-     <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text">Order Shipped <br>{{$order->shipped_date		}} </span> </div>
+     <div class="step active"> <span class="icon"> <i class="fa fa-spinner"></i> </span> <span class="text"> Order Processed <br>{{$order->processing_date}} </span> </div>
+     <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text">Ready to Ship<br>{{$order->shipped_date		}} </span> </div>
      <div class="step"> <span class="icon"> <i class="fa fa-archive"></i> </span> <span class="text">Ready to Pick <br>{{$order->picked_date	}}</span> </div>
     
  
-      <div class="step"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text">Delivered <br>{{$order->delivered_date}}</span> </div>
+      <div class="step"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text">Ready to Deliver <br>{{$order->delivered_date}}</span> </div>
 
 
  @elseif($order->status == 'Shipped')
@@ -322,12 +322,12 @@
 
  <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text"> Order Confirmed <br>{{$order->confirmed_date}}</span> </div>
  
-     <div class="step active"> <span class="icon"> <i class="fa fa-spinner"></i> </span> <span class="text"> Order Processing <br>{{$order->processing_date}} </span> </div>
-     <div class="step active"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text">Order Shipped <br>{{$order->shipped_date		}} </span> </div>
+     <div class="step active"> <span class="icon"> <i class="fa fa-spinner"></i> </span> <span class="text"> Order Processed <br>{{$order->processing_date}} </span> </div>
+     <div class="step active"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text">Ready to Ship <br>{{$order->shipped_date		}} </span> </div>
      <div class="step"> <span class="icon"> <i class="fa fa-archive"></i> </span> <span class="text">Ready to Pick <br>{{$order->picked_date	}}</span> </div>
     
  
-      <div class="step"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text">Delivered <br>{{$order->delivered_date}}</span> </div>
+      <div class="step"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text">Ready to Deliver <br>{{$order->delivered_date}}</span> </div>
       @elseif($order->status == 'Picked')
 
 <div class="step active"> <span class="icon"> <i class="fa fa-list-alt"></i> </span> <span class="text">Order Submitted <br>{{$order->created_at}}</span></div>
@@ -337,12 +337,12 @@
 
 <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text"> Order Confirmed <br>{{$order->confirmed_date}}</span> </div>
 
-    <div class="step active"> <span class="icon"> <i class="fa fa-spinner"></i> </span> <span class="text"> Order Processing <br>{{$order->processing_date}} </span> </div>
+    <div class="step active"> <span class="icon"> <i class="fa fa-spinner"></i> </span> <span class="text"> Order Processed <br>{{$order->processing_date}} </span> </div>
     <div class="step active"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text">Order Shipped <br>{{$order->shipped_date		}} </span> </div>
-    <div class="step active"> <span class="icon"> <i class="fa fa-archive"></i> </span> <span class="text">Picked <br>{{$order->picked_date	}}</span> </div>
+    <div class="step active"> <span class="icon"> <i class="fa fa-archive"></i> </span> <span class="text">Order Picked <br>{{$order->picked_date	}}</span> </div>
    
 
-     <div class="step"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text">Delivered <br>{{$order->delivered_date}}</span> </div>
+     <div class="step"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text">Ready to Deliver <br>{{$order->delivered_date}}</span> </div>
     @elseif($order->status == 'Delivered')
 
     <div class="step active"> <span class="icon"> <i class="fa fa-list-alt"></i> </span> <span class="text">Order Submitted <br>{{$order->created_at}}</span></div>
@@ -352,12 +352,12 @@
 
  <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text"> Order Confirmed <br>{{$order->confirmed_date}}</span> </div>
  
-     <div class="step active"> <span class="icon"> <i class="fa fa-spinner"></i> </span> <span class="text"> Order Processing <br>{{$order->processing_date}} </span> </div>
+     <div class="step active"> <span class="icon"> <i class="fa fa-spinner"></i> </span> <span class="text"> Order Processed <br>{{$order->processing_date}} </span> </div>
      <div class="step active"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text">Order Shipped <br>{{$order->shipped_date		}} </span> </div>
-     <div class="step active"> <span class="icon"> <i class="fa fa-archive"></i> </span> <span class="text">Ready to Pick <br>{{$order->picked_date	}}</span> </div>
+     <div class="step active"> <span class="icon"> <i class="fa fa-archive"></i> </span> <span class="text">Order Picked <br>{{$order->picked_date	}}</span> </div>
     
  
-      <div class="step active"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text">Delivered <br>{{$order->delivered_date}}</span> </div>
+      <div class="step active"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text">Order Delivered <br>{{$order->delivered_date}}</span> </div>
 
      @endif  
 

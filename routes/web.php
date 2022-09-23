@@ -286,6 +286,7 @@ Route::get('/language/frensh', [LanguageController::class, 'LanFrensh'])->name('
 //frontend product details
 
 Route::get('/product/details/{id}/{slug}', [IndexController::class, 'GetProductDetails']);
+Route::get('/product/search', [IndexController::class, 'GetSearchedProducts'])->name('product.search');
 Route::get('/totalreviews/{idProduct}', [IndexController::class, 'GetAverageReviews']);
 Route::post('/review/store/{idPro}', [IndexController::class, 'ReviewStore']);
 Route::get('/reviews/list/{idProduct}', [IndexController::class, 'ReviewsList']);

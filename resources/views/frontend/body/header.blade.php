@@ -81,7 +81,8 @@
           <!-- /.contact-row --> 
           <!-- ============================================================= SEARCH AREA ============================================================= -->
           <div class="search-area" >
-            <form >
+          <form method="get" action="{{ route('product.search') }}">
+              
               <div class="control-group">
                 <ul class="categories-filter animate-dropdown">
                   <li class="dropdown"> <a class="dropdown-toggle"  data-toggle="dropdown" href="category.html">Categories <b class="caret"></b></a>
@@ -103,7 +104,7 @@
                     </ul>
                   </li>
                 </ul>
-                <input class="search-field" placeholder="Search here..." />
+                <input class="search-field" name="search" placeholder="Search here..." />
                 <a class="search-button" href="#" ></a> </div>
             </form>
           </div>
