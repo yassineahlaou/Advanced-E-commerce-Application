@@ -26,6 +26,7 @@
 						<thead>
 							<tr>
                                 <th>Date </th>
+								<th>Order Number</th>
 								<th>Invoice </th>
 								<th>Amount </th>
 								<th>Payment </th>
@@ -40,6 +41,7 @@
 								
                                 
 								<td>{{$order->order_date}}</td>
+								<td>{{$order->order_number}}</td>
                                 <td>{{$order->invoice_no}}</td>
                                 <td>{{$order->amount_after}}</td>
                                 <td>{{$order->payment_method}}</td>

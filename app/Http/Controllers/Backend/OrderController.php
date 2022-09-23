@@ -30,6 +30,7 @@ class OrderController extends Controller
     public function ConfirmOrder($orderId){
         Order::findOrFail($orderId)->update([
             'status'=>'Confirmed',
+            'confirmed_date' => Carbon::now(),
         ]);
 
         $notification = array(
@@ -42,6 +43,7 @@ class OrderController extends Controller
     public function ProcessOrder($orderId){
         Order::findOrFail($orderId)->update([
             'status'=>'Processing',
+            'processing_date'=> Carbon::now(),
         ]);
 
         $notification = array(
@@ -54,6 +56,7 @@ class OrderController extends Controller
     public function ShipOrder($orderId){
         Order::findOrFail($orderId)->update([
             'status'=>'Shipped',
+            'shipped_date' => Carbon::now(),
         ]);
 
         $notification = array(
@@ -66,6 +69,7 @@ class OrderController extends Controller
     public function PickOrder($orderId){
         Order::findOrFail($orderId)->update([
             'status'=>'Picked',
+            'picked_date'=>Carbon::now(),
         ]);
 
         $notification = array(
@@ -78,6 +82,7 @@ class OrderController extends Controller
     public function DeliverOrder($orderId){
         Order::findOrFail($orderId)->update([
             'status'=>'Delivered',
+            'delivered_date'=>Carbon::now(),
         ]);
 
         $notification = array(
@@ -91,6 +96,7 @@ class OrderController extends Controller
     public function CancelOrder($orderId){
         Order::findOrFail($orderId)->update([
             'status'=>'Canceled',
+            'cancel_date'=>Carbon::now(),
         ]);
 
         $notification = array(
