@@ -311,12 +311,14 @@
 								                  <div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
 								                  <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
 								                </div>
-								                <input type="text" is="qty" value="1"  min="1">
+								                <input type="text" id="qty" value="1"  min="1">
 							              </div>
 							            </div>
 									</div>
 
 									<input type="hidden" id="product_id" value="{{$productData->id}}">
+									<p hidden id="productnameenglish">{{$productData->product_name_en}}</p>
+									<p hidden id="productnamefrensh">{{$productData->product_name_fr}}</p>
 
 
 									<div class="col-sm-7">
@@ -546,13 +548,9 @@
 					<div class="cart clearfix animate-effect">
 							<div class="action">
 								<ul class="list-unstyled">
-									<li class="add-cart-button btn-group"><button class="btn btn-primary icon" data-toggle="dropdown" type="button"><i class="fa fa-shopping-cart"></i></button><button class="btn btn-primary cart-btn" type="button">Add to cart</button></li>
+									<li class="add-cart-button btn-group"><button class="btn btn-primary icon" data-toggle="modal" data-target="#exampleModal" type="button" title="Add Cart" id="{{ $rel->id }}"><i class="fa fa-shopping-cart"></i></button><button class="btn btn-primary cart-btn" type="button">Add to cart</button></li>
 	                   
-		                			<li class="lnk wishlist">
-										<a class="add-to-cart" href="detail.html" title="Wishlist">
-											 <i class="icon fa fa-heart"></i>
-										</a>
-									</li>
+		                			<button class="btn btn-primary icon" type="button" title="Wishlist" id="{{ $rel->id }}" > <i class="fa fa-heart"></i> </button>
 
 									<li class="lnk">
 										<a class="add-to-cart" href="detail.html" title="Compare">

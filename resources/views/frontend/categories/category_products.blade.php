@@ -9,13 +9,11 @@
        
 
        
-        <li class='active'><a href="{{url('products/category/'. $breadsubsubcat['category']['id'] . '/' . $breadsubsubcat['category']['category_slug_en'])}}">{{ $breadsubsubcat['category']['category_name_en']}}</a></li>
-        <li class='active'><a href="{{url('products/subcategory/'. $breadsubsubcat['subcategory']['id'] . '/' . $breadsubsubcat['subcategory']['sub_category_slug_en'])}}">{{ $breadsubsubcat['subcategory']['sub_category_name_en']}}</a></li>
-        <li class='active'><a style="color:#0f6cb2" href="{{url('products/subsubcategory/'. $breadsubsubcat->id . '/' . $breadsubsubcat->sub_sub_category_slug_en)}}">{{ $breadsubsubcat->sub_sub_category_name_en}}</a></li>
+        <li class='active'><a  style="color:#0f6cb2" href="{{url('products/category/'. $breadcat->id . '/' . $breadcat->category_slug_en)}}">{{ $breadcat->category_name_en}}</a></li>
        
 
         
-      
+       
        
       </ul>
     </div>
@@ -23,7 +21,6 @@
   </div>
   <!-- /.container --> 
 </div>
-<!-- /.breadcrumb -->
 <!-- /.breadcrumb -->
 <div class="body-content outer-top-xs">
   <div class='container'>

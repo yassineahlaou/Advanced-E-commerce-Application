@@ -295,8 +295,8 @@ function productView(id){
 //Add to Cart
 
 function addToCart(){
-  console.log($('#productnameenglish').text());
-  console.log($('#productnamefrensh').text());
+  //console.log($('#productnameenglish').text());
+  //console.log($('#productnamefrensh').text());
       if ( $('#productnameenglish').text() == ""){
         var product_name = $('#productnamefrensh').text();
       }
@@ -803,7 +803,22 @@ function wishlistRemove(id){
 }
 
 
+$(document).ready(function(){
 
+//onclick="productView(this.id)"
+$("button[title='Add Cart']").click(function(){
+ 
+  productView(this.id);
+});
+
+$("button[title='Wishlist']").click(function(){
+ 
+ addToWishList(this.id);
+});
+
+
+  
+});
 
 </script>
 </body>

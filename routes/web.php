@@ -293,6 +293,7 @@ Route::get('/reviews/list/{idProduct}', [IndexController::class, 'ReviewsList'])
 
 Route::get('/products/tag/{tag}', [IndexController::class, 'GetProductsTag']);
 Route::get('/products/subcategory/{id}/{slug}', [IndexController::class, 'GetSubCategoryProducts']);
+Route::get('/products/category/{id}/{slug}', [IndexController::class, 'GetCategoryProducts']);
 Route::get('/products/subsubcategory/{id}/{slug}', [IndexController::class, 'GetSubSubCategoryProducts']);
 
 //dispalay product view with modal

@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Cache;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\SubCategory;
+use App\Models\SubSubCategory;
+
+
 use App\Models\Brand;
 use App\Models\Review;
 use App\Models\ReviewImages;
@@ -295,7 +299,7 @@ class IndexController extends Controller
         $products = Product::where('sub_category_id', $id)->where('status', 1)->orderBy('id', 'DESC')->get();
         //dd($products);
         $categories = Category::latest()->get();
-       
+        $breadsubcat = SubCategory::where('id',$id)->first();
         $listpros = array(); 
         
 
@@ -303,6 +307,8 @@ class IndexController extends Controller
             array_push($listpros,$pro);
 
         }
+
+
 
 
         // Get current page form url e.x. &page=1
@@ -331,11 +337,63 @@ class IndexController extends Controller
         'listpros' => $paginatedproducts,
 
         
-
+            'breadsubcat' => $breadsubcat,
        
         
         'categories' => $categories,
     ]);
+
+    }
+
+    public function GetCategoryProducts ($id, $slug, Request $request){
+
+        $products = Product::where('category_id', $id)->where('status', 1)->orderBy('id', 'DESC')->get();
+        //dd($products);
+        $categories = Category::latest()->get();
+        $breadcat = Category::where('id',$id)->first();
+        $listpros = array(); 
+        
+
+        foreach($products as $pro){
+            array_push($listpros,$pro);
+
+        }
+
+
+
+
+        // Get current page form url e.x. &page=1
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+ 
+        // Create a new Laravel collection from the array data
+        $productCollection = collect($listpros);
+ 
+        // Define how many products we want to be visible in each page
+        $perPage = 2;
+ 
+        // Slice the collection to get the products to display in current page
+        $currentPageproducts = $productCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+ 
+        // Create our paginator and pass it to the view
+        $paginatedproducts= new LengthAwarePaginator($currentPageproducts , count($productCollection), $perPage);
+ 
+        // set url path for generted links
+        $paginatedproducts->setPath($request->url());
+
+        //dd($paginatedproducts);
+
+       
+
+        return view ('frontend.categories.category_products', [
+        'listpros' => $paginatedproducts,
+
+        
+            'breadcat' => $breadcat,
+       
+        
+        'categories' => $categories,
+    ]);
+
 
     }
 
@@ -345,6 +403,7 @@ class IndexController extends Controller
         //dd($products);
         $categories = Category::latest()->get();
        
+        $breadsubsubcat = SubSubCategory::where('id',$id)->first();
         $listpros = array(); 
         
 
@@ -381,7 +440,7 @@ class IndexController extends Controller
 
         
 
-       
+       'breadsubsubcat'=>$breadsubsubcat,
         
         'categories' => $categories,
     ]);

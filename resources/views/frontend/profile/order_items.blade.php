@@ -358,6 +358,42 @@
     
  
       <div class="step active"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text">Order Delivered <br>{{$order->delivered_date}}</span> </div>
+      @elseif ($order->status == 'Canceled')
+
+    <div class="step active"> <span class="icon"> <i class="fa fa-list-alt"></i> </span> <span class="text">Order Submitted <br>{{$order->created_at}}</span></div>
+ 
+
+@if ($order->confirmed_date != NULL)
+
+ <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text"> Order Confirmed <br>{{$order->confirmed_date}}</span> </div>
+ @else
+ <div class="step"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text"> Ready to Confirm <br>{{$order->confirmed_date}}</span> </div>
+ @endif
+ @if ($order->processing_date != NULL)
+
+ <div class="step active"> <span class="icon"> <i class="fa fa-spinner"></i> </span> <span class="text"> Order Processed <br>{{$order->processing_date}}</span> </div>
+ @else
+ <div class="step"> <span class="icon"> <i class="fa fa-spinner"></i> </span> <span class="text"> Ready to Process <br>{{$order->processing_date}}</span> </div>
+ @endif
+ @if ($order->shipped_date != NULL)
+
+ <div class="step active"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> Order Shipped <br>{{$order->shipped_date}}</span> </div>
+ @else
+ <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> Ready to Ship <br>{{$order->shipped_date}}</span> </div>
+ @endif
+ @if ($order->picked_date != NULL)
+
+ <div class="step active"> <span class="icon"> <i class="fa fa-archive"></i> </span> <span class="text"> Order Picked <br>{{$order->picked_date}}</span> </div>
+ @else
+ <div class="step"> <span class="icon"> <i class="fa fa-archive"></i> </span> <span class="text"> Ready to Pick <br>{{$order->picked_date}}</span> </div>
+ @endif
+ @if ($order->delivered_date != NULL)
+
+ <div class="step active"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text"> Order Delivered <br>{{$order->delivered_date}}</span> </div>
+ @else
+ <div class="step"> <span class="icon"> <i class="fa fa-calendar-check-o"></i> </span> <span class="text"> Ready to Deliver <br>{{$order->delivered_date}}</span> </div>
+ @endif
+   
 
      @endif  
 

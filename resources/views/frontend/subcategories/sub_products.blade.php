@@ -1,7 +1,26 @@
 @extends('frontend.main_master')
 @section('content')
 
+<div class="breadcrumb">
+  <div class="container">
+    <div class="breadcrumb-inner">
+      <ul class="list-inline list-unstyled">
+        <li><a href="#">Home</a></li>
+       
 
+       
+        <li class='active'><a href="{{url('products/category/'. $breadsubcat['category']['id'] . '/' . $breadsubcat['category']['category_slug_en'])}}">{{ $breadsubcat['category']['category_name_en']}}</a></li>
+       
+
+        
+        <li class='active'><a style="color:#0f6cb2" href="{{url('products/subcategory/'. $breadsubcat->id . '/' . $breadsubcat->sub_category_slug_en)}}">{{ $breadsubcat->sub_category_name_en }}</a></li>
+       
+      </ul>
+    </div>
+    <!-- /.breadcrumb-inner --> 
+  </div>
+  <!-- /.container --> 
+</div>
 <!-- /.breadcrumb -->
 <div class="body-content outer-top-xs">
   <div class='container'>

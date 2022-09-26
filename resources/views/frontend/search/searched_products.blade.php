@@ -591,7 +591,7 @@
                 <ul class="list-inline list-unstyled">
                   
                
-             {{$listpros->withQueryString()->links()}}
+             {{$listpros->withQueryString()->links()}} <!-- we addedd withQueryString to maitain the query while navigating between search pages -->
              
             
                 </ul>
