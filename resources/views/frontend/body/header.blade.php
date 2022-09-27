@@ -104,9 +104,10 @@
                     </ul>
                   </li>
                 </ul>
-                <input class="search-field" name="search" placeholder="Search here..." />
-                <a class="search-button" href="#" ></a> </div>
+                <input class="search-field" onfocus="search_result_show()" onblur="search_result_hide()" name="search" id="search" placeholder="Search here..." />
+                <button class="search-button" type="submit"></button> </div>
             </form>
+            <div id="searchProducts"></div>
           </div>
           <!-- /.search-area --> 
           <!-- ============================================================= SEARCH AREA : END ============================================================= --> </div>
@@ -256,3 +257,22 @@
   <!-- ============================================== NAVBAR : END ============================================== --> 
   
 </header>
+
+<style>
+  
+.search-area{
+  position: relative;
+}
+  #searchProducts {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    z-index: 999;
+    border-radius: 8px;
+    margin-top: 5px;
+  }
+</style>
+
+

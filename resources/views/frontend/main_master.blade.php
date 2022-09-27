@@ -820,6 +820,41 @@ $("button[title='Wishlist']").click(function(){
   
 });
 
+$("body").on("keyup", "#search", function(){
+
+let text = $("#search").val();
+//console.log(text);
+if (text.length > 0) {
+$.ajax({
+            data: {search: text},
+            url : "{{ url('/product/adv-search') }}", 
+            method : 'get',
+            
+            success:function(result){
+
+                $('#searchProducts').html(result);
+
+            }
+
+        }); // end ajax 
+    }
+    else{
+        $("#searchProducts").html("");
+
+       
+    }
+});
+
+</script>
+
+<script>
+  function search_result_hide(){
+    $("#searchProducts").slideUp(); //show the popup
+  }
+   function search_result_show(){
+      $("#searchProducts").slideDown(); //hide the popup
+  }
+
 </script>
 </body>
 </html>
