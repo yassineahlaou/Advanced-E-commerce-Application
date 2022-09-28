@@ -18,7 +18,21 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('phone')->nullable();
+            $table->string('brand')->nullable();
+            $table->string('categories')->nullable();
+            $table->string('products')->nullable();
+            $table->string('slider')->nullable();
+            $table->string('coupons')->nullable();
+            $table->string('shipping')->nullable();
+            $table->string('orders')->nullable();
+            $table->string('reports')->nullable();
+            $table->string('users')->nullable();
+            $table->string('returns')->nullable();
+            $table->string('reviews')->nullable();
+            $table->string('adminuserrole')->nullable();
+            $table->integer('type')->nullable();
+
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();

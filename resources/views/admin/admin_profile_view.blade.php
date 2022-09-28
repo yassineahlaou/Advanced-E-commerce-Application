@@ -13,7 +13,7 @@
  					  <h6 class="widget-user-desc">Admin Email : {{$adminData->email}}</h6>
 					</div>
 					<div class="widget-user-image">
-					  <img class="rounded-circle" src="{{ (!empty($adminData->profile_photo_path)) ? url('upload/admin_images/'.$adminData->profile_photo_path) : url('upload/no_image.jpg')}}" alt="User Avatar">
+					  <img class="rounded-circle" src="{{ (!empty($adminData->profile_photo_path)) ? url($adminData->profile_photo_path) : url('upload/no_image.jpg')}}" alt="User Avatar">
 					</div>
 					<div class="box-footer">
 					  <div class="row">

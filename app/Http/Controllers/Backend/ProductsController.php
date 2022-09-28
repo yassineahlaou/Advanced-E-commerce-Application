@@ -169,7 +169,7 @@ class ProductsController extends Controller
                          'sprecial_offer' => $request->sprecial_offer,
                          'speacial_deal' => $request->speacial_deal,
                          'status' => 1,
-                         'created_at' => Carbon::now(),
+                         'updated_at' => Carbon::now(),
                   ]);
           
                   $notification = array(
@@ -217,7 +217,7 @@ class ProductsController extends Controller
                'sprecial_offer' => $request->sprecial_offer,
                'speacial_deal' => $request->speacial_deal,
                'status' => 1,
-               'created_at' => Carbon::now(),
+               'updated_at' => Carbon::now(),
         ]);
 
         $notification = array(

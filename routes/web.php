@@ -15,6 +15,8 @@ use App\Http\Controllers\Backend\ShippingController;
 use App\Http\Controllers\Backend\ReportsController;
 use App\Http\Controllers\Backend\AllUsersController;
 
+use App\Http\Controllers\Backend\ManageAdminControllerr;
+
 use App\Http\Controllers\Backend\ReviewsController;
 use App\Http\Controllers\Backend\ReturnsController;
 
@@ -273,6 +275,23 @@ Route::prefix('reviews')->group(function(){
     Route::get('/confirm/{reviewId}', [ReviewsController::class, 'ConfirmReview'])->name('review.confirm');
     Route::get('/cancel/{reviewId}', [ReviewsController::class, 'CancelReview'])->name('review.cancel');
     
+});
+
+Route::prefix('adminerole')->group(function(){
+    Route::get('/addadmin', [ManageAdminControllerr::class, 'AddAdmin'])->name('add.admin');
+    
+    Route::post('/storeadmin', [ManageAdminControllerr::class, 'StoreAdmin'])->name('admin.store');
+    Route::get('/manageadmins', [ManageAdminControllerr::class, 'ManageAdmins'])->name('manage.admins');
+    Route::get('/editadmin/{adminId}', [ManageAdminControllerr::class, 'EditAdmin'])->name('admin.edit');
+    Route::post('/updateadmin/{adminId}', [ManageAdminControllerr::class, 'UpdateAdmin'])->name('admin.update');
+    
+    Route::get('/deleteadmin/{adminId}', [ManageAdminControllerr::class, 'DeleteAdmin'])->name('admin.delete');
+   
+    
+
+
+
+
 });
 
 });

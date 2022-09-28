@@ -28,8 +28,244 @@
 			<span>Dashboard</span>
           </a>
         </li>  
-		
+        @if (Auth::user()->id != 1)
+		@if (Auth::user()->brand == "access")
         <li class="treeview {{($prefix == '/brand')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="message-circle"></i>
+            <span>Brands</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'all.brands')? 'active' : ''}}"><a href="{{route('all.brands')}}"><i class="ti-more"></i>All Brands</a></li>
+            
+          </ul>
+        </li> 
+        @endif
+
+        @if (Auth::user()->categories == "access")
+		  
+        <li class="treeview {{($prefix == '/categories')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>Categories</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'all.Categories')? 'active' : ''}}"><a href="{{route('all.Categories')}}"><i class="ti-more"></i>All Categories</a></li>
+            <li class="{{($route == 'all.SubCategories')? 'active' : ''}}"><a href="{{route('all.SubCategories')}}"><i class="ti-more"></i>Sub Categories</a></li>
+            <li class="{{($route == 'all.SubSubCategories')? 'active' : ''}}"><a href="{{route('all.SubSubCategories')}}"><i class="ti-more"></i>Sub Sub Categories</a></li>
+            
+          </ul>
+        </li>
+        @endif
+        @if (Auth::user()->products == "access")
+
+        <li class="treeview {{($prefix == '/products')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>Products</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'add.product')? 'active' : ''}}"><a href="{{route('add.product')}}"><i class="ti-more"></i>Add Products</a></li>
+            <li class="{{($route == 'manage.product')? 'active' : ''}}"><a href="{{route('manage.product')}}"><i class="ti-more"></i>Manage Products</a></li>
+       
+            
+            
+          </ul>
+        </li>
+        @endif
+        @if (Auth::user()->slider == "access")
+
+        <li class="treeview {{($prefix == '/slider')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>Slider</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'slider.content')? 'active' : ''}}"><a href="{{route('slider.content')}}"><i class="ti-more"></i>All Sliders</a></li>
+            
+       
+            
+            
+          </ul>
+        </li>
+		@endif 
+    @if (Auth::user()->coupons == "access")
+        <li class="treeview {{($prefix == '/coupons')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>Coupons</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'manage.coupon')? 'active' : ''}}"><a href="{{route('manage.coupon')}}"><i class="ti-more"></i>Manage Coupon</a></li>
+            
+       
+            
+            
+          </ul>
+        </li>
+@endif
+@if (Auth::user()->shipping == "access")
+        <li class="treeview {{($prefix == '/shipping')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>Shipping Area</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'manage.division')? 'active' : ''}}"><a href="{{route('manage.division')}}"><i class="ti-more"></i>Shipping Division</a></li>
+            <li class="{{($route == 'manage.district')? 'active' : ''}}"><a href="{{route('manage.district')}}"><i class="ti-more"></i>Shipping District</a></li>
+            <li class="{{($route == 'manage.state')? 'active' : ''}}"><a href="{{route('manage.state')}}"><i class="ti-more"></i>Shipping State</a></li>
+            
+       
+            
+            
+          </ul>
+        </li>
+        @endif
+        @if (Auth::user()->orders == "access")
+		  
+        <li class="treeview {{($prefix == '/orders')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>Orders</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'view.pending')? 'active' : ''}}"><a href="{{route('view.pending')}}"><i class="ti-more"></i>Pending Orders</a></li>
+            <li class="{{($route == 'view.confirmed')? 'active' : ''}}"><a href="{{route('view.confirmed')}}"><i class="ti-more"></i>Confirmed Orders</a></li>
+            <li class="{{($route == 'view.processing')? 'active' : ''}}"><a href="{{route('view.processing')}}"><i class="ti-more"></i>Processing Orders</a></li>
+            <li class="{{($route == 'view.shipped')? 'active' : ''}}"><a href="{{route('view.shipped')}}"><i class="ti-more"></i>Shipped Orders</a></li>
+            <li class="{{($route == 'view.picked')? 'active' : ''}}"><a href="{{route('view.picked')}}"><i class="ti-more"></i>Picked Orders</a></li>
+            
+            <li class="{{($route == 'view.delivered')? 'active' : ''}}"><a href="{{route('view.delivered')}}"><i class="ti-more"></i>Delivered Orders</a></li>
+            <li class="{{($route == 'view.canceled')? 'active' : ''}}"><a href="{{route('view.canceled')}}"><i class="ti-more"></i>Canceled Orders</a></li>
+            
+            
+       
+            
+            
+          </ul>
+        </li>
+		
+		@endif
+    @if (Auth::user()->reports == "access")
+        <li class="treeview {{($prefix == '/reports')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>All Reports</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'all.reports')? 'active' : ''}}"><a href="{{route('all.reports')}}"><i class="ti-more"></i>All Reports</a></li>
+            
+            
+            
+       
+            
+            
+          </ul>
+        </li>
+@endif
+@if (Auth::user()->users == "access")
+        <li class="treeview {{($prefix == '/users')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>All Users</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'all.users')? 'active' : ''}}"><a href="{{route('all.users')}}"><i class="ti-more"></i>All Users</a></li>
+            
+            
+            
+       
+            
+            
+          </ul>
+        </li>
+@endif
+@if (Auth::user()->returns == "access")
+        <li class="treeview {{($prefix == '/returns')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>All Returns</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'pending.returns')? 'active' : ''}}"><a href="{{route('pending.returns')}}"><i class="ti-more"></i>Pending Returns</a></li>
+            <li class="{{($route == 'approved.returns')? 'active' : ''}}"><a href="{{route('approved.returns')}}"><i class="ti-more"></i>Approved Returns</a></li>
+            <li class="{{($route == 'canceled.returns')? 'active' : ''}}"><a href="{{route('canceled.returns')}}"><i class="ti-more"></i>Canceled Returns</a></li>
+            
+            
+            
+       
+            
+            
+          </ul>
+        </li>
+@endif
+@if (Auth::user()->reviews == "access")
+        <li class="treeview {{($prefix == '/reviews')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>All Reviews</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'pending.reviews')? 'active' : ''}}"><a href="{{route('pending.reviews')}}"><i class="ti-more"></i>Pending Reviews</a></li>
+            <li class="{{($route == 'approved.reviews')? 'active' : ''}}"><a href="{{route('approved.reviews')}}"><i class="ti-more"></i>Approved Reviews</a></li>
+            <li class="{{($route == 'canceled.reviews')? 'active' : ''}}"><a href="{{route('canceled.reviews')}}"><i class="ti-more"></i>Canceled Reviews</a></li>
+            
+            
+            
+       
+            
+            
+          </ul>
+        </li>
+        @endif
+        @if (Auth::user()->adminuserrole == "access")
+        <li class="treeview {{($prefix == '/adminerole')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>Admin Role</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'add.admin')? 'active' : ''}}"><a href="{{route('add.admin')}}"><i class="ti-more"></i>Add New Admin</a></li>
+            <li class="{{($route == 'manage.admins')? 'active' : ''}}"><a href="{{route('manage.admins')}}"><i class="ti-more"></i>Manage Admins</a></li>
+            
+            
+            
+            
+       
+            
+            
+          </ul>
+        </li>
+		  
+         	  		  
+		  @endif
+		 @else
+     <li class="treeview {{($prefix == '/brand')? 'active' : ''}}">
           <a href="#">
             <i data-feather="message-circle"></i>
             <span>Brands</span>
@@ -122,7 +358,7 @@
             
           </ul>
         </li>
-        <li class="header nav-small-cap">User Interface</li>
+        
 		  
         <li class="treeview {{($prefix == '/orders')? 'active' : ''}}">
           <a href="#">
@@ -224,11 +460,26 @@
             
           </ul>
         </li>
-		  
-         	  		  
-		  
-		 
-        
+        <li class="treeview {{($prefix == '/adminerole')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>Admin Role</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'add.admin')? 'active' : ''}}"><a href="{{route('add.admin')}}"><i class="ti-more"></i>Add New Admin</a></li>
+            <li class="{{($route == 'manage.admins')? 'active' : ''}}"><a href="{{route('manage.admins')}}"><i class="ti-more"></i>Manage Admins</a></li>
+            
+            
+            
+            
+       
+            
+            
+          </ul>
+        </li>
+        @endif
       </ul>
     </section>
 	
