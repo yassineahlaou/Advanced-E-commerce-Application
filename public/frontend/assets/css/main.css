@@ -5786,17 +5786,21 @@ age-container #owl-main .owl-next {
   display: inline-block;
   color: #fff;
   text-align: center;
+  width: 50%;
 }
 .body-content .sign-in-page .sign-in .social-sign-in a i {
   padding-right: 6px;
 }
 .body-content .sign-in-page .sign-in .social-sign-in .facebook-sign-in {
   background-color: #3d5c98;
-  margin-right: 10px;
+ /*margin-right: 10px;*/
+  
 }
 .body-content .sign-in-page .sign-in .social-sign-in .facebook-sign-in:hover,
 .body-content .sign-in-page .sign-in .social-sign-in .facebook-sign-in:focus {
   background-color: #153470;
+ /* margin-right: 10px;*/
+  
 }
 .body-content .sign-in-page .sign-in .social-sign-in .twitter-sign-in {
   background-color: #22aadf;
@@ -5804,6 +5808,13 @@ age-container #owl-main .owl-next {
 .body-content .sign-in-page .sign-in .social-sign-in .twitter-sign-in:hover,
 .body-content .sign-in-page .sign-in .social-sign-in .twitter-sign-in:focus {
   background-color: #0084B9;
+}
+.body-content .sign-in-page .sign-in .social-sign-in .google-sign-in {
+  background-color: #ff0000;
+}
+.body-content .sign-in-page .sign-in .social-sign-in .google-sign-in:hover,
+.body-content .sign-in-page .sign-in .social-sign-in .google-sign-in:focus {
+  background-color: #e50000 ;
 }
 .body-content .sign-in-page .create-new-account > span {
   font-size: 20px;

@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
+
+use App\Http\Controllers\GoogleAuthController;
+
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoriesController;
@@ -66,6 +69,8 @@ Route::middleware([
 });
 
 
+
+
 Route::get('admin/logout', [AdminController::class, 'destroy'])->name('admin.logout');
 Route::get('admin/profile', [AdminProfileController::class, 'AdminProfile'])->name('admin.profile');
 Route::get('admin/profile/edit', [AdminProfileController::class, 'AdminProfileEdit'])->name('admin.profile.edit');
@@ -76,7 +81,8 @@ Route::post('admin/update/password', [AdminProfileController::class, 'AdminUpdat
 //User
 
 
-
+Route::get('/redirect', [GoogleAuthController::class, 'RedirectToProvider'])->name('redirect.google');
+Route::get('/callback', [GoogleAuthController::class, 'HandleProviderCallback'])->name('callback.google');
 
 Route::middleware([
     'auth:sanctum',

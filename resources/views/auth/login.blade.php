@@ -1,6 +1,8 @@
 @extends('frontend.main_master')
 @section('content')
 
+
+<link rel="stylesheet" href="{{asset('css/over.css')}}">
 <div class="breadcrumb">
 	<div class="container">
 		<div class="breadcrumb-inner">
@@ -20,11 +22,14 @@
 <div class="col-md-6 col-sm-6 sign-in">
 	<h4 class="">Sign in</h4>
 	<p class="">Hello, Welcome to your account.</p>
-	<div class="social-sign-in outer-top-xs">
-		<a href="#" class="facebook-sign-in"><i class="fa fa-facebook"></i> Sign In with Facebook</a>
-		<a href="#" class="twitter-sign-in"><i class="fa fa-twitter"></i> Sign In with Twitter</a>
+	<div class="social-sign-in outer-top-xs buttons">
+		<a href="" class="facebook-sign-in"><i class="fa fa-facebook"></i> Sign In with Facebook</a>
+		<a href="" class="twitter-sign-in"><i class="fa fa-twitter"></i> Sign In with Twitter</a>
+		<a href="{{route('redirect.google')}}" class="google-sign-in"><i class="fa fa-google"></i> Sign In with Google</a>
 	</div>
-	
+</div>
+
+<div class="col-md-6 col-sm-6 sign-in">
     
     <form method="POST" action="{{isset($guard) ? url($guard.'/login') : route('login')}}">
                         @csrf
@@ -51,7 +56,7 @@
 	  	<button type="submit" class="btn-upper btn btn-primary checkout-page-button">Login</button>
 	</form>	
     
-    
+</div>
 </div>
 <!-- Sign-in -->
 
