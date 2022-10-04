@@ -5,11 +5,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-2">
-          @if ($userData->avatar == NULL)
-                <img class="card-img-top"  style="padding-top: 3mm" style="border-radius: 50%"  src="{{ (!empty($userData->profile_photo_path)) ? url('upload/user_images/'.$userData->profile_photo_path) : url('upload/no_image.jpg')}}" width =  100%; heigth = 100%>
-                @else
+                @if ($userData->profile_photo_path == NULL)
+        @if ($userData->avatar == NULL)
+                <img class="card-img-top"  style="padding-top: 3mm" style="border-radius: 50%"  src="{{ url('upload/no_image.jpg')}}" width =  100%; heigth = 100%>
+        @else
         <img class="card-img-top"  style="padding-top: 3mm" style="border-radius: 50%"  src="{{ $userData->avatar}}" width =  100%; heigth = 100%>
         @endif
+    @else
+    <img class="card-img-top"  style="padding-top: 3mm" style="border-radius: 50%"  src="{{ url('upload/user_images/'.$userData->profile_photo_path) }}" width =  100%; heigth = 100%>
+    @endif
                 <ul  class="list-group  list-group-flush " style="padding-top: 3mm">
 
                 <a href="/" class="btn btn-sm btn-primary mb-5 btn-block">Home</a>

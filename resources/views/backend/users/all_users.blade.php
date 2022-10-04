@@ -39,15 +39,15 @@
 						<tbody>
                             @foreach($users as $user)
 							<tr>
-							@if ($user->avatar == NULL)
-                                @if ($user->profile_photo_path == NULL)
+							@if ($user->profile_photo_path == NULL)
+                                @if ($user->avatar == NULL)
                                 <td><img  src="{{asset('upload/no_image.jpg')}}"  style="width:70px;heigth:40px"></td>
                                 @else
-                                <td><img  src="{{asset('upload/user_images/'. $user->profile_photo_path)}}"  style="width:70px;heigth:40px"></td>
+                                <td><img  src="{{asset('upload/user_images/'. $user->avatar)}}"  style="width:70px;heigth:40px"></td>
 								@endif
 								
 								@else
-								<td><img  src="{{$user->avatar}}"  style="width:70px;heigth:40px"></td>
+								<td><img  src="{{asset('upload/user_images/'.$user->profile_photo_path)}}"  style="width:70px;heigth:40px"></td>
 								@endif
 
                                 <td>{{$user->name}}</td>

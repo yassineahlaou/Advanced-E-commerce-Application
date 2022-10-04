@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
 
+use App\Http\Controllers\FacebookAuthController;
 use App\Http\Controllers\GoogleAuthController;
 
 use App\Http\Controllers\Backend\AdminProfileController;
@@ -80,9 +81,16 @@ Route::post('admin/update/password', [AdminProfileController::class, 'AdminUpdat
 });
 //User
 
+//google auth
+Route::get('/google/redirect', [GoogleAuthController::class, 'RedirectToProvider'])->name('redirect.google');
+Route::get('/google/callback', [GoogleAuthController::class, 'HandleProviderCallback'])->name('callback.google');
+//facebook auth (need fix)
+Route::get('/facebook/redirect', [FacebookAuthController::class, 'RedirectToProvider'])->name('redirect.facebook');
+Route::get('/facebook/callback', [FacebookAuthController::class, 'HandleProviderCallback'])->name('callback.facebook');
 
-Route::get('/redirect', [GoogleAuthController::class, 'RedirectToProvider'])->name('redirect.google');
-Route::get('/callback', [GoogleAuthController::class, 'HandleProviderCallback'])->name('callback.google');
+//twitter auth (needs twitter approve)
+Route::get('/twitter/redirect', [TwitterAuthController::class, 'RedirectToProvider'])->name('redirect.twitter');
+Route::get('/twitter/callback', [TwitterAuthController::class, 'HandleProviderCallback'])->name('callback.twitter');
 
 Route::middleware([
     'auth:sanctum',
