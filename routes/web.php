@@ -9,6 +9,8 @@ use App\Http\Controllers\GoogleAuthController;
 
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\BlogController;
+
 use App\Http\Controllers\Backend\CategoriesController;
 use App\Http\Controllers\Backend\SubCategoriesController;
 use App\Http\Controllers\Frontend\IndexController;
@@ -27,6 +29,8 @@ use App\Http\Controllers\Backend\ReturnsController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Frontend\LanguageController;
 use App\Http\Controllers\Frontend\CartController;
+
+use App\Http\Controllers\Frontend\FrontendBlogController;
 use App\Http\Controllers\User\WishlistController;
 use App\Http\Controllers\User\CartPageController;
 use App\Http\Controllers\User\CheckoutController;
@@ -307,6 +311,22 @@ Route::prefix('adminerole')->group(function(){
 
 
 });
+Route::prefix('blog')->group(function(){
+    Route::get('/manageCategories', [BlogController::class, 'ManageCategories'])->name('blog.category');
+    Route::post('/addBlogCategory', [BlogController::class, 'AddBlogCategory'])->name('add.category');
+    Route::get('/editBlogCategory/{categoryId}', [BlogController::class, 'EditBlogCategory'])->name('edit.category');
+    Route::post('/storeBlogCategory/{categoryId}', [BlogController::class, 'StoreBlogCategory'])->name('store.category');
+    Route::get('/deleteBlogCategory/{categoryId}', [BlogController::class, 'DeleteBlogCategory'])->name('delete.category');
+    Route::get('/viewPosts', [BlogController::class, 'ViewPosts'])->name('view.posts');
+    Route::get('/addPost', [BlogController::class, 'AddPost'])->name('add.post');
+    Route::post('/storePost', [BlogController::class, 'StorePost'])->name('store.post');
+    Route::get('/editPost/{postId}', [BlogController::class, 'EditPost'])->name('post.edit');
+    Route::post('/updatePost/{postId}', [BlogController::class, 'UpdatePost'])->name('post.update');
+    Route::get('/deletePost/{postId}', [BlogController::class, 'DeletePost'])->name('post.delete');
+    Route::get('/postdown/{postId}', [BlogController::class, 'PostDown'])->name('post.down');
+    Route::get('/postup/{postId}', [BlogController::class, 'PostUp'])->name('post.up');
+
+});
 
 });
 
@@ -343,6 +363,11 @@ Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'RemoveFr
 //add to wishlist
 
 Route::post('/add-to-wishlist/{product_id}', [CartController::class, 'AddToWishList']);
+
+
+//display blog in frontend
+Route::get('/blog', [FrontendBlogController::class, 'DisplayBlogPosts'])->name('blog.posts');
+
 Route::group(['prefix'=>'user','middleware' => ['user','auth'],'namespace'=>'User'],function(){
         Route::get('/wishlist', [WishlistController::class, 'ViewWishlist'])->name('wishlist'); // just the page without info
         Route::get('/get-wishlist-product', [WishlistController::class, 'GetWishlistProduct']); //wishlist load info

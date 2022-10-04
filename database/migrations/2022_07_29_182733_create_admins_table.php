@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('returns')->nullable();
             $table->string('reviews')->nullable();
             $table->string('adminuserrole')->nullable();
+            $table->string('blog')->nullable();
             $table->integer('type')->nullable();
 
             $table->rememberToken();

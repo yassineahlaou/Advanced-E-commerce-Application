@@ -81,6 +81,9 @@
                                 @if($admin->adminuserrole == "access")
                                     <span style="margin:7px" class="badge btn-info">Manage Admins</span>
                                 @endif
+                                @if($admin->blog == "access")
+                                    <span style="margin:7px" class="badge btn-success">Manage Admins</span>
+                                @endif
                                 </td>
                               
                                 

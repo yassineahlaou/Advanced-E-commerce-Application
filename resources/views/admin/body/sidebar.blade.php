@@ -264,6 +264,29 @@
 		  
          	  		  
 		  @endif
+      @if (Auth::user()->blog == "access")
+        <li class="treeview {{($prefix == '/blog')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>Manage Blog</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'blog.category')? 'active' : ''}}"><a href="{{route('blog.category')}}"><i class="ti-more"></i>Blog Categories</a></li>
+            
+            
+            
+            
+            
+       
+            
+            
+          </ul>
+        </li>
+		  
+         	  		  
+		  @endif
 		 @else
      <li class="treeview {{($prefix == '/brand')? 'active' : ''}}">
           <a href="#">
@@ -470,6 +493,27 @@
           <ul class="treeview-menu">
             <li class="{{($route == 'add.admin')? 'active' : ''}}"><a href="{{route('add.admin')}}"><i class="ti-more"></i>Add New Admin</a></li>
             <li class="{{($route == 'manage.admins')? 'active' : ''}}"><a href="{{route('manage.admins')}}"><i class="ti-more"></i>Manage Admins</a></li>
+            
+            
+            
+            
+       
+            
+            
+          </ul>
+        </li>
+        <li class="treeview {{($prefix == '/blog')? 'active' : ''}}">
+          <a href="#">
+            <i data-feather="mail"></i> <span>Manage Blog</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'blog.category')? 'active' : ''}}"><a href="{{route('blog.category')}}"><i class="ti-more"></i>Blog Categories</a></li>
+            <li class="{{($route == 'view.posts')? 'active' : ''}}"><a href="{{route('view.posts')}}"><i class="ti-more"></i>View Posts</a></li>
+            <li class="{{($route == 'add.post')? 'active' : ''}}"><a href="{{route('add.post')}}"><i class="ti-more"></i>Add Post</a></li>
+            
             
             
             

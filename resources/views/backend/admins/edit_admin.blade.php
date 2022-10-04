@@ -110,6 +110,10 @@
 											<input type="checkbox" id="slider"  name="slider"  value="access" {{($adminData->slider == "access" ) ? 'checked' : ''}}>
 											<label for="slider">Manage Sliders</label>
 										</fieldset>
+										<fieldset>
+											<input type="checkbox" id="blog"  name="blog"  value="access" {{($adminData->blog == "access" ) ? 'checked' : ''}}>
+											<label for="blog">Manage Blog</label>
+										</fieldset>
 									</div>
 								</div>
 							</div>

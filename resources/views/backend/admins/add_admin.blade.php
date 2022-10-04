@@ -124,6 +124,10 @@
 											<input type="checkbox" id="slider"  name="slider"  value="access">
 											<label for="slider">Manage Sliders</label>
 										</fieldset>
+										<fieldset>
+											<input type="checkbox" id="blog"  name="blog"  value="access">
+											<label for="blog">Manage Blog</label>
+										</fieldset>
 									</div>
 								</div>
 							</div>
