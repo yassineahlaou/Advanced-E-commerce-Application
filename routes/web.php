@@ -6,6 +6,9 @@ use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\FacebookAuthController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\TwitterAuthController;
+
+
 
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandController;

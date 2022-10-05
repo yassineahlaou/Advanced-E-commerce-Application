@@ -27,7 +27,7 @@ class TwitterAuthController extends Controller
        
             $user = Socialite::driver('twitter')->user();
 
-            dd($user);
+           // dd($user);
       
         $existingUser = User::where('email', $user->email)->first();
        if($existingUser){
@@ -38,13 +38,20 @@ class TwitterAuthController extends Controller
        }
 
        else{
-        $passwordGoogle = Hash::make($user->name);
+        $passwordSocialAuth = Hash::make($user->name);
+        if ($user->email == null){
+            $email = "No twitter email. Nickname : " . $user->nickname;
+        }
+        else{
+            $email = $user->email;
+        }
         $userId = User::insertGetId([
-            'googleid' => $user->id,
+            'twitterid' => $user->id,
             'name' => $user->name,
-            'email' => $user->email,
+            'email' => $email,
             'avatar' => $user->avatar,
-            'password' => $passwordGoogle,
+            'password' => $passwordSocialAuth,
+            
             'created_at' => Carbon::now(),
             
            

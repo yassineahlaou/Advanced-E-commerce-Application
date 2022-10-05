@@ -38,13 +38,13 @@ class FacebookAuthController extends Controller
        }
 
        else{
-        $passwordGoogle = Hash::make($user->name);
+        $passwordSocialAuth = Hash::make($user->name);
         $userId = User::insertGetId([
-            'googleid' => $user->id,
+            'facebookid' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
             'avatar' => $user->avatar,
-            'password' => $passwordGoogle,
+            'password' => $passwordSocialAuth,
             'created_at' => Carbon::now(),
             
            
