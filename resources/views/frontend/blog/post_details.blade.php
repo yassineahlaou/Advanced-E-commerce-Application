@@ -6,7 +6,9 @@
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
 				<li><a href="#">Home</a></li>
-				<li class='active'><a style="color:#0f6cb2" href="{{route('blog.posts')}}" >Blog</a></li>
+				<li class='active'><a  href="{{route('blog.posts')}}" >Blog</a></li>
+                <li class='active'><a  href="{{url('/blog/category/'.$postClicked['category']['category_slug_en'])}}">{{ $postClicked['category']['category_name_en']}}</a></li>
+                <li class='active'><a style="color:#0f6cb2" href="{{route('post.details', $postClicked->id)}}">{{ $postClicked->post_title_en}}</a></li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
 	</div><!-- /.container -->
@@ -17,54 +19,79 @@
 		<div class="row">
 			<div class="blog-page">
 				<div class="col-md-9">
-					@php  
-					$count = 0;
-					@endphp
-    @foreach ($allPosts as $post)
-	@php 
-	$count = $count +1;
-	@endphp 
-	@if ($count <= 1)
-<div class="blog-post   wow fadeInUp">
-	<a href="blog-details.html"><img class="img-responsive" src="{{asset($post->post_image)}}"  alt=""></a>
-	<h1><a href="blog-details.html">{{$post->post_title_en}}</a></h1>
-	<span class="author">{{$post->post_author}}</span>
-	<!--<span class="review">6 Comments</span>-->
-	<span class="date-time">{{$post->created_at}}</span>
-	<p>{!! Str::limit($post->post_details_en, 200 ) !!}</p><!-- truncate with STR-->
-	<a href="{{route('post.details', $post->id)}}" class="btn btn-upper btn-primary read-more">read more</a>
+                <div class="blog-post wow fadeInUp">
+	<img class="img-responsive" src="{{asset($postClicked->post_image)}}" alt="">
+	<h1>{{$postClicked->post_title}}</h1>
+	<span class="author">{{$postClicked->post_author}}</span>
+	<span class="review">{{count($comments)}} comments</span>
+	<span class="date-time">{{$postClicked->created_at}}</span>
+	
+	<p>{!! $postClicked->post_details_en !!}</p>
+	<div class="social-media">
+		<span>share post:</span>
+		<a href="#"><i class="fa fa-facebook"></i></a>
+		<a href="#"><i class="fa fa-twitter"></i></a>
+		<a href="#"><i class="fa fa-linkedin"></i></a>
+		<a href=""><i class="fa fa-rss"></i></a>
+		<a href="" class="hidden-xs"><i class="fa fa-pinterest"></i></a>
+	</div>
 </div>
-@else
-<div class="blog-post  outer-top-bd wow fadeInUp">
-	<a href="blog-details.html"><img class="img-responsive" src="{{asset($post->post_image)}}"  alt=""></a>
-	<h1><a href="blog-details.html">{{$post->post_title_en}}</a></h1>
-	<span class="author">{{$post->post_author}}</span>
-	<!--<span class="review">6 Comments</span>-->
-	<span class="date-time">{{$post->created_at}}</span>
-	<p>{!! Str::limit($post->post_details_en, 200 ) !!}</p><!-- truncate with STR-->
-	<a href="{{route('post.details', $post->id)}}" class="btn btn-upper btn-primary read-more">read more</a>
+
+					<div class="blog-review wow fadeInUp">
+	<div class="row">
+		<div class="col-md-12">
+			<h3 class="title-review-comments">{{count($comments)}} Comments</h3>
+		</div>
+        <p hidden id="postid">{{$postClicked->id}}</p>
+		<div id="comments"></div>
+		
+		
+	
+		<div class="post-load-more col-md-12"><a class="btn btn-upper btn-primary" href="#">Load more</a></div>
+	</div>
+</div>					<div class="blog-write-comment outer-bottom-xs outer-top-xs">
+	<div class="row">
+		<div class="col-md-12">
+			<h4>Leave A Comment</h4>
+		</div>
+		<div class="col-md-4">
+			<form class="register-form" role="form">
+				<div class="form-group">
+			    <label class="info-title" for="exampleInputName">Your Name <span>*</span></label>
+			    <input type="email" class="form-control unicase-form-control text-input" id="exampleInputName" placeholder="">
+			  </div>
+			</form>
+		</div>
+		<div class="col-md-4">
+			<form class="register-form" role="form">
+				<div class="form-group">
+			    <label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
+			    <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="">
+			  </div>
+			</form>
+		</div>
+		<div class="col-md-4">
+			<form class="register-form" role="form">
+				<div class="form-group">
+			    <label class="info-title" for="exampleInputTitle">Title <span>*</span></label>
+			    <input type="email" class="form-control unicase-form-control text-input" id="exampleInputTitle" placeholder="">
+			  </div>
+			</form>
+		</div>
+		<div class="col-md-12">
+			<form class="register-form" role="form">
+				<div class="form-group">
+			    <label class="info-title" for="exampleInputComments">Your Comments <span>*</span></label>
+			    <textarea class="form-control unicase-form-control" id="exampleInputComments" ></textarea>
+			  </div>
+			</form>
+		</div>
+		<div class="col-md-12 outer-bottom-small m-t-20">
+			<button type="submit" class="btn-upper btn btn-primary checkout-page-button">Submit Comment</button>
+		</div>
+	</div>
 </div>
-@endif
-
-@endforeach
-
-<div class="clearfix blog-pagination filters-container  wow fadeInUp" style="padding:0px; background:none; box-shadow:none; margin-top:15px; border:none">
-						
-	<div class="text-right">
-         <div class="pagination-container">
-	<ul class="list-inline list-unstyled">
-		<li class="prev"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-		<li><a href="#">1</a></li>	
-		<li class="active"><a href="#">2</a></li>	
-		<li><a href="#">3</a></li>	
-		<li><a href="#">4</a></li>	
-		<li class="next"><a href="#"><i class="fa fa-angle-right"></i></a></li>
-	</ul><!-- /.list-inline -->
-</div><!-- /.pagination-container -->    </div><!-- /.text-right -->
-
-</div><!-- /.filters-container -->				
-			
-</div>
+				</div>
 				<div class="col-md-3 sidebar">
                 
                 
@@ -312,4 +339,42 @@
         @include('frontend.body.brands')
 <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->	</div>
 </div>
+
+<script>
+
+    function loadComments(){
+        var idPost = $('#postid').text();
+        $.ajax({
+            type: 'GET',
+            url: '/comments/post/'+idPost,
+            dataType:'json',
+            success:function(response){
+                var list = ""
+                $.each(response.comments, function(key,value){
+                    list += `
+                    <div class="col-md-2 col-sm-2">
+                        <img src="/upload/user_images/${value.user.profile_photo_path}" alt="Responsive image" class="img-rounded img-responsive">
+                    </div>
+                    <div class="col-md-10 col-sm-10">
+                        <div class="blog-comments inner-bottom-xs outer-bottom-xs">
+                            <h4>${value.user.name}</h4>
+                            <span class="review-action pull-right">
+                               ${value.created_at} &sol;   
+                                <a href=""> Repost</a> &sol;
+                                <a href=""> Reply</a>
+                            </span>
+                            <p>${value.comment_details}</p>
+                        </div>
+                    </div>
+                    `
+                });
+                
+                $('#comments').html(list);//jquery function
+            }
+        });
+    }
+
+    loadComments();
+
+</script>
 @endsection

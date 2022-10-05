@@ -6,7 +6,7 @@
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
 				<li><a href="#">Home</a></li>
-				<li class='active'><a style="color:#0f6cb2" href="{{route('blog.posts')}}" >Blog</a></li>
+				<li class='active'>Blog</li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
 	</div><!-- /.container -->
@@ -74,13 +74,12 @@
 				<form method="get" action="{{ route('post.search') }}">
         <div class="control-group">
 		<input class="search-field"  name="search_post" id="search_post" placeholder="Type to search" />
-		<button ><a class="search-button" type="submit"></a></button>
-                
+                <button class="search-button" type="submit"></button> 
+               
            
         </div>
     </form>
-</div>	
-
+</div>		
 
 
 				<!-- ==============================================CATEGORY============================================== -->
@@ -150,7 +149,7 @@
 	</div>
 </div>
 						<!-- ============================================== PRODUCT TAGS ============================================== -->
-						<div class="sidebar-widget product-tag wow fadeInUp">
+                        <div class="sidebar-widget product-tag wow fadeInUp">
           <h3 class="section-title">Product tags</h3>
           <div class="sidebar-widget-body outer-top-xs">
             <div class="tag-list"> 

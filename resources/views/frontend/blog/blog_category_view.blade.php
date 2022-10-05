@@ -6,7 +6,8 @@
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
 				<li><a href="#">Home</a></li>
-				<li class='active'><a style="color:#0f6cb2" href="{{route('blog.posts')}}" >Blog</a></li>
+				<li class='active'><a href="{{route('blog.posts')}}" >Blog</a></li>
+                <li class='active'><a style="color:#0f6cb2" href="{{url('/blog/category/'.$categoryWanted->category_slug_en)}}">{{ $categoryWanted->category_name_en}}</a></li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
 	</div><!-- /.container -->
@@ -150,7 +151,7 @@
 	</div>
 </div>
 						<!-- ============================================== PRODUCT TAGS ============================================== -->
-						<div class="sidebar-widget product-tag wow fadeInUp">
+                        <div class="sidebar-widget product-tag wow fadeInUp">
           <h3 class="section-title">Product tags</h3>
           <div class="sidebar-widget-body outer-top-xs">
             <div class="tag-list"> 

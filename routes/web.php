@@ -370,6 +370,11 @@ Route::post('/add-to-wishlist/{product_id}', [CartController::class, 'AddToWishL
 
 //display blog in frontend
 Route::get('/blog', [FrontendBlogController::class, 'DisplayBlogPosts'])->name('blog.posts');
+Route::get('/blog/post/search', [FrontendBlogController::class, 'GetSearchedPosts'])->name('post.search');
+Route::get('/blog/category/{catSlug}', [FrontendBlogController::class, 'GetCategoryBlog']);
+Route::get('/blog/post/{postId}', [FrontendBlogController::class, 'GetPostDetails'])->name('post.details');
+Route::get('/comments/post/{idPost}', [FrontendBlogController::class, 'CommentsList']);
+
 
 Route::group(['prefix'=>'user','middleware' => ['user','auth'],'namespace'=>'User'],function(){
         Route::get('/wishlist', [WishlistController::class, 'ViewWishlist'])->name('wishlist'); // just the page without info

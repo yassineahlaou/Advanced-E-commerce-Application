@@ -140,7 +140,7 @@ class BlogController extends Controller
              'post_title_fr' => $request->post_title_fr,
              'title_slug_en' => strtolower(str_replace(' ', '_',$request->post_title_en)),//first param is what we want to replace, second whith what we will replace , last one where should we replace
              'title_slug_fr' => strtolower(str_replace(' ', '_',$request->post_title_fr)),
-            
+            'post_author'=>$request->post_author,
              'post_details_en' => $request->post_details_en,
              'post_details_fr' => $request->post_details_fr,
              'post_image' => $save_url,
@@ -195,7 +195,7 @@ class BlogController extends Controller
                        'post_title_fr' => $request->post_title_fr,
                        'title_slug_en' => strtolower(str_replace(' ', '_',$request->post_title_en)),//first param is what we want to replace, second whith what we will replace , last one where should we replace
                        'title_slug_fr' => strtolower(str_replace(' ', '_',$request->post_title_fr)),
-                      
+                      'post_author'=>$request->post_author,
                        'post_details_en' => $request->post_details_en,
                        'post_details_fr' => $request->post_details_fr,
                       'post_image' => $save_url,
@@ -226,7 +226,7 @@ class BlogController extends Controller
                 'post_title_fr' => $request->post_title_fr,
                 'title_slug_en' => strtolower(str_replace(' ', '_',$request->post_title_en)),//first param is what we want to replace, second whith what we will replace , last one where should we replace
                 'title_slug_fr' => strtolower(str_replace(' ', '_',$request->post_title_fr)),
-               
+                'post_author'=>$request->post_author,
                 'post_details_en' => $request->post_details_en,
                 'post_details_fr' => $request->post_details_fr,
              //  'post_image' => $save_url,

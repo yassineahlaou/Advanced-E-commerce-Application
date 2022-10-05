@@ -70,6 +70,18 @@
                                 </div>
 							</div>
                             </div>
+							<div class="col-md-6">
+
+                            <div class="form-group">
+								<h5>Post Author<span class="text-danger">*</span></h5>
+								<div class="controls">
+									<input type="text" name="post_author" id="post_author" required="" class="form-control" value="{{$post->post_author}}"> 
+                                    @error('post_author')
+            							<span class="invalid-feedback" role="alert"><strong>{{$message}}</strong></span>
+            						@enderror 
+                                </div>
+							</div>
+                            </div>
                            
                            
 

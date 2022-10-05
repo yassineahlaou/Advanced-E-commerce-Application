@@ -46,6 +46,18 @@
     flex-direction: column;
     gap: 10px;
 }
-.butt{
+.overflow-wrap{
+                
+    height: fit-content;
 
-}
+    
+     
+     
+     
+     display: -webkit-box;
+     -webkit-box-orient: vertical;
+     -webkit-line-clamp: 3;
+     overflow: hidden;
+       
+     
+ }

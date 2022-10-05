@@ -43,7 +43,7 @@
                                 @if ($user->avatar == NULL)
                                 <td><img  src="{{asset('upload/no_image.jpg')}}"  style="width:70px;heigth:40px"></td>
                                 @else
-                                <td><img  src="{{asset('upload/user_images/'. $user->avatar)}}"  style="width:70px;heigth:40px"></td>
+                                <td><img  src="{{$user->avatar}}"  style="width:70px;heigth:40px"></td>
 								@endif
 								
 								@else

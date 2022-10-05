@@ -105,7 +105,8 @@
                   </li>
                 </ul>
                 <input class="search-field" onfocus="search_result_show()" onblur="search_result_hide()" name="search" id="search" placeholder="Search here..." />
-                <button class="search-button" type="submit"></button> </div>
+                <button class="search-button" type="submit"></button> 
+              </div>
             </form>
             <div id="searchProducts"></div>
           </div>

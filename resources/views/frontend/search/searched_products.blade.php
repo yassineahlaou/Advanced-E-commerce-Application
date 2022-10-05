@@ -289,12 +289,9 @@
     
 
 @foreach ($tagsfrensh as $tagf)
-@if ($tag == $tagf)
 
-      <a class="item active" title="{{$tagf}}" href="{{url('/products/tag/'. $tagf)}}">{{$tagf}}</a>
-      @else
       <a class="item" title="{{$tagf}}" href="{{url('/products/tag/'. $tagf)}}">{{$tagf}}</a>
-      @endif
+     
     
     @endforeach
     @endif

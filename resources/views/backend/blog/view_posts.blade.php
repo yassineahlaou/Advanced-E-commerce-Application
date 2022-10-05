@@ -27,6 +27,7 @@
 							<tr>
 								<th>Image</th>
                                 <th>Post Cateory</th>
+								<th>Post Author</th>
 								<th>Post Title English</th>
 								<th>Post Title Frensh</th>
                                 
@@ -43,6 +44,7 @@
 								
                                 <td><img  src="{{asset($post->post_image)}}"  style="width:70px;heigth:40px"></td>
                                 <td>{{$post['category']['category_name_en']}}</td>
+								<td>{{$post->post_author}}</td>
                                 <td>{{$post->post_title_en}}</td>
                                 <td>{{$post->post_title_en}}</td>
 
