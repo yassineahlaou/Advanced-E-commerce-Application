@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\BlogPost;
 use App\Models\BlogPostCategory;
 use App\Models\PostComment;
-
+use App\Models\CommentReply;
+use Auth;
+use Carbon\Carbon;
 class FrontendBlogController extends Controller
 {
     public function DisplayBlogPosts(){
@@ -59,16 +61,65 @@ class FrontendBlogController extends Controller
 
     public function CommentsList($idPost){
         $comments = PostComment::with('user')->where('post_id',$idPost)->latest()->get();
+        $replies = CommentReply::with('user')->where('post_id', $idPost)->orderBy('id','ASC')->get();
        
 
        
        return response()->json(array(
            'comments' => $comments,
+           'replies'=> $replies,
            
            
            
 
        ));
    } // end method 
-   
+
+   public function CommentStore(Request $request , $idPost){
+    PostComment::insert([
+        'user_id'=>Auth::user()->id,
+        'post_id'=>$idPost,
+        'comment_details'=>$request->comment_details,
+        'created_at'=>Carbon::now(),
+
+    ]);
+
+    return response()->json(['success' => 'Your Comment is Posted']);
+   }
+
+   public function GetTotalComments($idPost){
+    $comments = PostComment::where('post_id', $idPost)->get();
+    return response()->json(array(
+        'total_comments' =>count($comments),
+       
+      
+
+    ));
+   }
+   public function CommentRepliesList($idComment, $idPost){
+    $replies = CommentReply::with('user')->with('comment')->where('comment_id' , $idComment)->where('post_id', $idPost)->orderBy('id','ASC')->get();
+    return response()->json(array(
+        'replies' =>$replies,
+        'idComment'=>$idComment,
+       
+      
+
+    ));
+
+}
+
+public function ReplyStore(Request $request , $idPost, $idComment){
+   // dd($idComment);
+    CommentReply::insert([
+        'post_id'=>$idPost,
+        'user_id'=>Auth::user()->id,
+        
+        'comment_id'=>$idComment,
+        'reply_details'=>$request->reply_details,
+        'created_at'=>Carbon::now(),
+
+    ]);
+
+    return response()->json(['success' => 'Your Reply is Posted']);
+   }
 }

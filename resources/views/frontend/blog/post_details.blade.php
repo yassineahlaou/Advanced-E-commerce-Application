@@ -1,11 +1,11 @@
 @extends('frontend.main_master')
 @section('content')
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <div class="breadcrumb">
 	<div class="container">
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
-				<li><a href="#">Home</a></li>
+				<li><a href="/">Home</a></li>
 				<li class='active'><a  href="{{route('blog.posts')}}" >Blog</a></li>
                 <li class='active'><a  href="{{url('/blog/category/'.$postClicked['category']['category_slug_en'])}}">{{ $postClicked['category']['category_name_en']}}</a></li>
                 <li class='active'><a style="color:#0f6cb2" href="{{route('post.details', $postClicked->id)}}">{{ $postClicked->post_title_en}}</a></li>
@@ -23,7 +23,7 @@
 	<img class="img-responsive" src="{{asset($postClicked->post_image)}}" alt="">
 	<h1>{{$postClicked->post_title}}</h1>
 	<span class="author">{{$postClicked->post_author}}</span>
-	<span class="review">{{count($comments)}} comments</span>
+	<span class="review" id="total_comments"></span>
 	<span class="date-time">{{$postClicked->created_at}}</span>
 	
 	<p>{!! $postClicked->post_details_en !!}</p>
@@ -40,7 +40,7 @@
 					<div class="blog-review wow fadeInUp">
 	<div class="row">
 		<div class="col-md-12">
-			<h3 class="title-review-comments">{{count($comments)}} Comments</h3>
+			<h3 class="title-review-comments" id="total_comments_h3"></h3>
 		</div>
         <p hidden id="postid">{{$postClicked->id}}</p>
 		<div id="comments"></div>
@@ -54,41 +54,25 @@
 		<div class="col-md-12">
 			<h4>Leave A Comment</h4>
 		</div>
-		<div class="col-md-4">
-			<form class="register-form" role="form">
-				<div class="form-group">
-			    <label class="info-title" for="exampleInputName">Your Name <span>*</span></label>
-			    <input type="email" class="form-control unicase-form-control text-input" id="exampleInputName" placeholder="">
-			  </div>
-			</form>
-		</div>
-		<div class="col-md-4">
-			<form class="register-form" role="form">
-				<div class="form-group">
-			    <label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
-			    <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="">
-			  </div>
-			</form>
-		</div>
-		<div class="col-md-4">
-			<form class="register-form" role="form">
-				<div class="form-group">
-			    <label class="info-title" for="exampleInputTitle">Title <span>*</span></label>
-			    <input type="email" class="form-control unicase-form-control text-input" id="exampleInputTitle" placeholder="">
-			  </div>
-			</form>
-		</div>
+		
+		@guest  
+        <div class="col-md-12">
+        <p>  Please , Login In First <b> <a href="{{ route('login') }}">Login Here</a> </b> </p>
+        </div>
+        @else
 		<div class="col-md-12">
-			<form class="register-form" role="form">
+			
 				<div class="form-group">
+                <input type="hidden"  name="post_id" id="post_id" value="{{$postClicked->id}}">
 			    <label class="info-title" for="exampleInputComments">Your Comments <span>*</span></label>
-			    <textarea class="form-control unicase-form-control" id="exampleInputComments" ></textarea>
+			    <textarea class="form-control unicase-form-control" id="comment_details"  name="comment_details"></textarea>
 			  </div>
-			</form>
+			
 		</div>
 		<div class="col-md-12 outer-bottom-small m-t-20">
-			<button type="submit" class="btn-upper btn btn-primary checkout-page-button">Submit Comment</button>
+			<button id="save_comment" class="btn-upper btn btn-primary checkout-page-button">Submit Comment</button>
 		</div>
+        @endguest
 	</div>
 </div>
 				</div>
@@ -100,7 +84,7 @@
 						<div class="search-area outer-bottom-small">
 				<form method="get" action="{{ route('post.search') }}">
         <div class="control-group">
-		<input class="search-field"  name="search_post" id="search_post" placeholder="Type to search" />
+		<input class="search-field"  name="search_post" id="search_post" placeholder="Type to search" required="" />
 		<button ><a class="search-button" type="submit"></a></button>
                 
            
@@ -350,31 +334,403 @@
             dataType:'json',
             success:function(response){
                 var list = ""
+                var listreplies = ""
+                var checkk = 0;
                 $.each(response.comments, function(key,value){
+                    function addZero(i) {
+						if (i < 10) {i = "0" + i}
+						return i;
+					}
+
+					var getDate = new Date(value.created_at);
+
+					var day =  addZero(getDate.getDate());
+					var month =   getDate.getMonth();
+					month =  addZero(month+1);  // JavaScript months are 0-11
+					var year =  addZero(getDate.getFullYear());
+
+					var hour = addZero(getDate.getHours());
+					var min = addZero(getDate.getMinutes());
+					var sec = addZero(getDate.getSeconds());
+					var formatedDate = day + "." + month + "." + year + "\t" + "at" + "\t" +hour + ":" + min + ":" + sec;
+					
                     list += `
+                   <div class="comment" name=${value.id}> 
                     <div class="col-md-2 col-sm-2">
                         <img src="/upload/user_images/${value.user.profile_photo_path}" alt="Responsive image" class="img-rounded img-responsive">
                     </div>
-                    <div class="col-md-10 col-sm-10">
-                        <div class="blog-comments inner-bottom-xs outer-bottom-xs">
+                    <p hidden id="commentid">${value.id}</p>
+                    <p hidden id="postid">${value.post_id}</p>
+
+                    <div class="col-md-10 col-sm-10 blog-comments outer-bottom-xs">
+                        <div class="blog-comments inner-bottom-xs sel">
                             <h4>${value.user.name}</h4>
                             <span class="review-action pull-right">
-                               ${value.created_at} &sol;   
-                                <a href=""> Repost</a> &sol;
-                                <a href=""> Reply</a>
+                               ${formatedDate} &sol;   
+                               
+                                <a id="addreply" name=${value.id} class="hiddenitem"> Reply</a>
                             </span>
                             <p>${value.comment_details}</p>
                         </div>
                     </div>
+                    <div class="blog-comments-responce outer-top-xs ">
+				<div class="row">
+                <div  style="display: none" id="show-replies" name=${value.id}>
+                `
+                $.each(response.replies, function(key,val){
+                        
+
+                        if (val.comment_id == value.id){
+                           //console.log('yesyys');
+                            
+                            function addZero(i) {
+                                        if (i < 10) {i = "0" + i}
+                                        return i;
+                                    }
+
+                                    var getDate = new Date(val.created_at);
+
+                                    var day =  addZero(getDate.getDate());
+                                    var month =   getDate.getMonth();
+                                    month =  addZero(month+1);  // JavaScript months are 0-11
+                                    var year =  addZero(getDate.getFullYear());
+
+                                    var hour = addZero(getDate.getHours());
+                                    var min = addZero(getDate.getMinutes());
+                                    var sec = addZero(getDate.getSeconds());
+                                    var formatedDate = day + "." + month + "." + year + "\t" + "at" + "\t" +hour + ":" + min + ":" + sec;
+
+                            list += `
+                            
+                            <div class="col-md-2 col-sm-2">
+                                        <img src="/upload/user_images/${val.user.profile_photo_path}" alt="Responsive image" class="img-rounded img-responsive">
+                                    </div>
+                                    <div class="col-md-10 col-sm-10 outer-bottom-xs">
+                                        <div class="blog-sub-comments inner-bottom-xs">
+                                            <h4>${val.user.name}</h4> (reply)
+                                            <span class="review-action pull-right">
+                                            ${formatedDate} &sol;   
+                                               
+                                            </span>
+                                            <p>${val.reply_details}</p>
+                                        </div>
+                                    </div>
+                                   
+
+                            `  
+                                                 
+                         }
+                        
+                    });
+                    list += ` </div>`
+                
+                    list += `<div  style="display: none" id="form_reply" name=${value.id}>
+                   
+		<div class="col-md-10 col-sm-10 outer-bottom-xs">
+			<h4>Leave A Reply</h4>
+		</div>
+		
+		@guest  
+        <div class="col-md-10 col-sm-10 outer-bottom-xs">
+        <p>  Please , Login In First <b> <a href="/login">Login Here</a> </b> </p>
+        </div>
+        @else
+		<div class="col-md-10 col-sm-10 outer-bottom-xs">
+			
+				<div class="form-group">
+                
+			    <label class="info-title" for="exampleInputComments">Your Reply <span>*</span></label>
+			    <textarea class="form-control unicase-form-control" id="reply_details"  name="reply_details"></textarea>
+			  </div>
+			
+		</div>
+		<div class="col-md-10 col-sm-10 outer-bottom-xs outer-bottom-small m-t-20">
+			<button id="save_reply" class="btn-upper btn btn-primary checkout-page-button">Submit Reply</button>
+		</div>
+        @endguest
+	</div>
+
+                   
+                    </div>
+                    </div>
+                    </div>
                     `
+                   
+                    
+
+                    
                 });
                 
                 $('#comments').html(list);//jquery function
+                
+                //$('.comment').find('#show-replies').html(listreplies);
+                    
+                $('.comment').each(function(){
+   
+                               // var rate = $(this).find('#addreply').text();
+								//console.log(rate);
+                               // console.log($(this).find('#commentid').text());
+                               // console.log($(this).find('#form_reply').attr('name'));
+
+                              $(this).find('#addreply').click(function(){
+                                    
+                                      // console.log( $(this).attr('name'));
+                                       //console.log($(this).closest('.comment').find('#form_reply').attr('name'));
+                                if ( $(this).attr('class') == "hiddenitem")
+                                       {
+                                        if ($(this).closest('.comment').find('#form_reply').attr('name') == $(this).attr('name') && $(this).closest('.comment').find('#show-replies').attr('name') == $(this).attr('name'))
+
+                                     {
+                                        $(this).removeClass('hiddenitem');
+									    $(this).addClass('shownitem');
+                                        //we used .closest to  travel up the DOM
+                                        $(this).closest('.comment').find('#form_reply').show();
+                                        $(this).closest('.comment').find('#show-replies').show();
+                                    }
+                                }
+                                else{
+                                    if ($(this).closest('.comment').find('#form_reply').attr('name') == $(this).attr('name') && $(this).closest('.comment').find('#show-replies').attr('name') == $(this).attr('name'))
+
+                                            {
+                                            $(this).removeClass('shownitem');
+                                            $(this).addClass('hiddenitem');
+                                            //we used .closest to  travel up the DOM
+                                            $(this).closest('.comment').find('#form_reply').hide();
+                                            $(this).closest('.comment').find('#show-replies').hide();
+                                            }
+
+                                }
+                                });
+
+                               
+                                    
+                                   
+                           // $(this).find('#form_reply').show();
+                    
+                           // $(this).find('#show-replys').show();
+
+                           
+                
+
+
+                        
+                                   
+
+
+                       
+
+                        //submit reply
+
+                        $(this).find('#save_reply').click(function(){
+
+                            var reply_details = $(this).closest('.comment').find('#reply_details').val();
+
+                            var idComment =  $(this).closest('.comment').find('#commentid').text();
+                         var idPost = $(this).closest('.comment').find('#postid').text();
+                        // console.log(idComment);
+
+
+                                $.ajax({
+
+                                    
+                                    type: "POST",
+                                    data:{reply_details:reply_details},
+                                    dataType: 'json',
+                                    url:'/reply/store/post/'+idPost+'/comment/'+idComment,
+                                
+                                    success:function(data)
+                                    {
+                                        
+                                      
+                                            $.ajax({
+                                                type: 'GET',
+                                                url: '/replies/comment/'+idComment+'/post/'+idPost,
+                                                dataType:'json',
+                                                success:function(response){
+                                                    var list = ""
+                                                    var idComment = response.idComment
+                                                    $.each(response.replies, function(key,value){
+                                                        if (response.idComment == value.comment.id){
+                                                        function addZero(i) {
+                                                            if (i < 10) {i = "0" + i}
+                                                            return i;
+                                                        }
+
+                                                        var getDate = new Date(value.created_at);
+
+                                                        var day =  addZero(getDate.getDate());
+                                                        var month =   getDate.getMonth();
+                                                        month =  addZero(month+1);  // JavaScript months are 0-11
+                                                        var year =  addZero(getDate.getFullYear());
+
+                                                        var hour = addZero(getDate.getHours());
+                                                        var min = addZero(getDate.getMinutes());
+                                                        var sec = addZero(getDate.getSeconds());
+                                                        var formatedDate = day + "." + month + "." + year + "\t" + "at" + "\t" +hour + ":" + min + ":" + sec;
+                                                        list += `
+                                                        <div class="col-md-2 col-sm-2">
+                                                            <img src="/upload/user_images/${value.user.profile_photo_path}" alt="Responsive image" class="img-rounded img-responsive">
+                                                        </div>
+                                                        <div class="col-md-10 col-sm-10 outer-bottom-xs">
+                                                            <div class="blog-sub-comments inner-bottom-xs">
+                                                                <h4>${value.user.name}</h4> (reply)
+                                                                <span class="review-action pull-right">
+                                                                ${formatedDate} &sol;   
+                                                                
+                                                                </span>
+                                                                <p>${value.reply_details}</p>
+                                                            </div>
+                                                        </div>
+
+                                                        `
+
+                                                    }
+                                                    });
+                                                   
+                                                    $(`.comment[name="${idComment}"]`).find('#show-replies').html(list);
+                                                }
+                                            });
+                                       
+                                    
+                                        
+                                        const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        //title: 'Product Added To Cart',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                        })
+                                    if ($.isEmptyObject(data.error)) {
+                                    //if there is no error
+                                    $('.comment').find('#reply_details').val('');
+                                    
+                                        Toast.fire({
+                                            icon: 'success',
+                                            title: data.success
+                                        })
+                                    }else{
+                                    //if there is an error
+                                        Toast.fire({
+                                            icon: 'error',
+                                            title: data.error
+                                        })
+                                    }
+                                    // End Message 
+
+                                    
+                                    
+                                }
+                            });
+
+                            });
+
+
+
+
+
+                    });
+
+                        
+                    
             }
         });
     }
 
     loadComments();
+
+    $('#save_comment').click(function(){
+
+var comment_details = $('#comment_details').val();
+var idPost = $('#post_id').val();
+
+
+
+
+
+
+
+    $.ajax({
+
+        
+        type: "POST",
+        data:{comment_details:comment_details},
+        dataType: 'json',
+        url:'/comment/store/'+idPost,
+      
+        success:function(data)
+        {
+            
+
+            loadComments();
+            loadtotalcomments();
+          
+            
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              icon: 'success',
+              //title: 'Product Added To Cart',
+              showConfirmButton: false,
+              timer: 3000
+            })
+        if ($.isEmptyObject(data.error)) {
+          //if there is no error
+          $('#comment_details').val('');
+         
+            Toast.fire({
+                icon: 'success',
+                title: data.success
+            })
+        }else{
+          //if there is an error
+            Toast.fire({
+                icon: 'error',
+                title: data.error
+            })
+        }
+        // End Message 
+
+           
+        
+    }
+});
+
+});
+
+
+
+function loadtotalcomments()
+{
+	var idPost = $('#postid').text();
+	
+	$.ajax({
+		type: 'GET',
+		
+		url:'/post/totalcomments/'+idPost,
+		
+		//data:{action:'load_data'},
+		dataType:"JSON",
+		success:function(data)
+		{
+			//$('#average_rating').text(data.average_rating);
+			$('#total_comments').text(data.total_comments+" comments");
+            $('#total_comments_h3').html(data.total_comments+" comments");
+
+		
+
+		}
+	}
+	)
+}
+loadtotalcomments()
+
+
+
+
+
+
+
 
 </script>
 @endsection
