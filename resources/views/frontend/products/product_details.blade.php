@@ -371,8 +371,14 @@
 
 											<div class="reviews">
 												<div id="reviewsList"></div>
+												<div class="ajax-loadmore-reviews text-center" style="display:none" >
+      <img src="{{ asset('frontend/assets/images/loader.svg') }}" style="width: 120px; height: 120px;">
+    </div>
+												
 											
 											</div><!-- /.reviews -->
+
+									
 										</div><!-- /.product-reviews -->
 										
 
@@ -768,7 +774,7 @@ $(document).ready(function(){
                     
 
                     load_rating_data();
-					reviewsList();
+					reviewsList(page);
 					
 					const Toast = Swal.mixin({
                       toast: true,
@@ -804,18 +810,28 @@ $(document).ready(function(){
 
     });
 
-	function reviewsList(){
+	function reviewsList(page){
 		var idProduct = $('#productid').text();
         $.ajax({
             type: 'GET',
-            url: '/reviews/list/'+idProduct,
+            url: '/reviews/list/'+idProduct+"?page="+page,
             dataType:'json',
-            success:function(response){
-                //console.log(response)
-               // $('span[id="carttotal"]').text(response.cartTotal);//Having 2 elements with the same ID is not valid html according to the W3C specification. thats's why we use this syntax cause we have 2 elements with the same id in our headr, span(carttotal)
-               // $('#cartcount').text(response.cartQty);
-                var list = ""
-                $.each(response.reviews, function(key,value){
+			beforeSend: function(response){
+          $('.ajax-loadmore-reviews').show();
+        }
+	})
+
+			.done(function(response){
+				//console.log(response.reviews.data)
+			if (response.reviews.data.length == 0 ) {
+				$('.ajax-loadmore-reviews').hide();
+				return;
+			}
+			$('.ajax-loadmore-reviews').hide();
+
+			var list = ""
+                $.each(response.reviews.data, function(key,value){
+					
 					var check = 0;
 					function addZero(i) {
 						if (i < 10) {i = "0" + i}
@@ -875,6 +891,7 @@ $(document).ready(function(){
 							<div class="text">"${value.comment}"</div>
 							
 						`
+						//console.log(response.review_images)
 						$.each(response.review_images, function(key,vall){
 							if (vall.review_id == value.id){check = check + 1;}
 
@@ -892,42 +909,65 @@ $(document).ready(function(){
 
 							`}
 						});
-
 						list += `</div>`
-						
-						
-                });
-                
-                $('#reviewsList').html(list);//jquery function
+				});
+				
 
 				
-				$('.review').each(function(){
-								var rate = $(this).find('#userrating').text();
-								//console.log(rate);
-								var count_star = 0;
-								$(this).find('.user_star').each(function(){
-								count_star++;
+			$('#reviewsList').append(list);
 
-								
-								
-								if(rate >= count_star)
-								{
-									$(this).removeClass('star-light');
-									$(this).addClass('star-warning');
-								}
-							});
-							});
+			$('.review').each(function(){
+					
+					var rate = $(this).find('#userrating').text();
+					//console.log(rate);
+					var count_star = 0;
+					$(this).find('.user_star').each(function(){
+					count_star++;
+
+					
+					
+					if(rate >= count_star)
+					{
+						$(this).removeClass('star-light');
+						$(this).addClass('star-warning');
+					}
+				});
+				});
+
+
+			
+			
+			})
+
+			.fail(function(){
+        alert('Something Went Wrong');
+      })
+	
+	
+          
+
+	
+			
+
+
+						}
 							
 				
 
-            }
-       
-            
           
-          })
-        }
 		
-        reviewsList();//we should run the function
+       reviewsList(page);//we should run the function
+
+		
+				var page = 1;
+					$(window).scroll(function (){
+						//The window height is what I see, but the document height includes everything below or above.
+					if ($(window).scrollTop() +$(window).height() >= $(document).height() - 600){
+						//we did -400 so we don't have to scroll untill button to load more
+						page ++;
+						reviewsList(page);
+					}
+					});
 
 		
 

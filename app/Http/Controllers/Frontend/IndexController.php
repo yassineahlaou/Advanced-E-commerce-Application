@@ -620,13 +620,34 @@ class IndexController extends Controller
 
     }
 
-    public function ReviewsList($idProduct){
+    public function ReviewsList(Request $request, $idProduct){
          $reviews = Review::with('user')->where('product_id',$idProduct)->where('status','Approved')->latest()->get();
+         
          $review_images = ReviewImages::with('review')->get();
+
+         // Get current page form url e.x. &page=1
+          $currentPage = LengthAwarePaginator::resolveCurrentPage();
+ 
+          // Create a new Laravel collection from the array data
+         // $productCollection = collect($listpros);
+   
+          // Define how many products we want to be visible in each page
+          $perPage = 3;
+   
+          // Slice the collection to get the products to display in current page
+          $currentPageproducts = $reviews->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+   
+          // Create our paginator and pass it to the view
+          $paginatedproducts= new LengthAwarePaginator($currentPageproducts , count($reviews), $perPage);
+   
+          // set url path for generted links
+          $paginatedproducts->setPath($request->url());
+
+         
 
         
     	return response()->json(array(
-    		'reviews' => $reviews,
+    		'reviews' => $paginatedproducts,
             'review_images'=>$review_images,
     		
             
