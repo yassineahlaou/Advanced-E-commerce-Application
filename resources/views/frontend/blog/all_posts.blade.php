@@ -1,6 +1,9 @@
 @extends('frontend.main_master')
 @section('content')
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
 <div class="breadcrumb">
 	<div class="container">
 		<div class="breadcrumb-inner">
@@ -16,53 +19,14 @@
 	<div class="container">
 		<div class="row">
 			<div class="blog-page">
-				<div class="col-md-9">
-					@php  
-					$count = 0;
-					@endphp
-    @foreach ($allPosts as $post)
-	@php 
-	$count = $count +1;
-	@endphp 
-	@if ($count <= 1)
-<div class="blog-post   wow fadeInUp">
-	<a href="blog-details.html"><img class="img-responsive" src="{{asset($post->post_image)}}"  alt=""></a>
-	<h1><a href="blog-details.html">{{$post->post_title_en}}</a></h1>
-	<span class="author">{{$post->post_author}}</span>
-	<!--<span class="review">6 Comments</span>-->
-	<span class="date-time">{{$post->created_at}}</span>
-	<p>{!! Str::limit($post->post_details_en, 200 ) !!}</p><!-- truncate with STR-->
-	<a href="{{route('post.details', $post->id)}}" class="btn btn-upper btn-primary read-more">read more</a>
+				<div class="col-md-9" >
+					<div id="list-posts">
+				@include('frontend.blog.list_posts')
 </div>
-@else
-<div class="blog-post  outer-top-bd wow fadeInUp">
-	<a href="blog-details.html"><img class="img-responsive" src="{{asset($post->post_image)}}"  alt=""></a>
-	<h1><a href="blog-details.html">{{$post->post_title_en}}</a></h1>
-	<span class="author">{{$post->post_author}}</span>
-	<!--<span class="review">6 Comments</span>-->
-	<span class="date-time">{{$post->created_at}}</span>
-	<p>{!! Str::limit($post->post_details_en, 200 ) !!}</p><!-- truncate with STR-->
-	<a href="{{route('post.details', $post->id)}}" class="btn btn-upper btn-primary read-more">read more</a>
-</div>
-@endif
 
-@endforeach
-
-<div class="clearfix blog-pagination filters-container  wow fadeInUp" style="padding:0px; background:none; box-shadow:none; margin-top:15px; border:none">
-						
-	<div class="text-right">
-         <div class="pagination-container">
-	<ul class="list-inline list-unstyled">
-		<li class="prev"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-		<li><a href="#">1</a></li>	
-		<li class="active"><a href="#">2</a></li>	
-		<li><a href="#">3</a></li>	
-		<li><a href="#">4</a></li>	
-		<li class="next"><a href="#"><i class="fa fa-angle-right"></i></a></li>
-	</ul><!-- /.list-inline -->
-</div><!-- /.pagination-container -->    </div><!-- /.text-right -->
-
-</div><!-- /.filters-container -->				
+				<div class="ajax-loadmore-posts text-center" style="display:none" >
+      <img src="{{ asset('frontend/assets/images/loader.svg') }}" style="width: 120px; height: 120px;">
+    </div>
 			
 </div>
 				<div class="col-md-3 sidebar">
@@ -312,4 +276,39 @@
         @include('frontend.body.brands')
 <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->	</div>
 </div>
+
+<script>
+    function loadmorePosts(page){
+      $.ajax({
+        type: "get",
+        url: "?page="+page,
+        beforeSend: function(response){
+          $('.ajax-loadmore-posts').show();
+        }
+      })
+
+	  .done(function(data){
+        if (data.posts_ajax == " " ) {
+			
+          return;
+        }
+         $('.ajax-loadmore-posts').hide();
+         $('#list-posts').append(data.posts_ajax);
+		
+        
+      })
+      .fail(function(){
+        alert('Something Went Wrong');
+      })
+    }
+    var page = 1;
+    $(window).scroll(function (){
+		//The window height is what I see, but the document height includes everything below or above.
+      if ($(window).scrollTop() +$(window).height() >= $(document).height()){
+        page ++;
+		loadmorePosts(page);
+      }
+    });
+</script>
+
 @endsection

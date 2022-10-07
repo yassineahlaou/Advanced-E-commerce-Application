@@ -794,8 +794,9 @@ function loadtotalcommentsformore()
 		 
 		url:'/post/totalcomments/'+idPost,
         async: false,  //Making the request synchronous means that browser will pause program execution (freeze all UI too) until the request is done
-		//data:{action:'load_data'},
+		//for a solution for async we can use the pagination in laravel + ajax + loader svg , likee in blog posts view
 		dataType:"JSON",
+        
 		success:function(data)
 		{
             result = data.total_comments;
