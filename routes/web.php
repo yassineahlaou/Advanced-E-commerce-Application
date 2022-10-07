@@ -373,7 +373,7 @@ Route::get('/blog', [FrontendBlogController::class, 'DisplayBlogPosts'])->name('
 Route::get('/blog/post/search', [FrontendBlogController::class, 'GetSearchedPosts'])->name('post.search');
 Route::get('/blog/category/{catSlug}', [FrontendBlogController::class, 'GetCategoryBlog']);
 Route::get('/blog/post/{postId}', [FrontendBlogController::class, 'GetPostDetails'])->name('post.details');
-Route::get('/comments/post/{idPost}', [FrontendBlogController::class, 'CommentsList']);
+Route::get('/comments/post/{idPost}/{limit}', [FrontendBlogController::class, 'CommentsList']);
 Route::post('/comment/store/{idPost}', [FrontendBlogController::class, 'CommentStore']);
 Route::get('/post/totalcomments/{idPost}', [FrontendBlogController::class, 'GetTotalComments']);
 Route::get('/replies/comment/{idComment}/post/{idPost}',  [FrontendBlogController::class, 'CommentRepliesList']);

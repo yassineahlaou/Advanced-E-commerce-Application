@@ -59,9 +59,10 @@ class FrontendBlogController extends Controller
 
     }
 
-    public function CommentsList($idPost){
-        $comments = PostComment::with('user')->where('post_id',$idPost)->latest()->get();
+    public function CommentsList($idPost, $limit){
+        $comments = PostComment::with('user')->where('post_id',$idPost)->latest()->limit($limit)->get();
         $replies = CommentReply::with('user')->where('post_id', $idPost)->orderBy('id','ASC')->get();
+
        
 
        
@@ -80,6 +81,7 @@ class FrontendBlogController extends Controller
         'user_id'=>Auth::user()->id,
         'post_id'=>$idPost,
         'comment_details'=>$request->comment_details,
+        'replies_total'=>0,
         'created_at'=>Carbon::now(),
 
     ]);
@@ -101,6 +103,7 @@ class FrontendBlogController extends Controller
     return response()->json(array(
         'replies' =>$replies,
         'idComment'=>$idComment,
+        'total' => count($replies),
        
       
 
@@ -119,7 +122,16 @@ public function ReplyStore(Request $request , $idPost, $idComment){
         'created_at'=>Carbon::now(),
 
     ]);
+    $comment = PostComment::where('id',$idComment)->first();
+    PostComment::findOrFail($idComment)->update([
+        'replies_total'=>$comment->replies_total + 1,
 
-    return response()->json(['success' => 'Your Reply is Posted']);
+    ]);
+    $commentAfter = PostComment::where('id',$idComment)->first();
+
+    return response()->json([
+        'success' => 'Your Reply is Posted',
+        'total' => $commentAfter->replies_total,
+    ]);
    }
 }

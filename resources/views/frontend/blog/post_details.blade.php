@@ -44,10 +44,13 @@
 		</div>
         <p hidden id="postid">{{$postClicked->id}}</p>
 		<div id="comments"></div>
+       
+       
+        <div class="post-load-more col-md-12"><a class="btn btn-upper btn-primary" id="loadmore">Load more</a></div>
 		
 		
 	
-		<div class="post-load-more col-md-12"><a class="btn btn-upper btn-primary" href="#">Load more</a></div>
+		
 	</div>
 </div>					<div class="blog-write-comment outer-bottom-xs outer-top-xs">
 	<div class="row">
@@ -325,18 +328,29 @@
 </div>
 
 <script>
-
+    
+    var limit = 0;
+   var totalDisplayed = 0;
     function loadComments(){
         var idPost = $('#postid').text();
+        limit = limit + 5;
+        //totalDisplayed = totalDisplayed + 1;
+        
+        
         $.ajax({
             type: 'GET',
-            url: '/comments/post/'+idPost,
+            url: '/comments/post/'+idPost+'/'+limit,
             dataType:'json',
             success:function(response){
                 var list = ""
                 var listreplies = ""
                 var checkk = 0;
+
                 $.each(response.comments, function(key,value){
+                  
+                 
+                   
+                    
                     function addZero(i) {
 						if (i < 10) {i = "0" + i}
 						return i;
@@ -363,16 +377,16 @@
                     <p hidden id="postid">${value.post_id}</p>
 
                     <div class="col-md-10 col-sm-10 blog-comments outer-bottom-xs">
-                        <div class="blog-comments inner-bottom-xs sel">
+                        <div class=" inner-bottom-xs sel">
                             <h4>${value.user.name}</h4>
                             <span class="review-action pull-right">
                                ${formatedDate} &sol;   
-                               
-                                <a id="addreply" name=${value.id} class="hiddenitem"> Reply</a>
+                             
+                                <a style="cursor:pointer" id="addreply" name=${value.id} class="hiddenitem"> ${value.replies_total} Replies</a>
                             </span>
                             <p>${value.comment_details}</p>
                         </div>
-                    </div>
+                   
                     <div class="blog-comments-responce outer-top-xs ">
 				<div class="row">
                 <div  style="display: none" id="show-replies" name=${value.id}>
@@ -407,9 +421,9 @@
                                     </div>
                                     <div class="col-md-10 col-sm-10 outer-bottom-xs">
                                         <div class="blog-sub-comments inner-bottom-xs">
-                                            <h4>${val.user.name}</h4> (reply)
+                                            <h4>${val.user.name}</h4>
                                             <span class="review-action pull-right">
-                                            ${formatedDate} &sol;   
+                                            ${formatedDate} 
                                                
                                             </span>
                                             <p>${val.reply_details}</p>
@@ -422,7 +436,8 @@
                          }
                         
                     });
-                    list += ` </div>`
+                    list += ` </div>
+                    `
                 
                     list += `<div  style="display: none" id="form_reply" name=${value.id}>
                    
@@ -435,7 +450,7 @@
         <p>  Please , Login In First <b> <a href="/login">Login Here</a> </b> </p>
         </div>
         @else
-		<div class="col-md-10 col-sm-10 outer-bottom-xs">
+		<div class="col-md-12 col-sm-10 outer-bottom-xs">
 			
 				<div class="form-group">
                 
@@ -454,17 +469,39 @@
                     </div>
                     </div>
                     </div>
+                    </div>
+
+                    <p hidden id="total"><p>
+                    
                     `
                    
                     
 
                     
                 });
+
+  
                 
                 $('#comments').html(list);//jquery function
                 
                 //$('.comment').find('#show-replies').html(listreplies);
+               // console.log($('.comment').length)
+              
+                $('#total').text($('.comment').length)
+                var tot = $('#total_comments').text();
+                
+                var newto=tot.substring(0,tot.indexOf(' '));
+                console.log($('#total').text());
+               console.log(loadtotalcommentsformore())
+                   
+                if ( loadtotalcommentsformore() ==  $('#total').text()){
                     
+                    $('#loadmore').text('No more Results');
+                    $('#loadmore').attr('disabled', true);
+                }
+               
+            
+               
                 $('.comment').each(function(){
    
                                // var rate = $(this).find('#addreply').text();
@@ -547,10 +584,14 @@
                                                 url: '/replies/comment/'+idComment+'/post/'+idPost,
                                                 dataType:'json',
                                                 success:function(response){
+                                                   
                                                     var list = ""
                                                     var idComment = response.idComment
                                                     $.each(response.replies, function(key,value){
                                                         if (response.idComment == value.comment.id){
+                                                           
+                                                                $('.comment').find(`#addreply[name='${response.idComment}']`).text(response.total + ' Replies')
+                                                            
                                                         function addZero(i) {
                                                             if (i < 10) {i = "0" + i}
                                                             return i;
@@ -573,9 +614,9 @@
                                                         </div>
                                                         <div class="col-md-10 col-sm-10 outer-bottom-xs">
                                                             <div class="blog-sub-comments inner-bottom-xs">
-                                                                <h4>${value.user.name}</h4> (reply)
+                                                                <h4>${value.user.name}</h4>
                                                                 <span class="review-action pull-right">
-                                                                ${formatedDate} &sol;   
+                                                                ${formatedDate}  
                                                                 
                                                                 </span>
                                                                 <p>${value.reply_details}</p>
@@ -635,9 +676,12 @@
                     
             }
         });
+        
     }
 
     loadComments();
+    
+    
 
     $('#save_comment').click(function(){
 
@@ -725,12 +769,45 @@ function loadtotalcomments()
 }
 loadtotalcomments()
 
+//console.log(limit);
+    //console.log($('#total').text());
+   // console.log($('.comment').length);
+$('.post-load-more').find('#loadmore').click(function(){
+
+    loadComments();
+    
+    
+    console.log(limit);
+    //console.log($('#total').text());
+    
+
+});
 
 
+function loadtotalcommentsformore()
+{
+	var idPost = $('#postid').text();
+    var result=0;
+	
+	$.ajax({
+		type: 'GET',
+		 
+		url:'/post/totalcomments/'+idPost,
+        async: false,  //Making the request synchronous means that browser will pause program execution (freeze all UI too) until the request is done
+		//data:{action:'load_data'},
+		dataType:"JSON",
+		success:function(data)
+		{
+            result = data.total_comments;
+			
 
+		
 
-
-
+		}
+	}
+	);
+    return result;
+}
 
 </script>
 @endsection

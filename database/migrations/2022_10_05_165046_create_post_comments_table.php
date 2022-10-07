@@ -19,6 +19,8 @@ return new class extends Migration
             $table->unSignedBigInteger('user_id')->unsigned();
             
             $table->text('comment_details');
+            $table->integer('replies_total')->nullable();
+
             $table->timestamps();
         });
     }

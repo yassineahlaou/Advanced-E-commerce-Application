@@ -693,4 +693,6 @@ class IndexController extends Controller
 		$products = Product::where('product_name_en','LIKE',"%$inputsearch%")->limit(5)->get();
 		return view('frontend.search.search_product',compact('products'));
     }
+
+    
 }
