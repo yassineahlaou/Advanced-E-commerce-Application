@@ -411,7 +411,7 @@
 												<div class="form-container">
 												
 													
-													<input type="hidden"  name="product_id" id="product_id" value="{{$productData->id}}">
+													<input type="hidden"  name="product_id" id="product_id"  value="{{$productData->id}}">
 													<h4 class="title">Write your own review</h4>
 											<h4 class="text-center mt-2 mb-4">
 												<i class="fa fa-star star-light submit_star mr-1" id="submit_star_1" data-rating="1"></i>
@@ -426,14 +426,20 @@
 																
 																<div class="form-group">
 																	<label for="exampleInputSummary">Summary <span class="astk">*</span></label>
-																	<input type="text" class="form-control txt" id="summary"  name="summary" placeholder="">
+																	<input type="text" class="form-control txt" id="summary"  name="summary" placeholder="" >
+																	@error('summary')
+																		<span class="invalid-feedback" role="alert"><strong>{{$message}}</strong></span>
+																		@enderror
 																</div><!-- /.form-group -->
 															</div>
 
 															<div class="col-md-6">
 																<div class="form-group">
 																	<label for="exampleInputReview">Review <span class="astk">*</span></label>
-																	<textarea class="form-control txt txt-review" id="comment" name="comment" rows="4" style="resize:none" placeholder=""></textarea>
+																	<textarea class="form-control txt txt-review" id="comment" name="comment" rows="4" style="resize:none" placeholder="" ></textarea>
+																	@error('comment')
+																		<span class="invalid-feedback" role="alert"><strong>{{$message}}</strong></span>
+																		@enderror
 																</div><!-- /.form-group -->
 															</div>
 														</div><!-- /.row -->
@@ -795,6 +801,9 @@ $(document).ready(function(){
                         title: data.success
                     })
                 }else{
+
+					
+					
                   //if there is an error
                     Toast.fire({
                         icon: 'error',
@@ -804,7 +813,53 @@ $(document).ready(function(){
                 // End Message 
 
                    
+                },
+
+				error:function(data){
+
+					
+              
+				//console.log(data.responseJSON)
+
+				const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      icon: 'success',
+                      //title: 'Product Added To Cart',
+                      showConfirmButton: false,
+                      timer: 3000
+                    })
+					
+                  //if there is an error
+
+				  if (comment == ""){
+                    Toast.fire({
+                        icon: 'error',
+                        title: "Please Enter a valid review!"
+                    })
+				}
+				if (summary==""){
+					Toast.fire({
+                        icon: 'error',
+                        title: "Please enter a valid summary"
+                    })
+
+				}
+				if (comment == "" && summary==""){
+					Toast.fire({
+                        icon: 'error',
+                        title: "The comment and Summary fields are required!"
+                    })
+
+				}
                 }
+					
+					
+                
+               
+                
+
+				
             })
         });
 
@@ -963,7 +1018,7 @@ $(document).ready(function(){
 					$(window).scroll(function (){
 						//The window height is what I see, but the document height includes everything below or above.
 					if ($(window).scrollTop() +$(window).height() >= $(document).height() - 600){
-						//we did -400 so we don't have to scroll untill button to load more
+						//we did -600 so we don't have to scroll untill button to load more
 						page ++;
 						reviewsList(page);
 					}

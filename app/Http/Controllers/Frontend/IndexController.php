@@ -566,7 +566,11 @@ class IndexController extends Controller
     }
     public function ReviewStore(Request $request , $idPro){
       
-        
+        $validateData = $request->validate([
+            'comment' => 'required',
+            'summary' => 'required',
+            
+        ]);
        
         
     	$review_id = Review::insertGetId([
@@ -615,7 +619,9 @@ class IndexController extends Controller
             'average_rating' => $total_rating / count($reviews),
             'total_review' => count($reviews),
         ]);}
-        return response()->json(['success' => 'Your Review is being reviewed!']);
+
+       
+        return response()->json(['success' => 'Your Review is being reviewed!' ]);
 
 
     }
