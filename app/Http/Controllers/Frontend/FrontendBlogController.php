@@ -117,6 +117,11 @@ class FrontendBlogController extends Controller
    } // end method 
 
    public function CommentStore(Request $request , $idPost){
+    $validateData = $request->validate([
+        'comment_details' => 'required',
+      
+        
+    ]);
     PostComment::insert([
         'user_id'=>Auth::user()->id,
         'post_id'=>$idPost,
@@ -152,7 +157,11 @@ class FrontendBlogController extends Controller
 }
 
 public function ReplyStore(Request $request , $idPost, $idComment){
-   // dd($idComment);
+    $validateData = $request->validate([
+        'reply_details' => 'required',
+      
+        
+    ]);
     CommentReply::insert([
         'post_id'=>$idPost,
         'user_id'=>Auth::user()->id,

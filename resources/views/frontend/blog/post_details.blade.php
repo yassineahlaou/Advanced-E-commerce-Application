@@ -624,7 +624,33 @@
                                     // End Message 
                                     
                                     
+                                },
+                                error:function(data){
+
+					
+              
+                                //console.log(data.responseJSON)
+
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    //title: 'Product Added To Cart',
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                    })
+                                    
+                                //if there is an error
+
+                                if (reply_details == ""){
+                                    Toast.fire({
+                                        icon: 'error',
+                                        title: "Please Enter a valid Reply!"
+                                    })
                                 }
+                                
+                                
+                            }
                             });
                             });
                     });
@@ -684,7 +710,35 @@ var idPost = $('#post_id').val();
         // End Message 
            
         
-    }
+    },
+    error:function(data){
+
+					
+              
+//console.log(data.responseJSON)
+
+const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      icon: 'success',
+      //title: 'Product Added To Cart',
+      showConfirmButton: false,
+      timer: 3000
+    })
+    
+  //if there is an error
+
+  if (comment_details == ""){
+    Toast.fire({
+        icon: 'error',
+        title: "Please Enter a valid Comment!"
+    })
+}
+
+
+
+}
+
 });
 });
 function loadtotalcomments()
