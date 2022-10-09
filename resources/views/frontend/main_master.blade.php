@@ -718,7 +718,7 @@ function wishlistRemove(id){
         dataType: 'json',
         success:function(data){
             if (data.total){
-                console.log('yes')
+                //console.log('yes')
                 var rows = ""
 
                 rows += `

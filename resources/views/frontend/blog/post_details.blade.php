@@ -47,7 +47,9 @@
        
        
         <div class="post-load-more col-md-12"><a class="btn btn-upper btn-primary" id="loadmore">Load more</a></div>
-		
+		<div class="ajax-loadmore-comments text-center" style="display:none" >
+      <img src="{{ asset('frontend/assets/images/loader.svg') }}" style="width: 120px; height: 120px;">
+    </div>
 		
 	
 		
@@ -175,7 +177,6 @@
                   else{
                     $products = App\Models\Product::orderBy('product_name_fr' , 'ASC')->get();
                   }   
-
                    $l = 0;
                 @endphp
 
@@ -196,7 +197,6 @@
               
                  $tags = $product->product_tags_en;
                  
-
                     
                  $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
                 
@@ -205,14 +205,12 @@
                 $sizetab = count($tagsenglish);
                 $check = 0;
                 
-
                   for($i = 0; $i< $size ; $i++){
                     for($j = 0; $j< $sizetab ; $j++) {
                       if (strcmp($wordsenglish[$i] , $tagsenglish[$j]) == 0){
                         $check = $check +1;
                       }
                     }
-
                     if ($check == 0)
                     {
                       
@@ -220,7 +218,6 @@
                     }
                     
                   }
-
                 
               @endphp
               
@@ -244,7 +241,6 @@
               
               @php
               $tags = $product->product_tags_fr;
-
       
               $pattern = '/,|\[[^]]+\](*SKIP)(*FAIL)/';
   
@@ -258,7 +254,6 @@
               $check = 0;
              
                 
-
               for($i = 0; $i< $size ; $i++){
                   for($j = 0; $j< $sizetabf ; $j++){
                     
@@ -333,7 +328,7 @@
    var totalDisplayed = 0;
     function loadComments(){
         var idPost = $('#postid').text();
-        limit = limit + 5;
+        limit = limit + 2;
         //totalDisplayed = totalDisplayed + 1;
         
         
@@ -341,11 +336,16 @@
             type: 'GET',
             url: '/comments/post/'+idPost+'/'+limit,
             dataType:'json',
-            success:function(response){
+            beforeSend: function(response){
+          $('.ajax-loadmore-comments').show();
+        }
+    })
+            .done(function(response){
+                $('.ajax-loadmore-comments').hide();
+
                 var list = ""
                 var listreplies = ""
                 var checkk = 0;
-
                 $.each(response.comments, function(key,value){
                   
                  
@@ -355,14 +355,11 @@
 						if (i < 10) {i = "0" + i}
 						return i;
 					}
-
 					var getDate = new Date(value.created_at);
-
 					var day =  addZero(getDate.getDate());
 					var month =   getDate.getMonth();
 					month =  addZero(month+1);  // JavaScript months are 0-11
 					var year =  addZero(getDate.getFullYear());
-
 					var hour = addZero(getDate.getHours());
 					var min = addZero(getDate.getMinutes());
 					var sec = addZero(getDate.getSeconds());
@@ -375,7 +372,6 @@
                     </div>
                     <p hidden id="commentid">${value.id}</p>
                     <p hidden id="postid">${value.post_id}</p>
-
                     <div class="col-md-10 col-sm-10 blog-comments outer-bottom-xs">
                         <div class=" inner-bottom-xs sel">
                             <h4>${value.user.name}</h4>
@@ -393,7 +389,6 @@
                 `
                 $.each(response.replies, function(key,val){
                         
-
                         if (val.comment_id == value.id){
                            //console.log('yesyys');
                             
@@ -401,19 +396,15 @@
                                         if (i < 10) {i = "0" + i}
                                         return i;
                                     }
-
                                     var getDate = new Date(val.created_at);
-
                                     var day =  addZero(getDate.getDate());
                                     var month =   getDate.getMonth();
                                     month =  addZero(month+1);  // JavaScript months are 0-11
                                     var year =  addZero(getDate.getFullYear());
-
                                     var hour = addZero(getDate.getHours());
                                     var min = addZero(getDate.getMinutes());
                                     var sec = addZero(getDate.getSeconds());
                                     var formatedDate = day + "." + month + "." + year + "\t" + "at" + "\t" +hour + ":" + min + ":" + sec;
-
                             list += `
                             
                             <div class="col-md-2 col-sm-2">
@@ -430,7 +421,6 @@
                                         </div>
                                     </div>
                                    
-
                             `  
                                                  
                          }
@@ -464,22 +454,18 @@
 		</div>
         @endguest
 	</div>
-
                    
                     </div>
                     </div>
                     </div>
                     </div>
-
                     <p hidden id="total"><p>
                     
                     `
                    
                     
-
                     
                 });
-
   
                 
                 $('#comments').html(list);//jquery function
@@ -491,8 +477,8 @@
                 var tot = $('#total_comments').text();
                 
                 var newto=tot.substring(0,tot.indexOf(' '));
-                console.log($('#total').text());
-               console.log(loadtotalcommentsformore())
+               // console.log($('#total').text());
+               //console.log(loadtotalcommentsformore())
                    
                 if ( loadtotalcommentsformore() ==  $('#total').text()){
                     
@@ -508,7 +494,6 @@
 								//console.log(rate);
                                // console.log($(this).find('#commentid').text());
                                // console.log($(this).find('#form_reply').attr('name'));
-
                               $(this).find('#addreply').click(function(){
                                     
                                       // console.log( $(this).attr('name'));
@@ -516,7 +501,6 @@
                                 if ( $(this).attr('class') == "hiddenitem")
                                        {
                                         if ($(this).closest('.comment').find('#form_reply').attr('name') == $(this).attr('name') && $(this).closest('.comment').find('#show-replies').attr('name') == $(this).attr('name'))
-
                                      {
                                         $(this).removeClass('hiddenitem');
 									    $(this).addClass('shownitem');
@@ -527,7 +511,6 @@
                                 }
                                 else{
                                     if ($(this).closest('.comment').find('#form_reply').attr('name') == $(this).attr('name') && $(this).closest('.comment').find('#show-replies').attr('name') == $(this).attr('name'))
-
                                             {
                                             $(this).removeClass('shownitem');
                                             $(this).addClass('hiddenitem');
@@ -535,40 +518,26 @@
                                             $(this).closest('.comment').find('#form_reply').hide();
                                             $(this).closest('.comment').find('#show-replies').hide();
                                             }
-
                                 }
                                 });
-
                                
                                     
                                    
                            // $(this).find('#form_reply').show();
                     
                            // $(this).find('#show-replys').show();
-
                            
                 
-
-
                         
                                    
-
-
                        
-
                         //submit reply
-
                         $(this).find('#save_reply').click(function(){
-
                             var reply_details = $(this).closest('.comment').find('#reply_details').val();
-
                             var idComment =  $(this).closest('.comment').find('#commentid').text();
                          var idPost = $(this).closest('.comment').find('#postid').text();
                         // console.log(idComment);
-
-
                                 $.ajax({
-
                                     
                                     type: "POST",
                                     data:{reply_details:reply_details},
@@ -596,14 +565,11 @@
                                                             if (i < 10) {i = "0" + i}
                                                             return i;
                                                         }
-
                                                         var getDate = new Date(value.created_at);
-
                                                         var day =  addZero(getDate.getDate());
                                                         var month =   getDate.getMonth();
                                                         month =  addZero(month+1);  // JavaScript months are 0-11
                                                         var year =  addZero(getDate.getFullYear());
-
                                                         var hour = addZero(getDate.getHours());
                                                         var min = addZero(getDate.getMinutes());
                                                         var sec = addZero(getDate.getSeconds());
@@ -622,9 +588,7 @@
                                                                 <p>${value.reply_details}</p>
                                                             </div>
                                                         </div>
-
                                                         `
-
                                                     }
                                                     });
                                                    
@@ -658,44 +622,29 @@
                                         })
                                     }
                                     // End Message 
-
                                     
                                     
                                 }
                             });
-
                             });
-
-
-
-
-
                     });
-
                         
                     
-            }
-        });
+            })
+            .fail(function(){
+        alert('Something Went Wrong');
+      })
+
+       
         
     }
-
     loadComments();
     
     
-
     $('#save_comment').click(function(){
-
 var comment_details = $('#comment_details').val();
 var idPost = $('#post_id').val();
-
-
-
-
-
-
-
     $.ajax({
-
         
         type: "POST",
         data:{comment_details:comment_details},
@@ -705,7 +654,6 @@ var idPost = $('#post_id').val();
         success:function(data)
         {
             
-
             loadComments();
             loadtotalcomments();
           
@@ -734,16 +682,11 @@ var idPost = $('#post_id').val();
             })
         }
         // End Message 
-
            
         
     }
 });
-
 });
-
-
-
 function loadtotalcomments()
 {
 	var idPost = $('#postid').text();
@@ -760,30 +703,23 @@ function loadtotalcomments()
 			//$('#average_rating').text(data.average_rating);
 			$('#total_comments').text(data.total_comments+" comments");
             $('#total_comments_h3').html(data.total_comments+" comments");
-
 		
-
 		}
 	}
 	)
 }
 loadtotalcomments()
-
 //console.log(limit);
     //console.log($('#total').text());
    // console.log($('.comment').length);
 $('.post-load-more').find('#loadmore').click(function(){
-
     loadComments();
     
     
-    console.log(limit);
+   // console.log(limit);
     //console.log($('#total').text());
     
-
 });
-
-
 function loadtotalcommentsformore()
 {
 	var idPost = $('#postid').text();
@@ -801,14 +737,11 @@ function loadtotalcommentsformore()
 		{
             result = data.total_comments;
 			
-
 		
-
 		}
 	}
 	);
     return result;
 }
-
 </script>
 @endsection

@@ -371,6 +371,7 @@
 
 											<div class="reviews">
 												<div id="reviewsList"></div>
+												<div class="post-load-more col-md-12 text-center"><a class="btn btn-upper btn-primary" id="loadmore">Load more</a></div>
 												<div class="ajax-loadmore-reviews text-center" style="display:none" >
       <img src="{{ asset('frontend/assets/images/loader.svg') }}" style="width: 120px; height: 120px;">
     </div>
@@ -388,7 +389,7 @@
 											
 											<div class="review-form">
 											@guest
-													<p> <b> Please , Login In First <a href="{{ route('login') }}">Login Here</a> </b> </p>
+													<p class="text-center" style="padding-top:50px"> <b> Please , Login In First To Post A Review &nbsp;<a href="{{ route('login') }}">Login Here</a> </b> </p>
 													@else
 													@php
 													$check = 0;
@@ -781,6 +782,7 @@ $(document).ready(function(){
 
                     load_rating_data();
 					reviewsList(page);
+					reset_background();
 					
 					const Toast = Swal.mixin({
                       toast: true,
@@ -794,7 +796,7 @@ $(document).ready(function(){
                   //if there is no error
 				  $('#comment').val('');
 				  $('#summary').val('');
-				  reset_background();
+				  
 				  $('#preview_img').empty();
                     Toast.fire({
                         icon: 'success',
@@ -877,9 +879,11 @@ $(document).ready(function(){
 	})
 
 			.done(function(response){
-				//console.log(response.reviews.data)
+				//console.log(response.reviews)
 			if (response.reviews.data.length == 0 ) {
 				$('.ajax-loadmore-reviews').hide();
+				$('#loadmore').text('No More Reviews')
+				$('#loadmore').attr('disabled', true);
 				return;
 			}
 			$('.ajax-loadmore-reviews').hide();
@@ -1015,14 +1019,16 @@ $(document).ready(function(){
 
 		
 				var page = 1;
-					$(window).scroll(function (){
+					
 						//The window height is what I see, but the document height includes everything below or above.
-					if ($(window).scrollTop() +$(window).height() >= $(document).height() - 600){
+					//if ($(window).scrollTop() +$(window).height() >= $(document).height()){
 						//we did -600 so we don't have to scroll untill button to load more
+						$('#loadmore').click(function(){
+
 						page ++;
 						reviewsList(page);
-					}
-					});
+					})
+				
 
 		
 
