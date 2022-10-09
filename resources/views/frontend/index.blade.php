@@ -1,6 +1,29 @@
 
 @extends('frontend.main_master')
 @section('content')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+.progress-label-left
+{
+    float: left;
+    margin-right: 0.5em;
+    line-height: 1em;
+}
+.progress-label-right
+{
+    float: right;
+    margin-left: 0.3em;
+    line-height: 1em;
+}
+.star-light
+{
+	color:#e9ecef;
+}
+.star-warning
+{
+	color:#ffff00;
+}
+</style>
 <div class="body-content outer-top-xs" id="top-banner-and-menu">
   <div class="container">
     <div class="row"> 
@@ -51,7 +74,7 @@
                 $discount = ($amount/$product->selling_price) * 100;
                 $counter  = $counter + 1;
                 @endphp
-                  <div class="product">
+                  <div class="product specialoffer" name="{{$product->id}}">
                     <div class="product-micro">
                       <div class="row product-micro-row">
                         <div class="col col-xs-5">
@@ -66,7 +89,21 @@
                         <div class="col col-xs-7">
                           <div class="product-info">
                             <h3 class="name"><a href="{{url('product/details/'. $product->id . '/' . $product->product_slug_en)}}">@if (session()->get('language') == 'english'){{ $product->product_name_en }} @else {{ $product->product_name_fr }} @endif</a></h3>
-                            <div class="rating rateit-small"></div>
+                            <div class="rating-reviews ">
+								
+                <div class="mb-3">
+                  <i class="fa fa-star star-light mr-1 main_star" ></i>
+                  <i class="fa fa-star star-light mr-1 main_star" ></i>
+                  <i class="fa fa-star star-light mr-1 main_star" ></i>
+                  <i class="fa fa-star star-light mr-1 main_star" ></i>
+                  <i class="fa fa-star star-light mr-1 main_star"></i>
+                </div>
+                
+              
+                
+              </div>
+            
+                <p hidden id="productid">{{$product->id}}</p>
 
                             @if ($product->discount_price == 0)
                             <div class="product-price"> <span class="price">${{$product->selling_price}}</span> </div>
@@ -297,7 +334,7 @@
                 $discount = ($amount/$product->selling_price) * 100;
                 $counter  = $counter + 1;
                 @endphp
-                  <div class="product">
+                  <div class="product specialdeals" name="{{$product->id}}">
                     <div class="product-micro">
                       <div class="row product-micro-row">
                         <div class="col col-xs-5">
@@ -312,7 +349,21 @@
                         <div class="col col-xs-7">
                           <div class="product-info">
                             <h3 class="name"><a href="{{url('product/details/'. $product->id . '/' . $product->product_slug_en)}}">@if (session()->get('language') == 'english'){{ $product->product_name_en }} @else {{ $product->product_name_fr }} @endif</a></h3>
-                            <div class="rating rateit-small"></div>
+                            <div class="rating-reviews ">
+								
+                <div class="mb-3">
+                  <i class="fa fa-star star-light mr-1 main_star" ></i>
+                  <i class="fa fa-star star-light mr-1 main_star" ></i>
+                  <i class="fa fa-star star-light mr-1 main_star" ></i>
+                  <i class="fa fa-star star-light mr-1 main_star" ></i>
+                  <i class="fa fa-star star-light mr-1 main_star"></i>
+                </div>
+                
+              
+                
+              </div>
+            
+                <p hidden id="productid">{{$product->id}}</p>
                             @if ($product->discount_price == 0)
                             <div class="product-price"> <span class="price">${{$product->selling_price}}</span> </div>
                            @else
@@ -533,7 +584,7 @@
                 $discount = ($amount/$product->selling_price) * 100;
                 @endphp
                 
-                  <div class="item item-carousel">
+                  <div class="item item-carousel new" name="{{$product->id}}">
                     <div class="products">
                       <div class="product">
                         <div class="product-image">
@@ -551,6 +602,9 @@
                           @endif
                         </div>
                         <!-- /.product-image -->
+
+                      
+
                         
                         <div class="product-info text-left">
                         @if (session()->get('language') == 'english')
@@ -558,7 +612,21 @@
                           @else
                           <h3 class="name"><a href="{{url('product/details/'. $product->id) . '/' . $product->product_slug_fr}}">@if (session()->get('language') == 'english'){{$product->product_name_en}} @else {{$product->product_name_fr}} @endif</a></h3>
                           @endif
-                          <div class="rating rateit-small"></div>
+                          <div class="rating-reviews ">
+								
+                <div class="mb-3">
+                  <i class="fa fa-star star-light mr-1 main_star" ></i>
+                  <i class="fa fa-star star-light mr-1 main_star" ></i>
+                  <i class="fa fa-star star-light mr-1 main_star" ></i>
+                  <i class="fa fa-star star-light mr-1 main_star" ></i>
+                  <i class="fa fa-star star-light mr-1 main_star"></i>
+                </div>
+                
+              
+                
+              </div>
+            
+                <p hidden id="productid">{{$product->id}}</p>
                           <div class="description"></div>
                           @if ($product->discount_price == 0)
                           <div class="product-price"> <span class="price"> ${{$product->selling_price}}</span>  </div>
@@ -755,7 +823,7 @@
                 $amount = $product->selling_price - $product->discount_price;
                 $discount = ($amount/$product->selling_price) * 100;
                 @endphp
-            <div class="item item-carousel">
+            <div class="item item-carousel featured" name="{{$product->id}}">
               <div class="products">
                 <div class="product">
                   <div class="product-image">
@@ -779,7 +847,21 @@
                   <div class="product-info text-left">
                     
                     <h3 class="name"><a href="detail.html">@if (session()->get('language') == 'english'){{$product->product_name_en}} @else {{$product->product_name_fr}} @endif</a></h3>
-                    <div class="rating rateit-small"></div>
+                    <div class="rating-reviews ">
+								
+									<div class="mb-3">
+										<i class="fa fa-star star-light mr-1 main_star" ></i>
+										<i class="fa fa-star star-light mr-1 main_star" ></i>
+										<i class="fa fa-star star-light mr-1 main_star" ></i>
+										<i class="fa fa-star star-light mr-1 main_star" ></i>
+										<i class="fa fa-star star-light mr-1 main_star"></i>
+									</div>
+									
+								
+									
+								</div>
+							
+                  <p hidden id="productid">{{$product->id}}</p>
                     <div class="description"></div>
                     @if  ($product->discount_price != 0)
                           <div class="product-price"> <span class="price"> ${{$product->discount_price}} </span> <span class="price-before-discount">${{$product->selling_price}}</span> </div>
@@ -1418,12 +1500,230 @@
 
 <script>
 
-$('.multiple-items').slick({
-  infinite: true,
-  slidesToShow: 3,
-  slidesToScroll: 2
-});
 
+
+
+
+
+function load_rating_data_featured()
+{
+  $('.featured').each(function(){
+	var idProduct = $(this).find('#productid').text();
+  //console.log($(this).find('.main_star').length)
+  //console.log(idProduct)
+	
+	$.ajax({
+		type: 'GET',
+		
+		url:'/totalreviews/'+idProduct,
+		
+		//data:{action:'load_data'},
+		dataType:"JSON",
+		success:function(data)
+		{
+			//$('#average_rating').text(data.average_rating);
+			//$('#total_review').text(data.total_review);
+
+			var count_star = 0;
+
+     // console.log($(`.featured[name="${idProduct}"]`).find('.main_star').length)
+
+			$(`.featured[name="${idProduct}"]`).find('.main_star').each(function(){
+
+        
+				count_star++;
+
+				
+			
+				if(Math.ceil(data.average_rating) >= count_star)
+				{
+					$(this).removeClass('star-light');
+					$(this).addClass('star-warning');
+				}
+			});
+
+		}
+	});
+})
+}
+
+
+function load_rating_data_hot()
+{
+  $('.hot').each(function(){
+	var idProduct = $(this).find('#productid').text();
+  //console.log($(this).find('.main_star').length)
+ // console.log(idProduct)
+	
+	$.ajax({
+		type: 'GET',
+		
+		url:'/totalreviews/'+idProduct,
+		
+		//data:{action:'load_data'},
+		dataType:"JSON",
+		success:function(data)
+		{
+			//$('#average_rating').text(data.average_rating);
+			//$('#total_review').text(data.total_review);
+
+			var count_star = 0;
+
+     // console.log($(`.featured[name="${idProduct}"]`).find('.main_star').length)
+
+			$(`.hot[name="${idProduct}"]`).find('.main_star').each(function(){
+
+        
+				count_star++;
+
+				
+			
+				if(Math.ceil(data.average_rating) >= count_star)
+				{
+					$(this).removeClass('star-light');
+					$(this).addClass('star-warning');
+				}
+			});
+
+		}
+	});
+})
+}
+
+function load_rating_data_new()
+{
+  $('.new').each(function(){
+	var idProduct = $(this).find('#productid').text();
+  //console.log($(this).find('.main_star').length)
+  //console.log(idProduct)
+	
+	$.ajax({
+		type: 'GET',
+		
+		url:'/totalreviews/'+idProduct,
+		
+		//data:{action:'load_data'},
+		dataType:"JSON",
+		success:function(data)
+		{
+			//$('#average_rating').text(data.average_rating);
+			//$('#total_review').text(data.total_review);
+
+			var count_star = 0;
+
+     // console.log($(`.featured[name="${idProduct}"]`).find('.main_star').length)
+
+			$(`.new[name="${idProduct}"]`).find('.main_star').each(function(){
+
+        
+				count_star++;
+
+				
+			
+				if(Math.ceil(data.average_rating) >= count_star)
+				{
+					$(this).removeClass('star-light');
+					$(this).addClass('star-warning');
+				}
+			});
+
+		}
+	});
+})
+}
+
+
+function load_rating_data_special_offer()
+{
+  $('.specialoffer').each(function(){
+	var idProduct = $(this).find('#productid').text();
+  //console.log($(this).find('.main_star').length)
+  //console.log(idProduct)
+	
+	$.ajax({
+		type: 'GET',
+		
+		url:'/totalreviews/'+idProduct,
+		
+		//data:{action:'load_data'},
+		dataType:"JSON",
+		success:function(data)
+		{
+			//$('#average_rating').text(data.average_rating);
+			//$('#total_review').text(data.total_review);
+
+			var count_star = 0;
+
+     // console.log($(`.featured[name="${idProduct}"]`).find('.main_star').length)
+
+			$(`.specialoffer[name="${idProduct}"]`).find('.main_star').each(function(){
+
+        
+				count_star++;
+
+				
+			
+				if(Math.ceil(data.average_rating) >= count_star)
+				{
+					$(this).removeClass('star-light');
+					$(this).addClass('star-warning');
+				}
+			});
+
+		}
+	});
+})
+}
+
+function load_rating_data_special_deals()
+{
+  $('.specialdeals').each(function(){
+	var idProduct = $(this).find('#productid').text();
+  //console.log($(this).find('.main_star').length)
+  //console.log(idProduct)
+	
+	$.ajax({
+		type: 'GET',
+		
+		url:'/totalreviews/'+idProduct,
+		
+		//data:{action:'load_data'},
+		dataType:"JSON",
+		success:function(data)
+		{
+			//$('#average_rating').text(data.average_rating);
+			//$('#total_review').text(data.total_review);
+
+			var count_star = 0;
+
+     // console.log($(`.featured[name="${idProduct}"]`).find('.main_star').length)
+
+			$(`.specialdeals[name="${idProduct}"]`).find('.main_star').each(function(){
+
+        
+				count_star++;
+
+				
+			
+				if(Math.ceil(data.average_rating) >= count_star)
+				{
+					$(this).removeClass('star-light');
+					$(this).addClass('star-warning');
+				}
+			});
+
+		}
+	});
+})
+}
+$(document).ready(function(){
+  //console.log($('.featured').length)
+load_rating_data_featured()
+load_rating_data_new()
+load_rating_data_hot()
+load_rating_data_special_offer()
+load_rating_data_special_deals()
+})
 
 
 </script>

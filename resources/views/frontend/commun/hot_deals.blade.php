@@ -12,7 +12,7 @@
 
                 
           @foreach($products as $product)
-            <div class="item">
+            <div class="item hot" name="{{$product->id}}">
                 
                 @php  
                 $amount = $product->selling_price - $product->discount_price;
@@ -47,7 +47,21 @@
                 
                 <div class="product-info text-left m-t-20">
                   <h3 class="name"><a href="{{url('product/details/'. $product->id . '/' . $product->product_slug_en)}}">@if (session()->get('language') == 'english'){{ $product->product_name_en }} @else {{ $product->product_name_fr }} @endif</a></h3>
-                  <div class="rating rateit-small"></div>
+                  <div class="rating-reviews ">
+								
+									<div class="mb-3">
+										<i class="fa fa-star star-light mr-1 main_star" ></i>
+										<i class="fa fa-star star-light mr-1 main_star" ></i>
+										<i class="fa fa-star star-light mr-1 main_star" ></i>
+										<i class="fa fa-star star-light mr-1 main_star" ></i>
+										<i class="fa fa-star star-light mr-1 main_star"></i>
+									</div>
+									
+								
+									
+								</div>
+							
+                  <p hidden id="productid">{{$product->id}}</p>
                   @if ($product->discount_price == 0)
                   <div class="product-price"> <span class="price">${{$product->selling_price}}</span></div>
                  @else

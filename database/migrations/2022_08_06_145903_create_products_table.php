@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('product_name_en');
             $table->string('product_name_fr');
             $table->string('product_name_fr');
-            $table->float('average_rating',5,1)->nullable();
+            $table->float('average_rating',5,1)->default(0);
             $table->unsignedBigInteger('total_review')->default(0);
             
             $table->string('product_slug_en');
