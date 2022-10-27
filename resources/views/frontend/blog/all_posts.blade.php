@@ -34,11 +34,11 @@
                 
                 
 					<div class="sidebar-module-container">
-						<div class="search-area outer-bottom-small">
+          <div class="search-area outer-bottom-small" style="  flex-wrap: wrap; align-items: center;">
 				<form method="get" action="{{ route('post.search') }}">
         <div class="control-group">
-		<input class="search-field"  name="search_post" id="search_post" placeholder="Type to search" />
-		<button ><a class="search-button" type="submit"></a></button>
+		<input class="search-field"  name="search_post" id="search_post" placeholder="Type to search" required=""  style="width:79.1%"/>
+		<button type="submit" class="search-button" ></button>
                 
            
         </div>

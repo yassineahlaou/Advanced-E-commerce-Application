@@ -144,14 +144,14 @@
 								<div class="row">
 									<div class="col-sm-3">
 									<div class="mb-3">
-										<i class="fa fa-star star-light mr-1 main_star" ></i>
-										<i class="fa fa-star star-light mr-1 main_star" ></i>
-										<i class="fa fa-star star-light mr-1 main_star" ></i>
-										<i class="fa fa-star star-light mr-1 main_star" ></i>
-										<i class="fa fa-star star-light mr-1 main_star"></i>
+										<i class="fa fa-star star-light mr-1 main_star_product" ></i>
+										<i class="fa fa-star star-light mr-1 main_star_product" ></i>
+										<i class="fa fa-star star-light mr-1 main_star_product" ></i>
+										<i class="fa fa-star star-light mr-1 main_star_product" ></i>
+										<i class="fa fa-star star-light mr-1 main_star_product"></i>
 									</div>
 									</div>
-									<p hidden id="productid">{{$productData->id}}</p>
+									<p hidden id="singleproductid">{{$productData->id}}</p>
 									<div class="col-sm-8">
 										<div class="reviews">
 										
@@ -868,7 +868,7 @@ $(document).ready(function(){
     });
 
 	function reviewsList(page){
-		var idProduct = $('#productid').text();
+		var idProduct = $('#singleproductid').text();
         $.ajax({
             type: 'GET',
             url: '/reviews/list/'+idProduct+"?page="+page,
@@ -1037,7 +1037,7 @@ $(document).ready(function(){
 
 function load_rating_data(idProduct)
 {
-	var idProduct = $('#productid').text();
+	var idProduct = $('#singleproductid').text();
 	
 	$.ajax({
 		type: 'GET',
@@ -1053,7 +1053,7 @@ function load_rating_data(idProduct)
 
 			var count_star = 0;
 
-			$('.main_star').each(function(){
+			$('.main_star_product').each(function(){
 				count_star++;
 
 				
@@ -1072,8 +1072,49 @@ function load_rating_data(idProduct)
 load_rating_data()
 
 
+function load_rating_data_hot()
+{
+  $('.hot').each(function(){
+	var idProduct = $(this).find('#productid').text();
+  //console.log($(this).find('.main_star').length)
+ // console.log(idProduct)
+	
+	$.ajax({
+		type: 'GET',
+		
+		url:'/totalreviews/'+idProduct,
+		
+		//data:{action:'load_data'},
+		dataType:"JSON",
+		success:function(data)
+		{
+			//$('#average_rating').text(data.average_rating);
+			//$('#total_review').text(data.total_review);
 
+			var count_star = 0;
 
+     // console.log($(`.featured[name="${idProduct}"]`).find('.main_star').length)
+
+			$(`.hot[name="${idProduct}"]`).find('.main_star').each(function(){
+
+        
+				count_star++;
+
+				
+			
+				if(Math.ceil(data.average_rating) >= count_star)
+				{
+					$(this).removeClass('star-light');
+					$(this).addClass('star-warning');
+				}
+			});
+
+		}
+	});
+})
+}
+
+load_rating_data_hot();
 
   /* jQuery(document).ready(function() {
 	$('.date').find()

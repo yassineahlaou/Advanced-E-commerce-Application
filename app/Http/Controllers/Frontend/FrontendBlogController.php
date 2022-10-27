@@ -66,8 +66,28 @@ class FrontendBlogController extends Controller
         $searchPost = $request->search_post;
         $allBlogCategories = BlogPostCategory::latest()->get();
        $allPosts =  BlogPost::where('post_title_en','LIKE',"%$searchPost%")->get();
+       
+
+       // Get current page form url e.x. &page=1
+       $currentPage = LengthAwarePaginator::resolveCurrentPage();
+ 
+       // Create a new Laravel collection from the array data
+      // $productCollection = collect($listpros);
+
+       // Define how many products we want to be visible in each page
+       $perPage = 2;
+
+       // Slice the collection to get the products to display in current page
+       $currentPageproducts = $allPosts->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+
+       // Create our paginator and pass it to the view
+       $paginatedproducts= new LengthAwarePaginator($currentPageproducts , count($allPosts), $perPage);
+
+       // set url path for generted links
+       $paginatedproducts->setPath($request->url());
+
        return view ('frontend.blog.searched_posts', [
-        'allPosts' => $allPosts,
+        'allPosts' => $paginatedproducts,
         'allBlogCategories' => $allBlogCategories,
  
        

@@ -48,38 +48,23 @@
 
 @endforeach
 
-<div class="clearfix blog-pagination filters-container  wow fadeInUp" style="padding:0px; background:none; box-shadow:none; margin-top:15px; border:none">
-						
-	<div class="text-right">
-         <div class="pagination-container">
-	<ul class="list-inline list-unstyled">
-		<li class="prev"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-		<li><a href="#">1</a></li>	
-		<li class="active"><a href="#">2</a></li>	
-		<li><a href="#">3</a></li>	
-		<li><a href="#">4</a></li>	
-		<li class="next"><a href="#"><i class="fa fa-angle-right"></i></a></li>
-	</ul><!-- /.list-inline -->
-</div><!-- /.pagination-container -->    </div><!-- /.text-right -->
-
-</div><!-- /.filters-container -->				
-			
+{{$allPosts->withQueryString()->links('vendor.pagination.costum')}}
 </div>
 				<div class="col-md-3 sidebar">
                 
                 
                 
 					<div class="sidebar-module-container">
-						<div class="search-area outer-bottom-small">
+					<div class="search-area outer-bottom-small" style="  flex-wrap: wrap; align-items: center;">
 				<form method="get" action="{{ route('post.search') }}">
         <div class="control-group">
-		<input class="search-field"  name="search_post" id="search_post" placeholder="Type to search" />
-                <button class="search-button" type="submit"></button> 
-               
+		<input class="search-field"  name="search_post" id="search_post" placeholder="Type to search" required=""  style="width:79.1%"/>
+		<button type="submit" class="search-button" ></button>
+                
            
         </div>
     </form>
-</div>		
+</div>	
 
 
 				<!-- ==============================================CATEGORY============================================== -->
