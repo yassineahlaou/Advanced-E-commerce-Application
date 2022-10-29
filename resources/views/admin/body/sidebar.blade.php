@@ -274,9 +274,10 @@
           </a>
           <ul class="treeview-menu">
             <li class="{{($route == 'blog.category')? 'active' : ''}}"><a href="{{route('blog.category')}}"><i class="ti-more"></i>Blog Categories</a></li>
+            <li class="{{($route == 'view.posts')? 'active' : ''}}"><a href="{{route('view.posts')}}"><i class="ti-more"></i>View Posts</a></li>
+            <li class="{{($route == 'add.post')? 'active' : ''}}"><a href="{{route('add.post')}}"><i class="ti-more"></i>Add Post</a></li>
             
-            
-            
+            <li class="{{($route == 'manage.subscriptions')? 'active' : ''}}"><a href="{{route('manage.subscriptions')}}"><i class="ti-more"></i>Manage Subscriptions</a></li>
             
             
        
@@ -513,7 +514,7 @@
             <li class="{{($route == 'blog.category')? 'active' : ''}}"><a href="{{route('blog.category')}}"><i class="ti-more"></i>Blog Categories</a></li>
             <li class="{{($route == 'view.posts')? 'active' : ''}}"><a href="{{route('view.posts')}}"><i class="ti-more"></i>View Posts</a></li>
             <li class="{{($route == 'add.post')? 'active' : ''}}"><a href="{{route('add.post')}}"><i class="ti-more"></i>Add Post</a></li>
-            
+            <li class="{{($route == 'manage.subscriptions')? 'active' : ''}}"><a href="{{route('manage.subscriptions')}}"><i class="ti-more"></i>Manage Subscriptions</a></li>
             
             
             

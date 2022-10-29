@@ -407,13 +407,16 @@
           <h3 class="section-title">Newsletters</h3>
           <div class="sidebar-widget-body outer-top-xs">
             <p>Sign Up for Our Newsletter!</p>
-            <form>
+            
               <div class="form-group">
-                <label class="sr-only" for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Subscribe to our newsletter">
+                <label class="sr-only" for="email">Email address</label>
+                <input type="email" name="email" id="email" class="form-control"  placeholder="Subscribe to our newsletter">
               </div>
-              <button class="btn btn-primary">Subscribe</button>
-            </form>
+              
+     
+                <div>
+              <button class="btn btn-primary subs" id="subscribe">Subscribe</button><img class="loading"  src="{{ asset('frontend/assets/images/loader.svg') }}" style="width: 50px; height: 50px;display:none">
+                </div>
           </div>
           <!-- /.sidebar-widget-body --> 
         </div>
@@ -1724,6 +1727,92 @@ load_rating_data_hot()
 load_rating_data_special_offer()
 load_rating_data_special_deals()
 })
+
+
+$('#subscribe').click(function(){
+
+  var email = $('#email').val()
+  $.ajax({
+		
+                
+    type: "POST",
+    data:{email:email},
+    dataType: 'json',
+    url:'/subscribe/'+email,
+    beforeSend: function(response){
+          $('.loading').show();
+          $('#subscribe').attr('disabled', true);
+         
+        }
+      })
+
+      .done(function(data)
+    {
+      $('.loading').hide();
+      $('#subscribe').attr('disabled', false);
+       const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  icon: 'success',
+                  //title: 'Product Added To Cart',
+                  showConfirmButton: false,
+                  timer: 3000
+                })
+      if ($.isEmptyObject(data.info)) {
+          //if there is no error
+          $('#email').val('');
+
+            Toast.fire({
+                icon: 'success',
+                title: data.success
+            })
+          }else{
+
+
+
+          //if there is an error
+            Toast.fire({
+                icon: 'info',
+                title: data.info
+            })
+        }
+    // End Message 
+
+       
+    })
+
+    .fail(function(){
+      $('.loading').hide();
+      $('#subscribe').attr('disabled', false);
+
+  
+//console.log(data.responseJSON)
+
+const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          icon: 'success',
+          //title: 'Product Added To Cart',
+          showConfirmButton: false,
+          timer: 3000
+        })
+
+      //if there is an error
+
+        if (email == ""){
+                Toast.fire({
+                    icon: 'error',
+                    title: "Please Enter a valid email!"
+                })
+        }
+
+
+});
+    
+
+
+})
+
 
 
 </script>

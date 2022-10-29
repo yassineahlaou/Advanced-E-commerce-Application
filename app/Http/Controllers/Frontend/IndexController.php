@@ -18,6 +18,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\SubSubCategory;
+use App\Models\BlogSubscribers;
 
 
 use App\Models\Brand;
@@ -27,6 +28,8 @@ use App\Models\Order;
 use App\Models\OrderItems;
 use Carbon\Carbon;
 use Image;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SubscriptionMail;
 
 class IndexController extends Controller
 {
@@ -721,5 +724,24 @@ class IndexController extends Controller
 		return view('frontend.search.search_product',compact('products'));
     }
 
-    
+    public function Subscribe($email){
+
+       $email_exists =  BlogSubscribers::where('email', $email)->first();
+       //dd($email_exists);
+        if ($email_exists == []){
+           $sub_id =  BlogSubscribers::insertGetId([
+                'email' => $email, 
+               
+                'created_at' => Carbon::now(), 
+            ]);
+            $subscriber = BlogSubscribers::findOrFail($sub_id);
+            Mail::to($email)->send(new SubscriptionMail($subscriber));
+           return response()->json(['success' => 'Successfully Subscribed To Our NewsLetter']);
+        }
+        else{
+            return response()->json(['info' => 'Already Subscribed To Our NewsLetter']);
+        }
+        
+
+    }
 }

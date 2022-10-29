@@ -328,6 +328,8 @@ Route::prefix('blog')->group(function(){
     Route::get('/deletePost/{postId}', [BlogController::class, 'DeletePost'])->name('post.delete');
     Route::get('/postdown/{postId}', [BlogController::class, 'PostDown'])->name('post.down');
     Route::get('/postup/{postId}', [BlogController::class, 'PostUp'])->name('post.up');
+    Route::get('/blog/managesubscriptions', [BlogController::class, 'GetSubscribers'])->name('manage.subscriptions');
+    Route::get('/blog/deletesubscriber/{subscriberId}', [BlogController::class, 'DeleteSubscriber'])->name('delete.subscriber');
 
 });
 
@@ -378,6 +380,8 @@ Route::post('/comment/store/{idPost}', [FrontendBlogController::class, 'CommentS
 Route::get('/post/totalcomments/{idPost}', [FrontendBlogController::class, 'GetTotalComments']);
 Route::get('/replies/comment/{idComment}/post/{idPost}',  [FrontendBlogController::class, 'CommentRepliesList']);
 Route::post('/reply/store/post/{idPost}/comment/{idComment}',[FrontendBlogController::class, 'ReplyStore'] );
+
+Route::post('/subscribe/{email}',[IndexController::class, 'Subscribe'] );
 
 
 Route::group(['prefix'=>'user','middleware' => ['user','auth'],'namespace'=>'User'],function(){

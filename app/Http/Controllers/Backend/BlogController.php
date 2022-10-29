@@ -8,6 +8,11 @@ use App\Models\BlogPostCategory;
 use Carbon\Carbon;
 use Image;
 use App\Models\BlogPost;
+use App\Models\BlogSubscribers;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SubscriptionMail;
+use App\Mail\NewPostMail;
+
 class BlogController extends Controller
 {
     public function ManageCategories(){
@@ -131,7 +136,7 @@ class BlogController extends Controller
         $save_url = "upload/post_images/".$filename;
 
         
-     BlogPost::insert([
+    $postId =  BlogPost::insertGetId([
 
              
              'category_id' => $request->category_id,
@@ -152,7 +157,20 @@ class BlogController extends Controller
          ]);
  
              
+         $postdata = BlogPost::findOrFail($postId);
+         
 
+         $subscribers = BlogSubscribers::latest()->get();
+
+         
+         
+         foreach($subscribers as $subscriber){
+           // dd($subscriber->email);
+
+            Mail::to($subscriber->email)->send(new NewPostMail($postdata));
+
+         }
+         
         
          
 
@@ -287,7 +305,27 @@ class BlogController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    
+    public function GetSubscribers(){
+
+        $subscribers = BlogSubscribers::latest()->get(); //get all data
+        return view ('backend.blog.manage_subscribers', compact('subscribers'));
+
+    }
+    public function DeleteSubscriber($subscriberId){
+        $subscriber = BlogSubscribers::where('id',$subscriberId)->get();
+      
+        BlogSubscribers::findOrFail($subscriberId)->delete();
+
+        $notification = array(
+            'message' => 'Blog Subscriber Deleted Successfully !',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+
+
+
+    }
 
 
 
