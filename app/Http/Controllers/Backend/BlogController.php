@@ -12,7 +12,7 @@ use App\Models\BlogSubscribers;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SubscriptionMail;
 use App\Mail\NewPostMail;
-
+use App\Jobs\TestEmailJob;
 class BlogController extends Controller
 {
     public function ManageCategories(){
@@ -166,8 +166,8 @@ class BlogController extends Controller
          
          foreach($subscribers as $subscriber){
            // dd($subscriber->email);
-
-            Mail::to($subscriber->email)->send(new NewPostMail($postdata));
+           dispatch(new TestEmailJob($subscriber,$postdata));
+            //Mail::to($subscriber->email)->send(new NewPostMail($postdata));
 
          }
          

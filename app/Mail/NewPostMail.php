@@ -11,16 +11,19 @@ class NewPostMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $postdata;
+   
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($postdata)
+    protected $subscriber;
+    protected $postdata;
+    public function __construct($subscriber, $postdata)
     {
-        $this->data = $postdata;
+        $this->subscriber = $subscriber;
+        $this->postdata = $postdata;
     }
 
     /**
@@ -30,7 +33,7 @@ class NewPostMail extends Mailable
      */
     public function build()
     {
-        $post_data = $this->data;
+        $post_data = $this->postdata;
         //dd($post_data);
         return $this->from('yassineahlaou@gmail.com')->view('frontend.mail.new_post_mail',compact('post_data'))->subject('Email from AHLAOUSHOP');
     }
